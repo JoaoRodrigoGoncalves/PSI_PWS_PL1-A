@@ -1,4 +1,5 @@
 <?php
+require_once './controllers/BaseAuthController.php';
 
 class SiteController extends BaseAuthController
 {

@@ -11,7 +11,7 @@ class Login{
     public function checkLogin($username, $password): bool
     {
         if ($username == "admin" && $password == '1234'){
-            $_SESSION['email'] = $username;
+            $_SESSION['username'] = $username;
             return true;
         }
         return false;
@@ -29,7 +29,7 @@ class Login{
 
     public function getUsername(){
         if($this->isLoggedIn())
-            return $_SESSION['name'];
+            return $_SESSION['username'];
         else
             return null;
     }

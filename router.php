@@ -3,6 +3,7 @@ require_once './startup/boot.php';
 require_once './controllers/SiteController.php';
 require_once './controllers/LoginController.php';
 require_once './controllers/ErrorController.php';
+require_once './controllers/SetupPageController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -16,8 +17,33 @@ else
     $c = $_GET['c'];
     $a = $_GET['a'];
 
+    $errorController = new ErrorController();
+
     switch ($c)
     {
+
+        case "site":
+            $controller = new SiteController();
+            $controller->index();
+            break;
+
+        case "setup":
+            $controller = new SetupPageController();
+            switch($a)
+            {
+                case "index":
+                    $controller->index();
+                    break;
+
+                case "store":
+                    $controller->store();
+                    break;
+
+                default:
+                    $errorController->index(null);
+            }
+            break;
+
         case "login":
             $controller = new LoginController();
             switch ($a)
@@ -34,27 +60,21 @@ else
                     $controller->logout();
 
                 default:
-                    $controller->index();
+                    $errorController->index(null);
             }
             break;
 
-        case "site":
-            $controller = new SiteController();
-            $controller->index();
-            break;
-
         case "error":
-            $controller = new ErrorController();
             switch($a)
             {
                 case "index":
                     if(isset($_GET['callbackRoute']))
                     {
-                        $controller->index($_GET['callbackRoute']);
+                        $errorController->index($_GET['callbackRoute']);
                     }
                     else
                     {
-                        $controller->index(null);
+                        $errorController->index(null);
                     }
                     break;
             }

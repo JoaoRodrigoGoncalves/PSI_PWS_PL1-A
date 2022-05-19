@@ -6,7 +6,14 @@ include_once './models/Login.php';
 class  LoginController extends BaseAuthController {
 
     public function index(){
-        $this->RenderView('login', 'index', []);
+        if(User::count() > 0)
+        {
+            $this->RenderView('login', 'index', []);
+        }
+        else
+        {
+            $this->RedirectToRoute('setup', 'index');
+        }
     }
 
     public function login(){
