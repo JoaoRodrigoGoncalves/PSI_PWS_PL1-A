@@ -2,12 +2,13 @@
 
 use ActiveRecord\Model;
 
-class User extends Model
+class Empresa extends Model
 {
     static $validates_presence_of = array(
-        array('username', 'message' => 'É necessário indicar um nome de utilizador'),
-        array('telefone', 'message' => 'É necessário indicar um número de telefone'),
+        array('designacaoSocial', 'message' => 'É necessário indicar a Designação Social'),
+        array('capitalSocial', 'message' => 'É necessário indicar o capital social'),
         array('email', 'message' => 'É necessário indicar um endereço de email'),
+        array('telefone', 'message' => 'É necessário indicar um número de telefone'),
         array('nif', 'message' => 'É necessário indicar o Número de Identificação Fiscal'),
         array('morada', 'message' => 'É necessário indicar a morada'),
         array('codigoPostal', 'message' => 'É necessário indicar o código postal'),
@@ -15,7 +16,7 @@ class User extends Model
     );
 
     static $validates_size_of = array(
-        array('username', 'maximum' => 100),
+        array('designacaoSocial', 'maximum' => 100),
         array('email', 'maximum' => 100),
         array('telefone', 'is' => 9),
         array('nif', 'is' => 9),
@@ -23,10 +24,4 @@ class User extends Model
         array('codigoPostal', 'is' => 8),
         array('localidade', 'maximum' => 40)
     );
-
-    public function validate()
-    {
-        if($_POST['password'] == $_POST['re_password'])
-            $this->errors->add('password', "As palavras-passe não coincidem");
-    }
 }
