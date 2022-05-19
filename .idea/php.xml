@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/fatura+/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/fatura+/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/fatura+/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/fatura+/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/fatura+/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/fatura+/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/fatura+/vendor/composer" />
+      <path value="$PROJECT_DIR$/fatura+/vendor/php-activerecord/php-activerecord" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
+</project>

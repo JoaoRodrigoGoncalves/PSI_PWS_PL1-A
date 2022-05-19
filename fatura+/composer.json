@@ -1,0 +1,6 @@
+{
+    "require": {
+        "nesbot/carbon": "^2.57",
+        "php-activerecord/php-activerecord": "^1.2"
+    }
+}
