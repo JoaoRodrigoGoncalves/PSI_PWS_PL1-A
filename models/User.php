@@ -10,7 +10,7 @@ class User extends Model
         array('email', 'message' => 'É necessário indicar um endereço de email'),
         array('nif', 'message' => 'É necessário indicar o Número de Identificação Fiscal'),
         array('morada', 'message' => 'É necessário indicar a morada'),
-        array('codigoPostal', 'message' => 'É necessário indicar o código postal'),
+        array('codigopostal', 'message' => 'É necessário indicar o código postal'),
         array('localidade', 'message' => 'É necessário indicar a localidade')
     );
 
@@ -20,13 +20,15 @@ class User extends Model
         array('telefone', 'is' => 9),
         array('nif', 'is' => 9),
         array('morada', 'maximum' => 100),
-        array('codigoPostal', 'is' => 8),
+        array('codigopostal', 'is' => 8),
         array('localidade', 'maximum' => 40)
     );
 
     public function validate()
     {
-        if($_POST['password'] == $_POST['re_password'])
+        if($_POST['password'] != $_POST['re_password'])
+        {
             $this->errors->add('password', "As palavras-passe não coincidem");
+        }
     }
 }

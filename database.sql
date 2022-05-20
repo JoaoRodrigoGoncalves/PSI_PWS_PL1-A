@@ -12,7 +12,7 @@ CREATE TABLE users
         telefone CHAR(9) NOT NULL,
         nif CHAR(9) UNIQUE NOT NULL,
         morada VARCHAR(100) NOT NULL,
-        codigoPostal CHAR(8) NOT NULL,
+        codigopostal varchar(8) NOT NULL,
         localidade VARCHAR(40) NOT NULL,
         role INT(2) DEFAULT 0 NOT NULL -- 0 -> normal, 1 -> funcionario, 2 -> admin
 )ENGINE=InnoDB;
@@ -20,13 +20,13 @@ CREATE TABLE users
 CREATE TABLE empresas
 (
 	id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    designacaoSocial VARCHAR(100) NOT NULL,
-    capitalSocial FLOAT NOT NULL,
+    designacaosocial VARCHAR(100) NOT NULL,
+    capitalsocial FLOAT NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     telefone CHAR(9) NOT NULL,
     nif CHAR(9) UNIQUE NOT NULL,
     morada VARCHAR(100) NOT NULL,
-    codigoPostal CHAR(8) NOT NULL,
+    codigopostal CHAR(8) NOT NULL,
     localidade VARCHAR(40) NOT NULL
 )ENGINE=InnoDB;
 
