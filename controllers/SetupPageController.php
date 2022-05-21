@@ -43,7 +43,8 @@ class SetupPageController extends BaseController
             'localidade' => $_POST['company_localidade']
         ));
 
-        if($administrador->is_valid() && $empresa->is_valid())
+        // is_valid: Validação normal|is_valid: Validação Normal|validate: Validação de password
+        if($administrador->is_valid() && $empresa->is_valid() && $administrador->validate())
         {
             $administrador->save();
             $empresa->save();

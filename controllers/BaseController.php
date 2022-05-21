@@ -4,6 +4,9 @@ class BaseController
 {
     protected function RenderView($prefix, $view, $parametros = []){
         extract($parametros);
+
+        $auth = new Auth();
+
         require_once './view/layout/header.php';
         require_once './view/'.$prefix.'/'.$view.'.php';
         require_once './view/layout/footer.php';

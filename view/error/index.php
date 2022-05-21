@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<body class="d-flex flex-column h-100">
+<?php require_once './view/layout/header.php'; ?>
     <div class="container">
-        <h1 class="m-2">Ocorreu um erro</h1>
-        <a href="router.php?c=<?=$_GET['c']?>&a=index" class="btn btn-dark"><- Go back</a>
+        <h1 class="m-2 display-4">Ocorreu um erro</h1>
+        <?php
+        if($callbackroute == null)
+        {
+            echo '<a href="./router.php?c=site&a=index" class="btn btn-primary mt-3">Ir para a página inicial</a>';
+        }
+        else
+        {
+            echo '<a href="' . $callbackroute . '" class="btn btn-primary mt-3">Voltar</a>';
+        }
+        ?>
     </div>
-</body>
-</html>
+<?php require_once './view/layout/footer.php'; ?>

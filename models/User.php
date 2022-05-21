@@ -29,6 +29,11 @@ class User extends Model
         if($_POST['password'] != $_POST['re_password'])
         {
             $this->errors->add('password', "As palavras-passe não coincidem");
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }

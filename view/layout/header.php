@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,21 +16,50 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
+                <?php
+                if($auth->isLoggedIn())
+                {
+                ?>
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Menu 1</a>
+                        </li>
+                    </ul>
+                <?php
+                }
+                ?>
+            </div>
+            <?php
+            if($auth->isLoggedIn())
+            {
+            ?>
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Link
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= $auth->getUsername() ?>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown">
+                            <li><a class="dropdown-item" href="#">Definições Empresa</a></li>
+                            <li><a class="dropdown-item" href="#">Definições User</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="./router.php?c=login&a=logout">Terminar Sessão</a></li>
                         </ul>
                     </li>
-
                 </ul>
-            </div>
+            <?php
+            }
+            else
+            {
+           ?>
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./router.php?c=login&a=index">Iniciar Sessão</a>
+                    </li>
+                </ul>
+            <?php
+            }
+            ?>
+
         </div>
     </nav>
 

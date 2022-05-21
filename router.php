@@ -41,6 +41,7 @@ else
 
                 default:
                     $errorController->index(null);
+                    break;
             }
             break;
 
@@ -58,9 +59,11 @@ else
 
                 case "logout":
                     $controller->logout();
+                    break;
 
                 default:
                     $errorController->index(null);
+                    break;
             }
             break;
 
@@ -81,8 +84,8 @@ else
             break;
 
         default:
-            $controller = new SiteController();
-            $controller->index();
+            $errorController->index(null);
+            break;
     }
 
 }

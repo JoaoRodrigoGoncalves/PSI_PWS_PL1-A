@@ -11,6 +11,6 @@ class ErrorController extends BaseController
             $callbackRoute = "./router.php?c=" . $parms[0] . "&a=" . $parms[1];
         }
 
-        $this->RedirectToRoute('error','index', ['callbackroute' => $callbackRoute]);
+        $this->RenderView('error','index', ['callbackroute' => $callbackRoute]);
     }
 }

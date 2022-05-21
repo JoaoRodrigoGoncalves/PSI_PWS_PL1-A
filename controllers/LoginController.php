@@ -1,14 +1,24 @@
 <?php
 
 require_once './controllers/BaseAuthController.php';
-include_once './models/Login.php';
+include_once './models/Auth.php';
 
-class  LoginController extends BaseAuthController {
+class  LoginController extends BaseAuthController
+{
 
-    public function index(){
+    public function index()
+    {
         if(User::count() > 0)
         {
-            $this->RenderView('login', 'index', []);
+            $auth = new Auth();
+            if(!$auth->isLoggedIn())
+            {
+                $this->RenderView('login', 'index', []);
+            }
+            else
+            {
+                $this->RedirectToRoute('site', 'index');
+            }
         }
         else
         {
@@ -16,22 +26,33 @@ class  LoginController extends BaseAuthController {
         }
     }
 
-    public function login(){
-        if(isset($_POST['email'],$_POST['password']))
+    public function login()
+    {
+        $auth = new Auth();
+        if(!$auth->isLoggedIn())
         {
-            $login = new Login();
-            if ($login->checkLogin($_POST['email'], $_POST['password']))
-                $this->RedirectToRoute('plano','index');
-            else
-                $this->RedirectToRoute('login','index');
-        }else{
-            $this->index();
+            if(isset($_POST['email'],$_POST['password']))
+            {
+                if ($auth->checkLogin($_POST['email'], $_POST['password']))
+                    // TODO: Redirecionar para a rota correta
+                    $this->RedirectToRoute('plano','index');
+                else
+                    $this->RenderView('login', 'index', ["fail" => true]);
+            }else{
+                $this->index();
+            }
+        }
+        else
+        {
+            $this->RedirectToRoute('site', 'index');
         }
     }
 
-    public function logOut(){
-        $login = new Login();
-        $login->logOut();
+    public function logOut()
+    {
+        $this->loginFilter();
+        $auth = new Auth();
+        $auth->logOut();
         $this->RedirectToRoute('login','index');
     }
 }
