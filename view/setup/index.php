@@ -69,6 +69,15 @@
                         <?php } ?>
                     </div>
                     <div class="mb-2">
+                        <label for="admin_codigoPostal">Código Postal</label>
+                        <input type="text" name="admin_codigoPostal" id="admin_codigoPostal" class="form-control" required maxlength="8" <?= (isset($admin->errors) ? 'value="' . $admin->codigopostal . '"' : '') ?>>
+                        <?php if(isset($admin->errors)) {?>
+                            <div class="invalid-feedback">
+                                <?= $admin->errors->on('admin_codigopostal') ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="mb-2">
                         <label for="admin_localidade">Localidade</label>
                         <input type="text" name="admin_localidade" id="admin_localidade" class="form-control" required maxlength="40" <?= (isset($admin->errors) ? 'value="' . $admin->localidade . '"' : '') ?>>
                         <?php if(isset($admin->errors)) {?>
