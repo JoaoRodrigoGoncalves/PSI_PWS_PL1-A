@@ -8,8 +8,9 @@ class  LoginController extends BaseAuthController
 
     public function index()
     {
-        if(User::count() > 0)
-        {
+
+        //if(User::count() > 0)
+        //{
             $auth = new Auth();
             if(!$auth->isLoggedIn())
             {
@@ -19,11 +20,11 @@ class  LoginController extends BaseAuthController
             {
                 $this->RedirectToRoute('site', 'index');
             }
-        }
+        /*}
         else
         {
             $this->RedirectToRoute('setup', 'index');
-        }
+        }*/
     }
 
     public function login()
@@ -33,13 +34,16 @@ class  LoginController extends BaseAuthController
         {
             if(isset($_POST['email'],$_POST['password']))
             {
-                if ($auth->checkLogin($_POST['email'], $_POST['password']))
+                if ($auth->checkLogin($_POST['email'], $_POST['password'])){
+                    $debug = new Debugger();
+                    $debug->debug_to_console("I'm here");
                     // TODO: Redirecionar para a rota correta
-                    $this->RedirectToRoute('plano','index');
+                    $this->RedirectToRoute('setup','index', []);
+                }
                 else
                     $this->RenderView('login', 'index', ["fail" => true]);
             }else{
-                $this->index();
+                $this->RedirectToRoute('site', 'index', []);
             }
         }
         else

@@ -1,4 +1,6 @@
-<?php require_once './view/layout/header.php'; ?>
+<!DOCTYPE html>
+<html lang="pt">
+<body>
     <div class="container">
         <h1 class="m-2 display-4">Ocorreu um erro</h1>
         <?php
@@ -12,4 +14,5 @@
         }
         ?>
     </div>
-<?php require_once './view/layout/footer.php'; ?>
+</body>
+</html>

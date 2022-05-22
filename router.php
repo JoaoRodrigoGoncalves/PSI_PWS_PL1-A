@@ -4,6 +4,7 @@ require_once './controllers/SiteController.php';
 require_once './controllers/LoginController.php';
 require_once './controllers/ErrorController.php';
 require_once './controllers/SetupPageController.php';
+require_once './controllers/EmpresaController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -63,6 +64,23 @@ else
 
                 default:
                     $errorController->index(null);
+                    break;
+            }
+            break;
+
+        case 'empresa':
+            $controller = new EmpresaController();
+            switch($a)
+            {
+                case "index":
+                    if(isset($_GET['callbackRoute']))
+                    {
+                        $controller->index($_GET['callbackRoute']);
+                    }
+                    else
+                    {
+                        $controller->index(null);
+                    }
                     break;
             }
             break;

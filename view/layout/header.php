@@ -11,8 +11,10 @@
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./router.php"><?= APP_NAME ?></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="./router.php?"><?= APP_NAME ?></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -62,4 +64,6 @@
 
         </div>
     </nav>
+</body>
+</html>
 

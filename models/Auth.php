@@ -15,11 +15,16 @@ class Auth
     {
         try
         {
-            $user = User::find(array('email' => $email));
+            //$user = User::find(array('email' => $email));
+            $user = [];
+            foreach(User::all() as $tmp_user)
+                if($tmp_user->email == $email)
+                    $user = $tmp_user;
 
             if($user != null)
             {
-                if(password_verify($password, $user->password))
+                //if(password_verify($password, $user->password)) It verify password hash
+                if(strcmp($password, $user->password) == 0)
                 {
                     $_SESSION['username'] = $user->username;
                     $_SESSION['email'] = $user->email;
