@@ -8,9 +8,16 @@ class  LoginController extends BaseAuthController
 
     public function index()
     {
-
-        //if(User::count() > 0)
-        //{
+        /**
+         * Verificar se existe algum utilizador na base de dados.
+         * Isto serve para determinar se é a primeira vez que a aplicação
+         * é iniciada. Caso seja a primeira vez que a aplicação esteja a
+         * ser iniciada, enviamos o utilizador para a página de configuração
+         * de um administrador e empresa. Caso contrário, mostramos a vista
+         * de início de sessão.
+         */
+        if(User::count() > 0)
+        {
             $auth = new Auth();
             if(!$auth->isLoggedIn())
             {
@@ -20,35 +27,41 @@ class  LoginController extends BaseAuthController
             {
                 $this->RedirectToRoute('site', 'index');
             }
-        /*}
+        }
         else
         {
             $this->RedirectToRoute('setup', 'index');
-        }*/
+        }
     }
 
     public function login()
     {
+        /**
+         * Verificamos se o utilizador tem sessão inciada. Caso exista
+         * uma sessão, enviamos o utilizador para o dashboard da aplicação,
+         * caso contrário verificamos se os dados para início de sessão foram
+         * fornecidos e se estão corretos. Se os dados não tiverem sido fornecidos,
+         * o utilizador é enviado para a página de início de sessão. Caso os dados
+         * fornecidos estejam incorretos, é mostrada a vista de início de sessão
+         * com um alert a indicar que as credenciais estão incorretas.
+         */
         $auth = new Auth();
         if(!$auth->isLoggedIn())
         {
             if(isset($_POST['email'],$_POST['password']))
             {
                 if ($auth->checkLogin($_POST['email'], $_POST['password'])){
-                    $debug = new Debugger();
-                    $debug->debug_to_console("I'm here");
-                    // TODO: Redirecionar para a rota correta
-                    $this->RedirectToRoute('setup','index', []);
+                    $this->RedirectToRoute('dashboard','index', []);
                 }
                 else
-                    $this->RenderView('login', 'index', ["fail" => true]);
+                    $this->RenderView('login', 'index', ['fail' => true]);
             }else{
-                $this->RedirectToRoute('site', 'index', []);
+                $this->RenderView('login', 'index', ['fail' => true]);
             }
         }
         else
         {
-            $this->RedirectToRoute('site', 'index');
+            $this->RedirectToRoute('dashboard', 'index');
         }
     }
 

@@ -13,18 +13,20 @@ class Auth
 
     public function checkLogin($email, $password): bool
     {
+        /**
+         * Procuramos por um utilizador com o email indicado.
+         * Caso não seja encontrado, devolvemos falso. Se for
+         * encontrado, verificamos se a palavra-passe está correta.
+         * Se a palavra-passe estiver correta, adicionamos o nome
+         * do utilizador e o email à sessão e devolvemos "true",
+         * caso contrário devolvemos falso.
+         */
         try
         {
-            //$user = User::find(array('email' => $email));
-            $user = [];
-            foreach(User::all() as $tmp_user)
-                if($tmp_user->email == $email)
-                    $user = $tmp_user;
-
+            $user = User::find(array('email' => $email));
             if($user != null)
             {
-                //if(password_verify($password, $user->password)) It verify password hash
-                if(strcmp($password, $user->password) == 0)
+                if(password_verify($password, $user->password))
                 {
                     $_SESSION['username'] = $user->username;
                     $_SESSION['email'] = $user->email;

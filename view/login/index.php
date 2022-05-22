@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt">
-<body>
-    <div class="container">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
             <div class="mt-5">
@@ -33,5 +30,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

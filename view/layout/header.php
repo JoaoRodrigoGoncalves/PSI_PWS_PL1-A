@@ -11,7 +11,7 @@
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./router.php?"><?= APP_NAME ?></a>
+            <a class="navbar-brand" href="./router.php"><?= APP_NAME ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,7 @@
                 ?>
                     <ul class="navbar-nav align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Menu 1</a>
+                            <a class="nav-link" href="./router.php?c=dashboard&a=index">Dashboard</a>
                         </li>
                     </ul>
                 <?php
@@ -41,7 +41,7 @@
                             <?= $auth->getUsername() ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown">
-                            <li><a class="dropdown-item" href="#">Definições Empresa</a></li>
+                            <li><a class="dropdown-item" href="./router.php?c=empresa&a=index">Definições Empresa</a></li>
                             <li><a class="dropdown-item" href="#">Definições User</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="./router.php?c=login&a=logout">Terminar Sessão</a></li>

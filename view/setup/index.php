@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt">
-<body>
 <h1 class="display-1 text-center"><?= APP_NAME ?></h1>
 <p class="lead text-center">Seja bem-vindo ao <?= APP_NAME ?>. Preencha os seguintes dados para poder começar a utilizar a aplicação!</p>
 <hr>
@@ -164,5 +161,3 @@
         </div>
     </form>
 </div>
-</body>
-</html>

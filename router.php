@@ -5,6 +5,7 @@ require_once './controllers/LoginController.php';
 require_once './controllers/ErrorController.php';
 require_once './controllers/SetupPageController.php';
 require_once './controllers/EmpresaController.php';
+require_once './controllers/DashboardController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -68,6 +69,20 @@ else
             }
             break;
 
+        case "dashboard":
+            $controller = new DashboardController();
+            switch($a)
+            {
+                case "index":
+                    $controller->index();
+                    break;
+
+                default:
+                    $errorController->index('dashboard/index');
+                    break;
+            }
+            break;
+
         case 'empresa':
             $controller = new EmpresaController();
             switch($a)
@@ -81,6 +96,10 @@ else
                     {
                         $controller->index(null);
                     }
+                    break;
+
+                default:
+                    $errorController->index('empresa/index');
                     break;
             }
             break;

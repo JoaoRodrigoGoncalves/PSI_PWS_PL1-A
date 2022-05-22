@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Site Controller</title>
-    <!--Bootstrap Style-->
-    <link rel="stylesheet" href="public/css/bootstrap/bootstrap.css">
-    <!--Personalise Style-->
-    <link rel="stylesheet" href="public/css/style.css">
-</head>
-<body class="d-flex flex-column h-100">
-    <!-- Begin page content -->
-    <main class="flex-shrink-0">
+<!-- Begin page content -->
+<main class="d-flex flex-column h-100">
+    <div class="flex-shrink-0">
         <div class="container my-5">
             <h2 class="alert-info p-3">Page Title</h2>
             <div class="row">
@@ -33,6 +23,5 @@
                 </div>
             </div>
         </div>
-    </main>
-</body>
-</html>
+    </div>
+</main>
