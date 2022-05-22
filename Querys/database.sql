@@ -69,7 +69,7 @@ CREATE TABLE produtos (
     unidade_id INTEGER NOT NULL COMMENT 'Identificador tipo de unidade do produto',
     stock FLOAT NOT NULL COMMENT 'Numero de stock do produto',
     CONSTRAINT IDIVA_P_FK FOREIGN KEY (iva_id)
-        REFERENCES faturas (id),
+        REFERENCES taxas (id),
     CONSTRAINT IDUNIDADE_FK FOREIGN KEY (unidade_id)
         REFERENCES unidades (id)
 )  ENGINE=INNODB;
@@ -79,6 +79,7 @@ CREATE TABLE linhas_faturas (
     fatura_id INTEGER NOT NULL COMMENT 'Identificador da fatura asociada',
     produto_id INTEGER NOT NULL COMMENT 'Identificador do produto asociado',
     valor DECIMAL(10 , 2 ) NOT NULL COMMENT 'Valor da fatura',
+    quantidade int not null default 1 comment 'Quantidade de produto',
     iva_id INTEGER NOT NULL COMMENT 'Identificador do tipo de iva da fatura',
     CONSTRAINT IDFATURA_FK FOREIGN KEY (fatura_id)
         REFERENCES faturas (id),
