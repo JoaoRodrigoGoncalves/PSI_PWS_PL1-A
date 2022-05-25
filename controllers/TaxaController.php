@@ -1,6 +1,6 @@
 <?php
 
-class TaxasController extends BaseAuthController{
+class TaxaController extends BaseAuthController{
     public function index()
     {
         $taxas = Taxas::all();

@@ -21,7 +21,7 @@
                 <?php foreach ($taxas as $taxa) { ?> 
                     <tr>
                         <td>
-                            <input type="checkbox" id="emvigor" name="emvigor" <?=$taxa->emvigor == 1 ? 'checked' : ''?>
+                            <input type="checkbox" id="emvigor" name="emvigor" <?=$taxa->emvigor == 1 ? 'checked' : ''?> disabled>
                             <label for="emvigor"> Ativo</label>
                         </td>                 
                         <td><?=$taxa->id?></td> 
