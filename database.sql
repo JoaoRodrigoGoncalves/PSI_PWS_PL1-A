@@ -4,7 +4,7 @@ USE faturamais;
 
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador User',
-    ativo BIT DEFAULT 1 NOT NULL COMMENT 'Estado do utilizador ',
+    ativo TINYINT(1) DEFAULT 1 NOT NULL COMMENT 'Estado do utilizador ',
     username VARCHAR(100) NOT NULL COMMENT 'Nome do utilizador',
     password VARCHAR(100) NOT NULL COMMENT 'Password do utilizador',
     email VARCHAR(100) UNIQUE NOT NULL COMMENT 'Email do utilizador',
@@ -51,7 +51,7 @@ CREATE TABLE taxas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador da Taxa',
     valor INTEGER NOT NULL COMMENT 'Valor da taxa', -- guarda-se o valor completo e no código divide-se por 100 para contas, caso necessário
     descricao VARCHAR(100) NOT NULL COMMENT 'Descrição da taxa',
-    emVigor BIT DEFAULT 0 NOT NULL COMMENT 'Bool estado em vigor ou não da taxa'
+    emVigor TINYINT(1) DEFAULT 0 NOT NULL COMMENT 'Bool estado em vigor ou não da taxa'
 )  ENGINE=INNODB;
 
 CREATE TABLE unidades
@@ -62,7 +62,7 @@ CREATE TABLE unidades
 
 CREATE TABLE produtos (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador do produto',
-    ativo BIT DEFAULT 1 NOT NULL COMMENT 'Estado ativo ou não do produto',
+    ativo TINYINT(1) DEFAULT 1 NOT NULL COMMENT 'Estado ativo ou não do produto',
     descricao VARCHAR(100) NOT NULL COMMENT 'Descrição do produto',
     preco_unitario DECIMAL(10 , 2 ) NOT NULL COMMENT 'Preço do produto',
     iva_id INTEGER NOT NULL COMMENT 'Identificador do iva do produto',
