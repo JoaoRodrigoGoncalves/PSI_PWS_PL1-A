@@ -10,6 +10,7 @@ require_once './controllers/TaxaController.php';
 //require_once './controllers/ClientController.php';
 require_once './controllers/ProdutoController.php';
 require_once './controllers/UnidadeController.php';
+require_once './controllers/FuncionarioController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -69,6 +70,34 @@ else
 
                 default:
                     $errorController->index(null);
+                    break;
+            }
+            break;
+
+        case "func":
+            $controller = new FuncionarioController();
+            switch($a)
+            {
+                case 'index':
+                    $controller->index();
+                    break;
+                case 'show':
+                    $controller->show();
+                    break;
+                case 'create':
+                    $controller->create();
+                    break;
+                case 'store':
+                    $controller->store();
+                    break;
+                case 'edit':
+                    $controller->edit();
+                    break;
+                case 'update':
+                    $controller->update();
+                    break;
+                default:
+                    $errorController->index('dashboard/index');
                     break;
             }
             break;
