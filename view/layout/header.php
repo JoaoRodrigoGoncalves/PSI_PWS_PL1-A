@@ -26,6 +26,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./router.php?c=dashboard&a=index">Dashboard</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./router.php?c=taxa&a=index">Taxas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./router.php?c=registo&a=index">Clientes</a>
+                        </li>
                     </ul>
                 <?php
                 }
