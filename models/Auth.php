@@ -23,7 +23,7 @@ class Auth
          */
         try
         {
-            $user = User::find(array('email' => $email));
+            $user = User::find_by_email($email);
             if($user != null)
             {
                 if(password_verify($password, $user->password))
@@ -58,5 +58,14 @@ class Auth
             return $_SESSION['username'];
         else
             return null;
+    }
+
+    public function getRole()
+    {
+        if($this->isLoggedIn())
+        {
+            return User::find_by_email($_SESSION['email'])->role;
+        }
+        return null;
     }
 }

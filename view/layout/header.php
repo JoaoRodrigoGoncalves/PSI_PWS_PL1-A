@@ -34,6 +34,9 @@
                             <a class="nav-link" href="./router.php?c=registo&a=index">Clientes</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="./router.php?c=produto&a=index">Produtos</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="./router.php?c=func&a=index">Funcionarios</a>
                         </li>
                     </ul>

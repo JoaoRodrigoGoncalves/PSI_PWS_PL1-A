@@ -3,7 +3,7 @@
 require_once './controllers/BaseAuthController.php';
 include_once './models/Auth.php';
 
-class  LoginController extends BaseAuthController
+class  AuthController extends BaseAuthController
 {
 
     public function index()
