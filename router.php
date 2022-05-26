@@ -93,6 +93,9 @@ else
                 case 'update':
                     $controller->update();
                     break;
+                case 'delete':
+                    $controller->delete();
+                    break;
                 default:
                     $errorController->index('dashboard/index');
                     break;

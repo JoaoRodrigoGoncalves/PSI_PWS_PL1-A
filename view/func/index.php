@@ -23,6 +23,9 @@
                         <h3>Morada</h3>
                     </th>
                     <th>
+                        <h3>Ativo</h3>
+                    </th>
+                    <th>
                         <h3>Actions</h3>
                     </th>
                     </thead>
@@ -34,6 +37,13 @@
                             <td><?=$funcionario->nif?></td>
                             <td><?=$funcionario->email?></td>
                             <td><?=$funcionario->morada .', '.$funcionario->localidade.', '.$funcionario->codigopostal?></td>
+                            <td>
+                                <div class="form-check form-switch" >
+                                    <input class="form-check-input" type="checkbox"
+                                           id="func_state" disabled
+                                        <?=$funcionario->ativo ? 'checked' : ''?>>
+                                </div>
+                            </td>
                             <td>
                                 <a href="router.php?c=func&a=show&id=<?=$funcionario->id ?>" class="btn btn-primary" role="button">Show</a>
                                 <a href="router.php?c=func&a=edit&id=<?=$funcionario->id ?>" class="btn btn-info" role="button">Edit</a>

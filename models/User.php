@@ -24,16 +24,4 @@ class User extends Model
         array('localidade', 'maximum' => 40)
     );
 
-    public function validate()
-    {
-        if($_POST['password'] != $_POST['re_password'])
-        {
-            $this->errors->add('password', "As palavras-passe não coincidem");
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
 }

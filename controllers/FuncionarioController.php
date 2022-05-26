@@ -16,7 +16,7 @@ class FuncionarioController extends BaseAuthController{
     public function show()
     {
         if(isset($_GET['id'])){
-            $func = User::find([isset($_GET['id'])]);
+            $func = User::find([$_GET['id']]);
             $this->RenderView('func', 'show', ['func' => $func]);
         }else{
             $this->RenderView('func', 'index', []);
@@ -47,7 +47,7 @@ class FuncionarioController extends BaseAuthController{
             ));
 
             // is_valid: Validação normal|is_valid: Validação Normal|validate: Validação de password
-            if ($funcionario->is_valid() && $funcionario->validate()) {
+            if ($funcionario->is_valid()) {
                 $funcionario->save();
                 $this->RedirectToRoute('func', 'index');
             } else {
@@ -62,7 +62,7 @@ class FuncionarioController extends BaseAuthController{
     public function edit()
     {
         if(isset($_GET['id'])){
-            $func = User::find([isset($_GET['id'])]);
+            $func = User::find([$_GET['id']]);
             $this->RenderView('func', 'edit', ['func' => $func]);
         }else{
             $this->RenderView('func', 'index', []);
@@ -71,7 +71,41 @@ class FuncionarioController extends BaseAuthController{
 
     public function update()
     {
-        $this->RenderView('func', 'index',[]);
+        if(!isset($_GET['id']))
+        {
+            $this->RenderView('func','index',[]);
+        }
+        else
+        {
+            $func = User::find([$_GET['id']]);
+
+            if(!isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'],
+                $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
+            {
+                $this->RenderView('func', 'edit', ['func' => $func]);
+            }
+            else
+            {
+                if($_POST['ativo'])
+                    $_POST['ativo'] = 1;
+                else
+                    $_POST['ativo'] = 0;
+
+                $func->update_attributes($_POST);
+
+
+                if($func->is_valid())
+                {
+                    $func->save();
+                    $this->RedirectToRoute('func', 'index');//redirecionar para o index
+                }
+                else
+                {
+                    //mostrar vista edit passando o modelo como parâmetro
+                    $this->renderView('func', 'edit', ['func' => $func]);
+                }
+            }
+        }
     }
 
     public function delete()
