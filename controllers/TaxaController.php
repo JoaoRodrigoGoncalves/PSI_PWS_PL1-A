@@ -3,7 +3,7 @@
 class TaxaController extends BaseAuthController{
     public function index()
     {
-        $taxas = Taxas::all();
+        $taxas = Taxa::all();
         $this->loginFilter();
         
         $this->RenderView('taxa', 'index', ['taxas' => $taxas]);
@@ -22,7 +22,7 @@ class TaxaController extends BaseAuthController{
             $_POST['emvigor'] = 0;
         }
         
-        $taxas = new Taxas($_POST);
+        $taxas = new Taxa($_POST);
         if($taxas->is_valid()){
             $taxas->save();
             $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
@@ -35,7 +35,7 @@ class TaxaController extends BaseAuthController{
 
     public function edit($id)
     {
-        $taxas = Taxas::find([$id]);
+        $taxas = Taxa::find([$id]);
         if (is_null($taxas)) {
         //TODO redirect to standard error page
         } 
@@ -47,7 +47,7 @@ class TaxaController extends BaseAuthController{
 
     public function update($id)
     {
-        $taxas = Taxas::find([$id]);
+        $taxas = Taxa::find([$id]);
         
         if(isset($_POST['emvigor'])){
             $_POST['emvigor'] = 1;
@@ -69,7 +69,7 @@ class TaxaController extends BaseAuthController{
 
     public function delete($id)
     {
-        $taxas = Taxas::find([$id]);
+        $taxas = Taxa::find([$id]);
         $taxas->delete();
         $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
     }

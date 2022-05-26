@@ -11,4 +11,11 @@ class BaseAuthController extends BaseController
            header("Location: ./router.php?" . INVALID_ACCESS_ROUTE);
        }
     }
+
+    protected function filterByRole($roles = [])
+    {
+        $auth = new Auth();
+        return in_array($auth->getRole(), $roles);
+    }
+
 }

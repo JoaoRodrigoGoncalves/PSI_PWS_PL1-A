@@ -196,6 +196,10 @@ else
                     $controller->index();
                     break;
 
+                case 'show':
+                    $controller->show($_GET['id']);
+                    break;
+
                 case 'create':
                     $controller->create();
                     break;

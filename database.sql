@@ -65,10 +65,10 @@ CREATE TABLE produtos (
     ativo TINYINT(1) DEFAULT 1 NOT NULL COMMENT 'Estado ativo ou não do produto',
     descricao VARCHAR(100) NOT NULL COMMENT 'Descrição do produto',
     preco_unitario DECIMAL(10 , 2 ) NOT NULL COMMENT 'Preço do produto',
-    iva_id INTEGER NOT NULL COMMENT 'Identificador do iva do produto',
+    taxa_id INTEGER NOT NULL COMMENT 'Identificador do iva do produto',
     unidade_id INTEGER NOT NULL COMMENT 'Identificador tipo de unidade do produto',
     stock FLOAT NOT NULL COMMENT 'Numero de stock do produto',
-    CONSTRAINT IDIVA_P_FK FOREIGN KEY (iva_id)
+    CONSTRAINT IDTAXA_P_FK FOREIGN KEY (taxa_id)
         REFERENCES taxas (id),
     CONSTRAINT IDUNIDADE_FK FOREIGN KEY (unidade_id)
         REFERENCES unidades (id)

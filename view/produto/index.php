@@ -2,7 +2,10 @@
     <div class="row">
         <div class="col">
             <div class="btn-group">
-                <a href="./router.php?c=produto&a=create"><button class="btn btn-primary m-2">Criar Produto</button></a>
+                <?php
+                if($allowRegister){ ?>
+                    <a href="./router.php?c=produto&a=create"><button class="btn btn-primary m-2">Criar Produto</button></a>
+                <?php } ?>
                 <a href="./router.php?c=unidade&a=index"><button class="btn btn-secondary m-2">Gerir Unidades</button></a>
             </div>
         </div>
@@ -43,8 +46,8 @@
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="opcoesProd_<?= $produto->id ?>">
+                                    <li><a class="dropdown-item" href="./router.php?c=produto&a=show&id=<?= $produto->id ?>">Mostrar</a></li>
                                     <li><a class="dropdown-item" href="./router.php?c=produto&a=edit&id=<?= $produto->id ?>">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#">Adicionar Stock</a></li>
                                     <li><a class="dropdown-item" href="./router.php?c=produto&a=delete&id=<?= $produto->id ?>">Apagar</a></li>
                                 </ul>
                             </div>

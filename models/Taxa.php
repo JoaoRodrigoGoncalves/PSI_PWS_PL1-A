@@ -1,7 +1,7 @@
 <?php
 use ActiveRecord\Model;
 
-    class Taxas extends Model
+    class Taxa extends Model
     {
         static $validates_presence_of = array(
             array('valor', 'message' => 'É necessário indicar o valor da taxa'),
