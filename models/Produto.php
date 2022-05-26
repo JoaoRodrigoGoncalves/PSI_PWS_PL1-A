@@ -19,4 +19,25 @@ class Produto extends Model
     static $has_one = array(
         array('unidade')
     );
+
+    public function validate() : bool
+    {
+        $return_value = true; // Definido para que todos os campos possam ser analizados
+
+        //$this->preco_unitario = str_replace(',', '.', $this->preco_unitario);
+        if(!is_numeric($this->preco_unitario))
+        {
+            $this->errors->add('preco_unitario', 'Indique um valor válido! Ex: 12.50');
+            $return_value = false;
+        }
+
+        //$this->stock = str_replace(',', '.', $this->stock);
+        if(!is_numeric($this->stock))
+        {
+            $this->errors->add('stock', 'Indique um valor válido! Ex: 12.50');
+            $return_value = false;
+        }
+
+        return $return_value;
+    }
 }

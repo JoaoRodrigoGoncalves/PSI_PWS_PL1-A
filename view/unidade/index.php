@@ -2,6 +2,7 @@
     <div class="row mt-2">
         <div class="col">
             <a href="./router.php?c=unidade&a=create"><button class="btn btn-primary">Adicionar Unidade</button></a>
+            <a href="./router.php?c=produto&a=index"><button class="btn btn-secondary">Voltar a Produtos</button></a>
         </div>
     </div>
     <div class="row">

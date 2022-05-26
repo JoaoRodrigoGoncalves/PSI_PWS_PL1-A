@@ -43,9 +43,9 @@
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="opcoesProd_<?= $produto->id ?>">
-                                    <li><a class="dropdown-item" href="#">Editar</a></li>
+                                    <li><a class="dropdown-item" href="./router.php?c=produto&a=edit&id=<?= $produto->id ?>">Editar</a></li>
                                     <li><a class="dropdown-item" href="#">Adicionar Stock</a></li>
-                                    <li><a class="dropdown-item" href="#">Apagar</a></li>
+                                    <li><a class="dropdown-item" href="./router.php?c=produto&a=delete&id=<?= $produto->id ?>">Apagar</a></li>
                                 </ul>
                             </div>
                         </td>

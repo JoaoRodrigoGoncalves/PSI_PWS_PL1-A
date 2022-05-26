@@ -238,6 +238,18 @@ else
                     $controller->store();
                     break;
 
+                case 'edit':
+                    $controller->edit($_GET['id']);
+                    break;
+
+                case 'update':
+                    $controller->update($_GET['id']);
+                    break;
+
+                case 'delete':
+                    $controller->delete($_GET['id']);
+                    break;
+
                 default:
                     $errorController->index('unidade/index');
                     break;
@@ -256,6 +268,10 @@ else
                     {
                         $errorController->index(null);
                     }
+                    break;
+
+                default:
+                    $errorController->index(null);
                     break;
             }
             break;
