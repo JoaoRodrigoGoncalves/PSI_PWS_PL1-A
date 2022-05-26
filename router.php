@@ -8,6 +8,7 @@ require_once './controllers/EmpresaController.php';
 require_once './controllers/DashboardController.php';
 require_once './controllers/TaxasController.php';
 require_once './controllers/FuncionarioController.php';
+require_once './controllers/ClientController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {

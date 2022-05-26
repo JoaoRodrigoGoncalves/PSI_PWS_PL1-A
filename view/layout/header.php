@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Bootstrap Style-->
     <link rel="stylesheet" href="public/css/bootstrap.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <title><?=APP_NAME ?></title>
 </head>
 <body>
