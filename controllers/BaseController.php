@@ -7,9 +7,21 @@ class BaseController
 
         $auth = new Auth();
 
-        require_once './view/layout/header.php';
-        require_once './view/'.$prefix.'/'.$view.'.php';
-        require_once './view/layout/footer.php';
+        if($auth->isLoggedIn())
+        {
+            $username = $auth->getUsername();
+            $userRole = $auth->getRole();
+
+            require_once './view/layoutBO/header.php';
+            require_once './view/'.$prefix.'/'.$view.'.php';
+            require_once './view/layoutBO/footer.php';
+        }
+        else
+        {
+            require_once './view/layoutFO/header.php';
+            require_once './view/'.$prefix.'/'.$view.'.php';
+            require_once './view/layoutFO/footer.php';
+        }
     }
 
     protected function RedirectToRoute($controllerPrefix, $action,  $params = []){

@@ -2,74 +2,117 @@
 class ClientController extends BaseAuthController{
     public function index()
     {
-        $clientes = [];
-        foreach (User::all() as $user)
-            if($user->role == 0)
-                array_push($clientes, $user);
-        $this->RenderView('registoClient', 'index', ['clientes' => $clientes]);
+        $this->loginFilter();
+        $clientes = User::find_all_by_role(0);
+        $this->RenderView('cliente', 'index', ['clientes' => $clientes]);
     }
     public function create()
     {
-        $this->RenderView('registoClient', 'create');//mostrar a vista create
+        $this->loginFilter();
+        $this->RenderView('cliente', 'create'); //mostrar a vista create
     }
     public function store()
     {
-        $clientes = new User(array(
-            'username' => $_POST['username'],
-            'password' => password_hash('12345', PASSWORD_BCRYPT),
-            'email' => $_POST['email'],
-            'telefone' => $_POST['telefone'],
-            'nif' => $_POST['nif'],
-            'morada' => $_POST['morada'],
-            'codigopostal' => $_POST['codigopostal'],
-            'localidade' => $_POST['localidade'],
-            'role' => 0
-        ));
-        if($clientes->is_valid()){
-            $clientes->save();
-            $this->RedirectToRoute('registo', 'index');//redirecionar para o index
-        } 
-        else {
-            $this->renderView('registoClient', 'create', ['clientes' => $clientes]);
-            //mostrar vista create passando o modelo como parâmetro
+        $this->loginFilter();
+
+        if(isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'], $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
+        {
+            $cliente = new User(array(
+                'username' => $_POST['username'],
+                'password' => password_hash('12345', PASSWORD_BCRYPT),
+                'email' => $_POST['email'],
+                'telefone' => $_POST['telefone'],
+                'nif' => $_POST['nif'],
+                'morada' => $_POST['morada'],
+                'codigopostal' => $_POST['codigopostal'],
+                'localidade' => $_POST['localidade'],
+                'role' => 0
+            ));
+
+            if($cliente->is_valid()){
+                $cliente->save();
+                $this->RedirectToRoute('cliente', 'index'); //redirecionar para o index
+            }
+            else {
+                //mostrar vista create passando o modelo como parâmetro
+                $this->renderView('cliente', 'create', ['clientes' => $cliente]);
+            }
         }
+        else
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+        }
+
     }
     public function edit($id)
     {
-        $clientes = User::find([$id]);
-        if (is_null($clientes)) {
-        //TODO redirect to standard error page
-        } 
-        else {
-            $this->renderView('registoClient', 'edit', ['clientes' => $clientes]);
-            //mostrar a vista edit passando os dados por parâmetro
+        $this->loginFilter();
+
+        try
+        {
+            $cliente = User::find([$id]);
+            $this->renderView('cliente', 'edit', ['cliente' => $cliente]);
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
     public function update($id)
     {
-        $clientes = User::find([$id]);
-        $clientes->update_attributes(array(
-            'username' => $_POST['username'],
-            'email' => $_POST['email'],
-            'telefone' => $_POST['telefone'],
-            'nif' => $_POST['nif'],
-            'morada' => $_POST['morada'],
-            'codigopostal' => $_POST['codigopostal'],
-            'localidade' => $_POST['localidade']
-        ));
-        if($clientes->is_valid()){
-            $clientes->save();
-            $this->RedirectToRoute('registo', 'index');//redirecionar para o index
-        } 
-        else {
-            $this->renderView('registoClient', 'edit', ['clientes' => $clientes]);
-            //mostrar vista edit passando o modelo como parâmetro
+        $this->loginFilter();
+
+        if(isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'], $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
+        {
+            try
+            {
+                $cliente = User::find([$id]);
+
+                $cliente->update_attributes(array(
+                    'username' => $_POST['username'],
+                    'email' => $_POST['email'],
+                    'telefone' => $_POST['telefone'],
+                    'nif' => $_POST['nif'],
+                    'morada' => $_POST['morada'],
+                    'codigopostal' => $_POST['codigopostal'],
+                    'localidade' => $_POST['localidade']
+                ));
+
+                if($cliente->is_valid()){
+                    $cliente->save();
+                    $this->RedirectToRoute('cliente', 'index');//redirecionar para o index
+                }
+                else {
+                    $this->renderView('cliente', 'edit', ['clientes' => $cliente]);
+                    //mostrar vista edit passando o modelo como parâmetro
+                }
+            }
+            catch (Exception $_)
+            {
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'client/index']);
+            }
         }
     }
     public function delete($id)
     {
-        $clientes = User::find([$id]);
-        $clientes->delete();
-        $this->RedirectToRoute('registo', 'index');//redirecionar para o index
+        $this->loginFilter();
+
+        try
+        {
+            $cliente = User::find([$id]);
+
+            if($cliente->delete())
+            {
+                $this->RedirectToRoute('registo', 'index');//redirecionar para o index
+            }
+            else
+            {
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+            }
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+        }
     }
 }

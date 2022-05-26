@@ -3,33 +3,33 @@
 class FuncionarioController extends BaseAuthController{
     public function index()
     {
-        $funcionarios = [];//User::find_by_role(1);
-        foreach (User::all() as $user)
-            if($user->role == 1)
-                array_push($funcionarios, $user);
-
         $this->loginFilter();
-        
-        $this->RenderView('func', 'index', ['funcionarios' => $funcionarios]);
+        $funcionarios = User::find_all_by_role(1);
+        $this->RenderView('funcionario', 'index', ['funcionarios' => $funcionarios]);
     }
 
-    public function show()
+    public function show($id)
     {
-        if(isset($_GET['id'])){
-            $func = User::find([$_GET['id']]);
-            $this->RenderView('func', 'show', ['func' => $func]);
-        }else{
-            $this->RenderView('func', 'index', []);
+        $this->loginFilter();
+        try
+        {
+            $funcionario = User::find([$id]);
+            $this->RenderView('funcionario', 'show', ['funcionario' => $funcionario]);
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }
     }
 
     public function create()
     {
-        $this->renderView('func', 'create');//mostrar a vista create
+        $this->renderView('funcionario', 'create');//mostrar a vista create
     }
     
     public function store()
     {
+        $this->loginFilter();
         if(isset($_POST['username'], $_POST['password'], $_POST['re_password'],
             $_POST['func_email'], $_POST['func_telefone'], $_POST['func_NIF'],
             $_POST['func_morada'], $_POST['func_codigoPostal'], $_POST['func_localidade'])) {
@@ -49,71 +49,84 @@ class FuncionarioController extends BaseAuthController{
             // is_valid: Validação normal|is_valid: Validação Normal|validate: Validação de password
             if ($funcionario->is_valid()) {
                 $funcionario->save();
-                $this->RedirectToRoute('func', 'index');
+                $this->RedirectToRoute('funcionario', 'index');
             } else {
                 // Mostrar erros
-                $this->RenderView('func', 'create', ['func' => $funcionario]);
+                $this->RenderView('funcionario', 'create', ['funcionario' => $funcionario]);
             }
         }else{
-            $this->RenderView('func', 'create',[]);
+            $this->RenderView('funcionario', 'create',[]);
         }
     }
 
-    public function edit()
+    public function edit($id)
     {
-        if(isset($_GET['id'])){
-            $func = User::find([$_GET['id']]);
-            $this->RenderView('func', 'edit', ['func' => $func]);
-        }else{
-            $this->RenderView('func', 'index', []);
+        $this->loginFilter();
+        try
+        {
+            $funcionario = User::find([$id]);
+            $this->RenderView('funcionario', 'edit', ['funcionario' => $funcionario]);
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }
     }
 
-    public function update()
+    public function update($id)
     {
-        if(!isset($_GET['id']))
+        $this->loginFilter();
+        try
         {
-            $this->RenderView('func','index',[]);
-        }
-        else
-        {
-            $func = User::find([$_GET['id']]);
-
-            if(!isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'],
-                $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
+            if(!isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'], $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
             {
-                $this->RenderView('func', 'edit', ['func' => $func]);
+                $this->RedirectToRoute('error', 'index', ['callbaclRoute' => 'funcionario/index']);
             }
             else
             {
-                if($_POST['ativo'])
-                    $_POST['ativo'] = 1;
-                else
-                    $_POST['ativo'] = 0;
+                $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
 
-                $func->update_attributes($_POST);
+                $funcionario = User::find([$id]);
+                $funcionario->update_attributes($_POST);
 
-
-                if($func->is_valid())
+                if($funcionario->is_valid())
                 {
-                    $func->save();
-                    $this->RedirectToRoute('func', 'index');//redirecionar para o index
+                    $funcionario->save();
+                    $this->RedirectToRoute('funcionario', 'index'); //redirecionar para o index
                 }
                 else
                 {
                     //mostrar vista edit passando o modelo como parâmetro
-                    $this->renderView('func', 'edit', ['func' => $func]);
+                    $this->renderView('funcionario', 'edit', ['funcionario' => $funcionario]);
                 }
             }
         }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+        }
     }
 
-    public function delete()
+    public function delete($id)
     {
-        if(isset($_GET['id'])){
-            $func = User::find([$_GET['id']]);
-            $func->delete();
+        $this->loginFilter();
+
+        try
+        {
+            $funcionario = User::find([$id]);
+
+            if($funcionario->delete())
+            {
+                $this->RedirectToRoute('funcionario', 'index');
+            }
+            else
+            {
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+            }
         }
-        $this->RedirectToRoute('func', 'index');//redirecionar para o index
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+        }
     }
 }

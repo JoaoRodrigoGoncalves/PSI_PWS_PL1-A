@@ -75,7 +75,7 @@ else
             }
             break;
 
-        case "func":
+        case "funcionario":
             $controller = new FuncionarioController();
             switch($a)
             {
@@ -83,7 +83,7 @@ else
                     $controller->index();
                     break;
                 case 'show':
-                    $controller->show();
+                    $controller->show($_GET['id']);
                     break;
                 case 'create':
                     $controller->create();
@@ -92,13 +92,13 @@ else
                     $controller->store();
                     break;
                 case 'edit':
-                    $controller->edit();
+                    $controller->edit($_GET['id']);
                     break;
                 case 'update':
-                    $controller->update();
+                    $controller->update($_GET['id']);
                     break;
                 case 'delete':
-                    $controller->delete();
+                    $controller->delete($_GET['id']);
                     break;
                 default:
                     $errorController->index('dashboard/index');
@@ -149,33 +149,33 @@ else
                 }
                 break;
         
-        case "registo":
-//            $controller = new ClientController();
-//            switch($a)
-//            {
-//                case "index":
-//                    $controller->index();
-//                    break;
-//                case 'create':
-//                    $controller -> create();
-//                    break;
-//                case 'store':
-//                    $controller -> store();
-//                    break;
-//                case 'edit':
-//                    $controller -> edit($_GET['id']);
-//                    break;
-//                case 'update':
-//                    $controller -> update($_GET['id']);
-//                    break;
-//                case 'delete':
-//                    $controller -> delete($_GET['id']);
-//                    break;
-//
-//                default:
-//                    $errorController->index('registo/index');
-//                    break;
-//                }
+        case "cliente":
+            $controller = new ClientController();
+            switch($a)
+            {
+                case "index":
+                    $controller->index();
+                    break;
+                case 'create':
+                    $controller -> create();
+                    break;
+                case 'store':
+                    $controller -> store();
+                    break;
+                case 'edit':
+                    $controller -> edit($_GET['id']);
+                    break;
+                case 'update':
+                    $controller -> update($_GET['id']);
+                    break;
+                case 'delete':
+                    $controller -> delete($_GET['id']);
+                    break;
+
+                default:
+                    $errorController->index('registo/index');
+                    break;
+                }
                 break;
 
         case 'empresa':
