@@ -1,172 +1,191 @@
-<h1 class="display-1 text-center"><?= APP_NAME ?></h1>
-<p class="lead text-center">Seja bem-vindo ao <?= APP_NAME ?>. Preencha os seguintes dados para poder começar a utilizar a aplicação!</p>
-<hr>
-<div class="container mb-5">
-    <form action="./router.php?c=setup&a=store" method="post">
-        <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                    <h1 class="display-4">Administrador</h1>
-                    <div class="mb-2">
-                        <label for="username">Nome de utilizador</label>
-                        <input type="text" name="username" id="username"
-                               class="form-control" maxlength="100"
-                               required <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $admin->username . '"' : '') ?>>
-                        <?php if(isset($admin->errors)) {?>
-                        <div class="invalid-feedback"><?= $admin->errors->on('username') ?></div><?php } ?>
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><?= APP_NAME ?> | Configurar aplicação</title>
+
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="./public/plugins/fontawesome-free/css/all.min.css">
+        <!-- icheck bootstrap -->
+        <link rel="stylesheet" href="./public/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="./public/dist/css/adminlte.min.css">
+    </head>
+    <body style="background-color: #e9ecef;">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-6 bg-white p-4 rounded">
+                    <div class="text-center">
+                        <a href="./router.php?c=site&a=index" class="h1"><?= APP_NAME ?></a>
+                        <p>Configure a aplicação para a começar a usar!</p>
                     </div>
-                    <div class="mb-2">
-                        <label for="admin_email">Email</label>
-                        <input type="email" name="admin_email" id="admin_email" class="form-control" maxlength="100" required <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $admin->email . '"' : '') ?>>
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('email') ?>
+                    <form action="./router.php?c=setup&a=store" method="post" class="row">
+                        <div class="col-6">
+                            <p class="login-box-msg">Dados Administrador</p>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Nome Completo" name="username" required value="<?= (isset($admin) || isset($empresa) ? $admin->username : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="password">Palavra-Passe</label>
-                        <input type="password" name="password" id="password" class="form-control" maxlength="100" required>
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('password') ?>
+                            <div class="input-group mb-3">
+                                <input type="email" class="form-control" placeholder="E-Mail" name="admin_email" required value="<?= (isset($admin) || isset($empresa) ? $admin->email : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-at fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="re_password">Repita a Palavra-Passe</label>
-                        <input type="password" name="re_password" id="re_password" class="form-control" required maxlength="100">
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('password') ?>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" placeholder="Palavra-Passe" name="password" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="admin_telefone">Telefone</label>
-                        <input type="number" name="admin_telefone" id="admin_telefone" class="form-control" required maxlength="9" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $admin->telefone . '"' : '') ?>>
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('telefone') ?>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" placeholder="Repita Palavra-Passe" name="re_password" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="admin_NIF">Número de Identificação Fiscal</label>
-                        <input type="number" name="admin_NIF" id="admin_NIF" class="form-control" required maxlength="9" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $admin->nif . '"' : '') ?>>
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('nif') ?>
+                            <div class="input-group mb-3">
+                                <input type="number" step="0" class="form-control" placeholder="Número de Contribuinte"
+                                       name="admin_NIF" min="0" max="999999999" required value="<?= (isset($admin) || isset($empresa) ? $admin->nif : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-id-card fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="admin_morada">Morada</label>
-                        <input type="text" name="admin_morada" id="admin_morada" class="form-control" required maxlength="100" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $admin->morada . '"' : '') ?>>
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('morada') ?>
+                            <div class="input-group mb-3">
+                                <input type="number" step="0" class="form-control" placeholder="Telemóvel" name="admin_telefone"
+                                       min="200000000" max="999999999" required value="<?= (isset($admin) || isset($empresa) ? $admin->telefone : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-mobile fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="admin_codigoPostal">Código Postal</label>
-                        <input type="text" name="admin_codigoPostal" id="admin_codigoPostal" class="form-control" required maxlength="8" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $admin->codigopostal . '"' : '') ?>>
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('admin_codigopostal') ?>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Morada" name="admin_morada" required value="<?= (isset($admin) || isset($empresa) ? $admin->morada : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-map-marked-alt fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="admin_localidade">Localidade</label>
-                        <input type="text" name="admin_localidade" id="admin_localidade" class="form-control" required maxlength="40" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $admin->localidade . '"' : '') ?>>
-                        <?php if(isset($admin->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $admin->errors->on('localidade') ?>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Código Postal" name="admin_codigoPostal"
+                                       minlength="8" maxlength="8" required value="<?= (isset($admin) || isset($empresa) ? $admin->codigopostal : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-mail-bulk fa-fw"></span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
-                    </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Localidade" name="admin_localidade" required value="<?= (isset($admin) || isset($empresa) ? $admin->localidade : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-city fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p class="login-box-msg">Dados Empresa</p>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Designação Social" name="designacaoSocial" required value="<?= (isset($admin) || isset($empresa) ? $empresa->designacaosocial : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-building fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="number" step="0.01" class="form-control" placeholder="Capital Social" name="capitalSocial" required value="<?= (isset($admin) || isset($empresa) ? $empresa->capitalsocial : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-money-bill fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="number" step="0" class="form-control" placeholder="Número de Contribuinte" name="empresa_NIF"
+                                min="0" max="999999999" required value="<?= (isset($admin) || isset($empresa) ? $empresa->nif : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-id-card fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="E-mail" name="empresa_email" required value="<?= (isset($admin) || isset($empresa) ? $empresa->email : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-at fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="number" step="0" class="form-control" placeholder="Telefone" name="empresa_telefone"
+                                       min="200000000" max="999999999" required value="<?= (isset($admin) || isset($empresa) ? $empresa->telefone : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-phone-alt fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Morada" name="empresa_morada" required value="<?= (isset($admin) || isset($empresa) ? $empresa->morada : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-map-marked-alt fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Código Postal" name="empresa_codigoPostal"
+                                       minlength="8" maxlength="8" required value="<?= (isset($admin) || isset($empresa) ? $empresa->codigopostal : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-mail-bulk fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Localidade" name="empresa_localidade" required value="<?= (isset($admin) || isset($empresa) ? $empresa->localidade : '') ?>">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-city fa-fw"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Começar!</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                    <h1 class="display-4">Empresa</h1>
-                    <div class="mb-2">
-                        <label for="designacaoSocial">Designação Social da Empresa</label>
-                        <input type="text" name="designacaoSocial" id="designacaoSocial" class="form-control" maxlength="100" required <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->designacaosocial . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('designacaosocial') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="capitalSocial">Capital Social</label>
-                        <input type="text" name="capitalSocial" id="capitalSocial" class="form-control" required <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->capitalsocial . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('capitalsocial') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="company_email">Email</label>
-                        <input type="email" name="company_email" id="company_email" class="form-control" maxlength="100" required <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->email . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('email') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="company_telefone">Telefone</label>
-                        <input type="number" name="company_telefone" id="company_telefone" class="form-control" required maxlength="9" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->telefone . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('telefone') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="company_NIF">Número de Identificação Fiscal</label>
-                        <input type="number" name="company_NIF" id="company_NIF" class="form-control" required maxlength="9" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->nif . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('nif') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="company_morada">Morada</label>
-                        <input type="text" name="company_morada" id="company_morada" class="form-control" required maxlength="100" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->morada . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('morada') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="company_codigoPostal">Código Postal</label>
-                        <input type="text" name="company_codigoPostal" id="company_codigoPostal" class="form-control" required maxlength="8" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->codigopostal . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('codigopostal') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="mb-2">
-                        <label for="company_localidade">Localidade</label>
-                        <input type="text" name="company_localidade" id="company_localidade" class="form-control" required maxlength="40" <?= (isset($admin->errors) || isset($empresa->errors) ? 'value="' . $empresa->localidade . '"' : '') ?>>
-                        <?php if(isset($empresa->errors)) {?>
-                            <div class="invalid-feedback">
-                                <?= $empresa->errors->on('localidade') ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <input type="submit" class="btn btn-success mt-2 w-100" value="Gravar">
             </div>
         </div>
-    </form>
-</div>
+        <!-- jQuery -->
+        <script src="./public/plugins/jquery/jquery.min.js"></script>
+        <!-- inputmask -->
+        <script src="./public/plugins/moment/moment.min.js"></script>
+        <script src="./public/plugins/inputmask/jquery.inputmask.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="./public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="./public/dist/js/adminlte.min.js"></script>
+    </body>
+</html>

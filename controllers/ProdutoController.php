@@ -28,8 +28,7 @@ class ProdutoController extends BaseAuthController
         }
         catch(Exception $_)
         {
-            var_dump($_);
-            //$this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
@@ -43,7 +42,7 @@ class ProdutoController extends BaseAuthController
         // Verificar se existem taxas ou unidades registadas
         if(count($taxas_iva) == 0 || count($unidades) == 0)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
         else
         {
@@ -74,7 +73,7 @@ class ProdutoController extends BaseAuthController
         }
         else
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
@@ -93,11 +92,11 @@ class ProdutoController extends BaseAuthController
             }
             else
             {
-                $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
             }
         }catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
@@ -128,11 +127,11 @@ class ProdutoController extends BaseAuthController
             }
             else
             {
-                $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
             }
         }catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
@@ -148,12 +147,12 @@ class ProdutoController extends BaseAuthController
             }
             else
             {
-                $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
             }
         }
         catch(Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 

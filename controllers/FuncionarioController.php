@@ -18,7 +18,7 @@ class FuncionarioController extends BaseAuthController{
         }
         catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'funcionario/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }
     }
 
@@ -70,7 +70,7 @@ class FuncionarioController extends BaseAuthController{
         }
         catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'funcionario/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }
     }
 
@@ -104,7 +104,7 @@ class FuncionarioController extends BaseAuthController{
         }
         catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'funcionario/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }
     }
 
@@ -122,12 +122,12 @@ class FuncionarioController extends BaseAuthController{
             }
             else
             {
-                $this->RenderView('error', 'index', ['callbackRoute' => 'funcionario/index']);
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
             }
         }
         catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'funcionario/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }
     }
 }

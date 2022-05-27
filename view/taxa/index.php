@@ -1,45 +1,89 @@
-<h2 class="text-left top-space">Taxas de IVA</h2> 
-<h2 class="top-space"></h2> 
-<div class="row"> 
-    <div class="col-sm-12"> 
-        <table class="table table-striped">
-            <thead>
-                <th>
-                    <h3>*</h3>
-                </th>
-                <th>
-                    <h3>Id</h3>
-                </th>
-                <th>
-                    <h3>Valor</h3>
-                </th>
-                <th>
-                    <h3>Descrição</h3>
-                </th>
-            </thead> 
-            <tbody>
-                <?php foreach ($taxas as $taxa) { ?> 
-                    <tr>
-                        <td>
-                            <input type="checkbox" id="emvigor" name="emvigor" <?=$taxa->emvigor == 1 ? 'checked' : ''?> disabled>
-                            <label for="emvigor"> Ativo</label>
-                        </td>                 
-                        <td><?=$taxa->id?></td> 
-                        <td><?=$taxa->valor?></td> 
-                        <td><?=$taxa->descricao?></td> 
-                        <td>  
-                            <a href="router.php?c=taxa&a=edit&id=<?=$taxa->id ?>" class="btn btn-info" role="button">Edit</a> 
-                            <a href="router.php?c=taxa&a=delete&id=<?=$taxa->id ?>" class="btn btn-warning" role="button">Delete</a> 
-                        </td> 
-                    </tr> 
-                <?php } ?> 
-            </tbody> 
-        </table> 
-    </div> 
-    <div class="col-sm-6"> 
-        <h3>Criar uma Nova Taxa</h3> 
-        <p> 
-            <a href="router.php?c=taxa&a=create" class="btn btn-info" role="button">New</a> 
-        </p> 
-    </div> 
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Taxas</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
+                        <li class="breadcrumb-item active">Taxas</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="./router.php?c=taxa&a=create" class="btn btn-primary btn-sm">Criar Taxa</a>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Procurar">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>Estado</th>
+                                    <th>Descrição</th>
+                                    <th>Valor</th>
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                if(count($taxas) > 0)
+                                {
+                                    foreach ($taxas as $taxa)
+                                    {
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php if($taxa->emvigor == 1){ ?>
+                                                    <span class="badge bg-success">Em Vigor</span>
+                                                <?php } else { ?>
+                                                    <span class="badge bg-danger">Oculta</span>
+                                                <?php } ?>
+                                            </td>
+                                            <td><?= $taxa->descricao ?></td>
+                                            <td><?= $taxa->valor ?></td>
+                                            <td>
+                                                <a href="./router.php?c=taxa&a=edit&id=<?= $taxa->id ?>" class="btn btn-warning">Editar</a>
+                                                <a href="#" class="btn btn-danger">Apagar</a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                else
+                                {
+                                    ?>
+                                    <tr>
+                                        <td colspan="2"><strong>Sem dados a mostrar</strong></td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

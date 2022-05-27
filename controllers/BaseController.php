@@ -18,9 +18,9 @@ class BaseController
         }
         else
         {
-            if($prefix == "login")
+            if($prefix == "login" || $prefix == "setup")
             {
-                require_once './view/login/index.php';
+                require_once './view/' . $prefix .'/' . $view . '.php';
             }
             else
             {

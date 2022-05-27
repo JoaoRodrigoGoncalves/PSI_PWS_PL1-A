@@ -40,7 +40,7 @@ class ClienteController extends BaseAuthController{
         }
         else
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
 
     }
@@ -55,7 +55,7 @@ class ClienteController extends BaseAuthController{
         }
         catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
     public function update($id)
@@ -89,7 +89,7 @@ class ClienteController extends BaseAuthController{
             }
             catch (Exception $_)
             {
-                $this->RenderView('error', 'index', ['callbackRoute' => 'client/index']);
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'client/index']);
             }
         }
     }
@@ -107,12 +107,12 @@ class ClienteController extends BaseAuthController{
             }
             else
             {
-                $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
             }
         }
         catch (Exception $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
 }

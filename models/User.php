@@ -24,4 +24,15 @@ class User extends Model
         array('localidade', 'maximum' => 40)
     );
 
+    public function validar_password($pwd, $re_pwd)
+    {
+        if($pwd != $re_pwd)
+        {
+            $this->errors->add('password', 'Palavras-passe não coincidem');
+            $this->errors->add('re_password', 'Palavras-passe não coincidem');
+            return false;
+        }
+        return true;
+    }
+
 }

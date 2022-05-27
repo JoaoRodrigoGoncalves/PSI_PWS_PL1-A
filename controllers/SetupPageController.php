@@ -28,8 +28,8 @@ class SetupPageController extends BaseController
         }
 
         if(isset($_POST['username'], $_POST['password'], $_POST['re_password'], $_POST['admin_email'], $_POST['admin_telefone'], $_POST['admin_NIF'], $_POST['admin_morada'],
-            $_POST['admin_codigoPostal'], $_POST['admin_localidade'], $_POST['designacaoSocial'], $_POST['capitalSocial'], $_POST['company_email'], $_POST['company_telefone'],
-            $_POST['company_NIF'], $_POST['company_morada'], $_POST['company_codigoPostal'], $_POST['company_localidade'])) {
+            $_POST['admin_codigoPostal'], $_POST['admin_localidade'], $_POST['designacaoSocial'], $_POST['capitalSocial'], $_POST['empresa_email'], $_POST['empresa_telefone'],
+            $_POST['empresa_NIF'], $_POST['empresa_morada'], $_POST['empresa_codigoPostal'], $_POST['empresa_localidade'])) {
 
             $administrador = new User(array(
                 'username' => $_POST['username'],
@@ -46,18 +46,30 @@ class SetupPageController extends BaseController
             $empresa = new Empresa(array(
                 'designacaosocial' => $_POST['designacaoSocial'],
                 'capitalsocial' => $_POST['capitalSocial'],
-                'email' => $_POST['company_email'],
-                'telefone' => $_POST['company_telefone'],
-                'nif' => $_POST['company_NIF'],
-                'morada' => $_POST['company_morada'],
-                'codigopostal' => $_POST['company_codigoPostal'],
-                'localidade' => $_POST['company_localidade']
+                'email' => $_POST['empresa_email'],
+                'telefone' => $_POST['empresa_telefone'],
+                'nif' => $_POST['empresa_NIF'],
+                'morada' => $_POST['empresa_morada'],
+                'codigopostal' => $_POST['empresa_codigoPostal'],
+                'localidade' => $_POST['empresa_localidade']
             ));
 
-            // is_valid: Validação normal|is_valid: Validação Normal|validate: Validação de password
-            if ($administrador->is_valid() && $empresa->is_valid() && $administrador->validate()) {
+            if ($administrador->is_valid() && $empresa->is_valid() && $administrador->validar_password($_POST['password'], $_POST['re_password'])) {
                 $administrador->save();
                 $empresa->save();
+
+                $unidade = new Unidade(
+                    array('unidade' => 'Un')
+                );
+                $unidade->save();
+
+                $taxa = new Taxa(array(
+                    'valor' => 23,
+                    'descricao' => 'Taxa Normal',
+                    'emvigor' => 1
+                ));
+                $taxa->save();
+
                 $this->RedirectToRoute('login', 'index');
             } else {
                 // Mostrar erros
@@ -66,7 +78,8 @@ class SetupPageController extends BaseController
         }
         else
         {
-            $this->RedirectToRoute('setup', 'index');
+            // TODO: Resolver o erro do erro
+            $this->RenderView('error', 'index', ['callbackRoute', 'setup/index']);
         }
     }
 }

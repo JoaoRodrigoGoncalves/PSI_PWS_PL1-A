@@ -51,7 +51,7 @@ CREATE TABLE taxas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador da Taxa',
     valor INTEGER NOT NULL COMMENT 'Valor da taxa', -- guarda-se o valor completo e no código divide-se por 100 para contas, caso necessário
     descricao VARCHAR(100) NOT NULL COMMENT 'Descrição da taxa',
-    emVigor TINYINT(1) DEFAULT 0 NOT NULL COMMENT 'Bool estado em vigor ou não da taxa'
+    emvigor TINYINT(1) DEFAULT 0 NOT NULL COMMENT 'Bool estado em vigor ou não da taxa'
 )  ENGINE=INNODB;
 
 CREATE TABLE unidades

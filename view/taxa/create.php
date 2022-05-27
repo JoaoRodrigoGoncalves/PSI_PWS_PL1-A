@@ -1,10 +1,26 @@
-<main class="d-flex flex-column h-100">
-    <div class="flex-shrink-0">
-        <div class="container my-5">
-            <h1 class="text-center top-space display-4">Criar Taxa</h1> 
-            <h2 class="top-space"></h2> 
-            <div class="form"> 
-                <form action="router.php?c=taxa&a=store" method="post" class="needs-validation row justify-content-center" novalidate>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Criar Taxa</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=taxa&a=index">Taxas</a></li>
+                        <li class="breadcrumb-item active">Criar Taxa</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="form">
+                <form action="router.php?c=taxa&a=store" method="post" class="needs-validation row justify-content-center">
                     <div class="col col-6">
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="emvigor" name="emvigor"/>
@@ -30,4 +46,4 @@
             </div>
         </div>
     </div>
-</main> 
+</div>

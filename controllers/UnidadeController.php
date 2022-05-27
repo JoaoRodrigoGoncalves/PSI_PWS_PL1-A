@@ -35,7 +35,7 @@ class UnidadeController extends BaseAuthController
         }
         else
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'unidade/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
         }
     }
 
@@ -52,12 +52,12 @@ class UnidadeController extends BaseAuthController
             }
             else
             {
-                $this->RenderView('error', 'index', ['callbackRoute' => 'unidade/index']);
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
             }
         }
         catch (RecordNotFound $_)
         {
-            $this->RenderView('error', 'index', ['callbackRoute' => 'unidade/index']);
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
         }
     }
 

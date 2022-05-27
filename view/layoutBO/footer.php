@@ -7,8 +7,15 @@
             </footer>
         </div>
         <script src="./public/plugins/jquery/jquery.min.js"></script>
+        <script src="./public/plugins/popper/umd/popper.js"></script>
         <script src="./public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="./public/dist/js/adminlte.js"></script>
         <script src="./public/plugins/chart.js/Chart.min.js"></script>
+        <script type="text/javascript">
+            // Ativar tooltips no backoffice todo
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
         </body>
 </html>

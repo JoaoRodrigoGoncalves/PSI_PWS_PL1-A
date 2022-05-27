@@ -4,13 +4,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0"><?= $produto->descricao ?></h1>
+                    <h1 class="m-0">Editar Unidade</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=produtos&a=index">Produtos</a></li>
-                        <li class="breadcrumb-item active"><?= $produto->descricao ?></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=unidade&a=index">Unidades</a></li>
+                        <li class="breadcrumb-item active">Editar Unidade</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -18,10 +18,6 @@
     </div>
     <!-- /.content-header -->
     <div class="content">
-        Ref: <?= $produto->id ?><br>
-        Descrição: <?= $produto->descricao ?><br>
-        Preço: <?= $produto->preco_unitario ?>€<br>
-        Iva: <?= $produto->taxa->valor ?>%<br>
-        Stock: <?= $produto->stock . $produto->unidade->unidade ?>
+
     </div>
 </div>
