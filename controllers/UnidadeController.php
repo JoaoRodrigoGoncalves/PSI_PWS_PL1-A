@@ -6,19 +6,20 @@ class UnidadeController extends BaseAuthController
 {
     public function index()
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
         $unidades = Unidade::all();
         $this->RenderView('unidade', 'index', ['unidades' => $unidades]);
     }
 
     public function create()
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
         $this->RenderView('unidade', 'create');
     }
 
     public function store()
     {
+        $this->filterByRole(['funcionario', 'administrador']);
         if(isset($_POST['unidade']))
         {
             $unidade = Unidade::create($_POST);
@@ -34,12 +35,13 @@ class UnidadeController extends BaseAuthController
         }
         else
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'unidade/index']);
         }
     }
 
     public function edit($id)
     {
+        $this->filterByRole(['funcionario', 'administrador']);
         try
         {
             $unidade = Unidade::find([$id]);
@@ -50,22 +52,25 @@ class UnidadeController extends BaseAuthController
             }
             else
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
+                $this->RenderView('error', 'index', ['callbackRoute' => 'unidade/index']);
             }
         }
         catch (RecordNotFound $_)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'unidade/index']);
         }
     }
 
     public function update($id)
     {
+        $this->filterByRole(['funcionario', 'administrador']);
 
     }
 
     public function delete($id)
     {
+        $this->filterByRole(['funcionario', 'administrador']);
+
     }
 
 }

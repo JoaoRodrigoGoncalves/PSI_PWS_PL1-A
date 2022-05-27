@@ -3,19 +3,23 @@
 class TaxaController extends BaseAuthController{
     public function index()
     {
+        $this->filterByRole(['funcionario', 'administrador']);
         $taxas = Taxa::all();
-        $this->loginFilter();
-        
         $this->RenderView('taxa', 'index', ['taxas' => $taxas]);
     }
     
     public function create()
     {
+        $this->filterByRole(['funcionario', 'administrador']);
         $this->renderView('taxa', 'create');//mostrar a vista create
     }
     
     public function store()
     {
+        $this->filterByRole(['funcionario', 'administrador']);
+
+        // TODO: Verificar se todos os dados necessários foram recebidos
+
         if($_POST['emvigor']){
             $_POST['emvigor'] = 1;
         }else{
@@ -35,6 +39,10 @@ class TaxaController extends BaseAuthController{
 
     public function edit($id)
     {
+        $this->filterByRole(['funcionario', 'administrador']);
+
+        // TODO: Validar se o item existe
+
         $taxas = Taxa::find([$id]);
         if (is_null($taxas)) {
         //TODO redirect to standard error page
@@ -47,6 +55,11 @@ class TaxaController extends BaseAuthController{
 
     public function update($id)
     {
+        $this->filterByRole(['funcionario', 'administrador']);
+
+        // TODO: Verificar se todos os dados necessários foram recebidos
+        // TODO: Validar se o item existe
+
         $taxas = Taxa::find([$id]);
         
         if(isset($_POST['emvigor'])){
@@ -69,6 +82,10 @@ class TaxaController extends BaseAuthController{
 
     public function delete($id)
     {
+        $this->filterByRole(['funcionario', 'administrador']);
+
+        // TODO: Validar se o item existe
+
         $taxas = Taxa::find([$id]);
         $taxas->delete();
         $this->RedirectToRoute('taxa', 'index');//redirecionar para o index

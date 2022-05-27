@@ -9,7 +9,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
-                        <li class="breadcrumb-item">Clientes</li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=cliente&a=index">Clientes</a></li>
                         <li class="breadcrumb-item active">Editar <?= $cliente->username ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -52,6 +52,7 @@
                                 <input type="text" class="form-control" id="localidade" name="localidade" value="<?=$cliente->localidade?>" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a href="./router.php?c=cliente&a=index" class="btn btn-danger">Cancelar</a>
                         </div>
                     </form>
                 </div>

@@ -22,6 +22,11 @@ class SetupPageController extends BaseController
 
     public function store()
     {
+        if(User::count() > 0)
+        {
+            $this->RedirectToRoute('login', 'index');
+        }
+
         if(isset($_POST['username'], $_POST['password'], $_POST['re_password'], $_POST['admin_email'], $_POST['admin_telefone'], $_POST['admin_NIF'], $_POST['admin_morada'],
             $_POST['admin_codigoPostal'], $_POST['admin_localidade'], $_POST['designacaoSocial'], $_POST['capitalSocial'], $_POST['company_email'], $_POST['company_telefone'],
             $_POST['company_NIF'], $_POST['company_morada'], $_POST['company_codigoPostal'], $_POST['company_localidade'])) {
@@ -35,7 +40,7 @@ class SetupPageController extends BaseController
                 'morada' => $_POST['admin_morada'],
                 'codigopostal' => $_POST['admin_codigoPostal'],
                 'localidade' => $_POST['admin_localidade'],
-                'role' => 2
+                'role' => 'administrador'
             ));
 
             $empresa = new Empresa(array(

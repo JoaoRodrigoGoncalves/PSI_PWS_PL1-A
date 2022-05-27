@@ -66,59 +66,65 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="./router.php?c=cliente&a=index" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Clientes
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./router.php?c=funcionario&a=index" class="nav-link">
-                                <i class="nav-icon fas fa-user-tie"></i>
-                                <p>
-                                    Funcionários
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Produtos
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./router.php?c=produtos&a=index" class="nav-link">
-                                        <i class="fas fa-list nav-icon"></i>
-                                        <p>Lista de Produtos</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./router.php?c=produtos&a=create" class="nav-link">
-                                        <i class="fas fa-plus nav-icon"></i>
-                                        <p>Novo Produto</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-balance-scale nav-icon"></i>
-                                        <p>Gerir Unidades</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./router.php?c=taxa&a=index" class="nav-link">
-                                <i class="nav-icon fas fa-coins"></i>
-                                <p>
-                                    Taxas
-                                </p>
-                            </a>
-                        </li>
+                        <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                            <li class="nav-item">
+                                <a href="./router.php?c=cliente&a=index" class="nav-link">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Clientes
+                                    </p>
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <?php if(in_array($userRole, ['administrador'])){ ?>
+                            <li class="nav-item">
+                                <a href="./router.php?c=funcionario&a=index" class="nav-link">
+                                    <i class="nav-icon fas fa-user-tie"></i>
+                                    <p>
+                                        Funcionários
+                                    </p>
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-barcode"></i>
+                                    <p>
+                                        Produtos
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="./router.php?c=produtos&a=index" class="nav-link">
+                                            <i class="fas fa-list nav-icon"></i>
+                                            <p>Lista de Produtos</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="./router.php?c=produtos&a=create" class="nav-link">
+                                            <i class="fas fa-plus nav-icon"></i>
+                                            <p>Novo Produto</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="fas fa-balance-scale nav-icon"></i>
+                                            <p>Gerir Unidades</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./router.php?c=taxa&a=index" class="nav-link">
+                                    <i class="nav-icon fas fa-coins"></i>
+                                    <p>
+                                        Taxas
+                                    </p>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

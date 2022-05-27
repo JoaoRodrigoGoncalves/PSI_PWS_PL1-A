@@ -4,6 +4,15 @@ require_once './controllers/BaseAuthController.php';
 class SiteController extends BaseAuthController
 {
     public function index(){
-        $this->RenderView('site', 'index');
+        $auth = new Auth();
+
+        if($auth->isLoggedIn())
+        {
+            $this->RedirectToRoute('dashboard', 'index');
+        }
+        else
+        {
+            $this->RenderView('site', 'index');
+        }
     }
 }

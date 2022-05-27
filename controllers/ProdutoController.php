@@ -6,7 +6,7 @@ class ProdutoController extends BaseAuthController
 {
     public function index()
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         $products = Produto::all();
 
@@ -19,7 +19,8 @@ class ProdutoController extends BaseAuthController
 
     public function show($id)
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
+
         try
         {
             $produto = Produto::find([$id]);
@@ -28,13 +29,13 @@ class ProdutoController extends BaseAuthController
         catch(Exception $_)
         {
             var_dump($_);
-            //$this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+            //$this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
     public function create()
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         $taxas_iva = Taxa::all(array('conditions' => array('emVigor = 1')));
         $unidades = Unidade::all();
@@ -42,7 +43,7 @@ class ProdutoController extends BaseAuthController
         // Verificar se existem taxas ou unidades registadas
         if(count($taxas_iva) == 0 || count($unidades) == 0)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
         }
         else
         {
@@ -52,7 +53,7 @@ class ProdutoController extends BaseAuthController
 
     public function store()
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         if(isset($_POST['descricao'], $_POST['preco_unitario'], $_POST['stock']))
         {
@@ -73,13 +74,13 @@ class ProdutoController extends BaseAuthController
         }
         else
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
     public function edit($id)
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         try
         {
@@ -92,17 +93,17 @@ class ProdutoController extends BaseAuthController
             }
             else
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+                $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
             }
         }catch (Exception $_)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
     public function update($id)
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         try
         {
@@ -127,17 +128,18 @@ class ProdutoController extends BaseAuthController
             }
             else
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+                $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
             }
         }catch (Exception $_)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 
     public function delete($id)
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
+
         try{
             $produto = Produto::find([$id]);
             if($produto->delete())
@@ -146,12 +148,12 @@ class ProdutoController extends BaseAuthController
             }
             else
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+                $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
             }
         }
         catch(Exception $_)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
 

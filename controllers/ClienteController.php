@@ -1,9 +1,9 @@
 <?php
-class ClientController extends BaseAuthController{
+class ClienteController extends BaseAuthController{
     public function index()
     {
-        $this->loginFilter();
-        $clientes = User::find_all_by_role(0);
+        $this->filterByRole(['funcionario', 'administrador']);
+        $clientes = User::find_all_by_role('cliente');
         $this->RenderView('cliente', 'index', ['clientes' => $clientes]);
     }
     public function create()
@@ -13,7 +13,7 @@ class ClientController extends BaseAuthController{
     }
     public function store()
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         if(isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'], $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
         {
@@ -26,7 +26,7 @@ class ClientController extends BaseAuthController{
                 'morada' => $_POST['morada'],
                 'codigopostal' => $_POST['codigopostal'],
                 'localidade' => $_POST['localidade'],
-                'role' => 0
+                'role' => 'cliente'
             ));
 
             if($cliente->is_valid()){
@@ -40,13 +40,13 @@ class ClientController extends BaseAuthController{
         }
         else
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
 
     }
     public function edit($id)
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         try
         {
@@ -55,12 +55,12 @@ class ClientController extends BaseAuthController{
         }
         catch (Exception $_)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
     public function update($id)
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         if(isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'], $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
         {
@@ -89,13 +89,13 @@ class ClientController extends BaseAuthController{
             }
             catch (Exception $_)
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'client/index']);
+                $this->RenderView('error', 'index', ['callbackRoute' => 'client/index']);
             }
         }
     }
     public function delete($id)
     {
-        $this->loginFilter();
+        $this->filterByRole(['funcionario', 'administrador']);
 
         try
         {
@@ -107,12 +107,12 @@ class ClientController extends BaseAuthController{
             }
             else
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+                $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
             }
         }
         catch (Exception $_)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+            $this->RenderView('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
 }

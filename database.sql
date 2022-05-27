@@ -13,7 +13,7 @@ CREATE TABLE users (
     morada VARCHAR(100) NOT NULL COMMENT 'Morada do utilizador',
     codigopostal VARCHAR(8) NOT NULL COMMENT 'Código Postal do Utilizador',
     localidade VARCHAR(40) NOT NULL COMMENT 'Localidade da morada do Utilizador',
-    role INT(2) DEFAULT 0 NOT NULL COMMENT 'Posição do utilizador' -- 0 -> Admin | 1 -> Funcionario | 2 -> Cliente 
+    role VARCHAR(15) DEFAULT 'cliente' NOT NULL COMMENT 'Role do utilizador'
 )  ENGINE=INNODB;
 
 CREATE TABLE empresas (

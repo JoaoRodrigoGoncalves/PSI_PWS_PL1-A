@@ -7,11 +7,10 @@ require_once './controllers/SetupPageController.php';
 require_once './controllers/EmpresaController.php';
 require_once './controllers/DashboardController.php';
 require_once './controllers/TaxaController.php';
-//require_once './controllers/ClientController.php';
 require_once './controllers/ProdutoController.php';
 require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
-require_once './controllers/ClientController.php';
+require_once './controllers/ClienteController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -150,7 +149,7 @@ else
                 break;
         
         case "cliente":
-            $controller = new ClientController();
+            $controller = new ClienteController();
             switch($a)
             {
                 case "index":

@@ -18,9 +18,16 @@ class BaseController
         }
         else
         {
-            require_once './view/layoutFO/header.php';
-            require_once './view/'.$prefix.'/'.$view.'.php';
-            require_once './view/layoutFO/footer.php';
+            if($prefix == "login")
+            {
+                require_once './view/login/index.php';
+            }
+            else
+            {
+                require_once './view/layoutFO/header.php';
+                require_once './view/'.$prefix.'/'.$view.'.php';
+                require_once './view/layoutFO/footer.php';
+            }
         }
     }
 
