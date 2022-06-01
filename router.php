@@ -11,6 +11,7 @@ require_once './controllers/ProdutoController.php';
 require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
 require_once './controllers/ClienteController.php';
+require_once './controllers/FaturacaoController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -259,6 +260,40 @@ else
 
                 default:
                     $errorController->index('unidade/index');
+                    break;
+            }
+            break;
+
+        case "fatura":
+            $controller = new FaturacaoController();
+            switch($a)
+            {
+                case 'index':
+                    $controller->index();
+                    break;
+
+                case 'create':
+                    $controller->create();
+                    break;
+
+                case 'store':
+                    $controller->store();
+                    break;
+
+                case 'edit':
+                    $controller->edit($_GET['id']);
+                    break;
+
+                case 'update':
+                    $controller->update($_GET['id']);
+                    break;
+
+                case 'delete':
+                    $controller->delete($_GET['id']);
+                    break;
+
+                default:
+                    $errorController->index('fatura/index');
                     break;
             }
             break;

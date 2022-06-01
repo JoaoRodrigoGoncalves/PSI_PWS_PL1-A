@@ -37,7 +37,7 @@ CREATE TABLE estados
 CREATE TABLE faturas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificação fatura',
     data DATETIME NOT NULL DEFAULT NOW() COMMENT 'Data criação fatura',
-    observacoes TEXT NOT NULL COMMENT 'Observações da fatura',
+    observacoes TEXT COMMENT 'Observações da fatura',
     estado_id INTEGER NOT NULL COMMENT 'Identificador do estado da fatura',
     cliente_id INTEGER NOT NULL COMMENT 'Identificador do cliente da fatura',
     funcionario_id INTEGER NOT NULL COMMENT 'Identificador do funcionario da fatura',
