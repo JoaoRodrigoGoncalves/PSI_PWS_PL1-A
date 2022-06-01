@@ -6,11 +6,27 @@ class ClienteController extends BaseAuthController{
         $clientes = User::find_all_by_role('cliente');
         $this->RenderView('cliente', 'index', ['clientes' => $clientes]);
     }
+
+    public function show($id)
+    {
+        $this->filterByRole(['funcionario', 'administrador']);
+        try
+        {
+            $cliente = User::find([$id]);
+            $this->RenderView('cliente', 'show', ['cliente' => $cliente]);
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+        }
+    }
+
     public function create()
     {
         $this->loginFilter();
         $this->RenderView('cliente', 'create'); //mostrar a vista create
     }
+
     public function store()
     {
         $this->filterByRole(['funcionario', 'administrador']);
@@ -93,6 +109,7 @@ class ClienteController extends BaseAuthController{
             }
         }
     }
+    
     public function delete($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
@@ -103,7 +120,7 @@ class ClienteController extends BaseAuthController{
 
             if($cliente->delete())
             {
-                $this->RedirectToRoute('registo', 'index');//redirecionar para o index
+                $this->RedirectToRoute('cliente', 'index');//redirecionar para o index
             }
             else
             {

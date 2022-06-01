@@ -64,13 +64,33 @@ class UnidadeController extends BaseAuthController
     public function update($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        
+        // TODO: Verificar se todos os dados necessários foram recebidos
+        // TODO: Validar se o item existe
 
+        $unidade = Unidade::find([$id]);
+
+        $unidade->update_attributes($_POST);
+
+        if($unidade->is_valid()){
+            $unidade->save();
+            $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+        } 
+        else {
+            $this->renderView('unidade', 'update', ['unidade' => $unidade]);
+            //mostrar vista edit passando o modelo como parâmetro
+        }
     }
 
     public function delete($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        
+        // TODO: Validar se o item existe
 
+        $unidade = Unidade::find([$id]);
+        $unidade->delete();
+        $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
     }
 
 }

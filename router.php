@@ -153,7 +153,10 @@ else
             switch($a)
             {
                 case "index":
-                    $controller->index();
+                    $controller -> index();
+                    break;
+                case "show":
+                    $controller -> show($_GET['id']);
                     break;
                 case 'create':
                     $controller -> create();

@@ -58,8 +58,9 @@
                                             <td><?= $cliente->nif ?></td>
                                             <td><?= $cliente->morada . ' ' . $cliente->codigopostal . ' ' . $cliente->localidade ?></td>
                                             <td>
+                                                <a href="./router.php?c=cliente&a=show&id=<?= $cliente->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger">Apagar</a>
+                                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Apagar</a>
                                             </td>
                                         </tr>
                                     <?php
@@ -79,6 +80,21 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDelete" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Pretende mesmo apagar este Cliente?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="./router.php?c=cliente&a=delete&id=<?= $cliente->id ?>" class="btn btn-danger">Apagar</a>
+                <a href="#" class="btn btn-info" data-dismiss="modal">Cancelar</a>
             </div>
         </div>
     </div>
