@@ -55,15 +55,22 @@
                                         ?>
                                         <tr>
                                             <td><?= $fatura->id?></td>
-                                            <td><?= $fatura->data ?></td>
-                                            <td><?= $fatura->obvervacoes ?></td>
-                                            <td><?= $fatura->estado ?></td>
-                                            <td><?= $fatura->cliente ?></td>
-                                            <td><?= $fatura->funcinario ?></td>
+                                            <td><?= $fatura->data->format('d-m-Y') ?></td>
+                                            <td><?= $fatura->observacoes ?></td>
+                                            <td><?= $fatura->estado->estado ?></td>
+                                            <td><?= $fatura->cliente->username ?></td>
+                                            <td><?= $fatura->funcionario->username ?></td>
                                             <td>
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-success">Detalhes</a>
+                                                <?php
+                                                if ($fatura->estado != "Fechado")
+                                                {
+                                                ?>
                                                 <a href="./router.php?c=fatura&a=edit&id=<?= $fatura->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger">Apagar</a>
+                                                <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Apagar</a>
+                                                <?php
+                                                }
+                                                ?>
                                             </td>
                                         </tr>
                                         <?php

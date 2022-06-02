@@ -7,6 +7,22 @@ class FaturacaoController extends BaseAuthController{
         $faturas = Fatura::all();
         $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
     }
+
+    public function show($id)
+    {
+        $this->filterByRole(['administrador']);
+        try
+        {
+            $fatura = Fatura::find([$id]);
+            //TODO Dinamizar para varias empresas
+            $empresa = Empresa::find([1]);
+            $this->RenderView('fatura', 'show', ['fatura' => $fatura, 'empresa' => $empresa]);
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
+        }
+    }
     
     public function create()
     {
@@ -26,44 +42,6 @@ class FaturacaoController extends BaseAuthController{
         else {
             $this->renderView('fatura', 'create', ['fatura' => $fatura]);
             //mostrar vista create passando o modelo como parâmetro
-        }
-    }
-
-    public function edit($id)
-    {
-        $this->filterByRole(['funcionario', 'administrador']);
-
-        // TODO: Validar se o item existe
-
-        $fatura = Fatura::find([$id]);
-        if (is_null($fatura)) {
-        //TODO redirect to standard error page
-        } 
-        else {
-            $this->renderView('fatura', 'edit', ['fatura' => $fatura]);
-            //mostrar a vista edit passando os dados por parâmetro
-        }
-    }
-
-    public function update($id)
-    {
-        $this->filterByRole(['funcionario', 'administrador']);
-
-        // TODO: Verificar se todos os dados necessários foram recebidos
-        // TODO: Validar se o item existe
-
-        $faturas = Fatura::find([$id]);
-
-        $faturas->update_attributes($_POST);
-        
-
-        if($faturas->is_valid()){
-            $faturas->save();
-            $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
-        } 
-        else {
-            $this->renderView('fatura', 'update', ['faturas' => $faturas]);
-            //mostrar vista edit passando o modelo como parâmetro
         }
     }
 

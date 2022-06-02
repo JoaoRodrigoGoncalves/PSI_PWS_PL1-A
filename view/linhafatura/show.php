@@ -4,21 +4,24 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Fatura Nº<?= $fatura->id ?></h1>
+                    <h1 class="m-0">Fatura Nº<?= $linhaFatura->fatura->id ?></h1>
+                    <h2 class="m-0">Linha de fatura Nº<?= $linhaFatura->id ?></h2>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
                         <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item active"><?= $fatura->id ?></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=show&id=<?= $linhaFatura->fatura->id ?>"><?= $linhaFatura->fatura->id ?></a></li>
+                        <li class="breadcrumb-item active"><?= $linhaFatura->id ?></li>
                     </ol>
                 </div><!-- /.col -->
                 <div class="col-12">
-                    <p>Data: <?=$fatura->data->format('d-m-Y')?></p>
+                    <p>Data: <?=$linhaFatura->data->format('d-m-Y')?></p>
                 </div>
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
+    <!-- TODO Finish -->
     <!-- /.content-header -->
     <div class="content">
         <div class="container-fluid">
@@ -33,10 +36,10 @@
                 </div>
                 <div class="col-md-6 col-12">
                     <b>Cliente:</b> <br>
-                    <?= $fatura->cliente->username ?> <br>
-                    Morada: <?= $fatura->cliente->morada ?> <br>
-                    Codigo Postal: <?= $fatura->cliente->codigopostal ?>, <?= $fatura->cliente->localidade ?> <br>
-                    Nif: <?= $fatura->cliente->nif ?>
+                    <?= $linhaFatura->cliente->username ?> <br>
+                    Morada: <?= $linhaFatura->cliente->morada ?> <br>
+                    Codigo Postal: <?= $linhaFatura->cliente->codigopostal ?>, <?= $linhaFatura->cliente->localidade ?> <br>
+                    Nif: <?= $linhaFatura->cliente->nif ?>
                 </div>
             </div>
             <div class="card-body">
@@ -53,9 +56,9 @@
                     </thead>
                     <tbody>
                     <?php
-                    if(count($fatura->linhafaturas) > 0)
+                    if(count($linhaFatura->linhafaturas) > 0)
                     {
-                        foreach ($fatura->linhafaturas as $linhafatura)
+                        foreach ($linhaFatura->linhafaturas as $linhafatura)
                         {
                             ?>
                             <tr>
@@ -66,13 +69,13 @@
                                 <td>%<?= $linhafatura->iva->valor ?></td>
                                 <rd><?= $linhafatura->valor * $linhafatura->quantidade?></rd>
                                 <td>
-                                    <a href="./router.php?c=linhafatura&a=show&id=<?= $fatura->id ?>" class="btn btn-success">Detalhes</a>
+                                    <a href="./router.php?c=linhafatura&a=show&id=<?= $linhaFatura->id ?>" class="btn btn-success">Detalhes</a>
                                     <?php
-                                    if ($fatura->estado != "Fechado")
+                                    if ($linhaFatura->estado != "Fechado")
                                     {
                                         ?>
-                                        <a href="./router.php?c=linhafatura&a=edit&id=<?= $fatura->id ?>" class="btn btn-warning">Editar</a>
-                                        <a href="./router.php?c=linhafatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Apagar</a>
+                                        <a href="./router.php?c=linhafatura&a=edit&id=<?= $linhaFatura->id ?>" class="btn btn-warning">Editar</a>
+                                        <a href="./router.php?c=linhafatura&a=delete&id=<?= $linhaFatura->id ?>" class="btn btn-danger">Apagar</a>
                                         <?php
                                     }
                                     ?>

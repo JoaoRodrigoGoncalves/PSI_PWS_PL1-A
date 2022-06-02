@@ -15,8 +15,11 @@ use ActiveRecord\Model;
         );
 
         static $belongs_to = array(
-            array('fatura'),
+            array('fatura')
+        );
+
+        static $has_one = array(
             array('produto'),
             array('taxa'),
         );
-    }
+    };

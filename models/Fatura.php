@@ -9,9 +9,14 @@ use ActiveRecord\Model;
             array('funcionario_id', 'msg' => 'Selecione um funcionario para a fatura')
         );
 
-        /*static $belongs_to = array(
+        static $belongs_to = array(
             array('estado'),
-            array('cliente'),
-            array('funcionario'),
-        );*/
+            array('cliente', 'class_name' => 'User', 'foreign_key' => 'cliente_id'),
+            array('funcionario', 'class_name' => 'User', 'foreign_key' => 'funcionario_id')
+        );
+
+        static $has_many = array(
+            array('linhafatura')
+        );
+
     }
