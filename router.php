@@ -187,7 +187,13 @@ else
                 case "index":
                     $controller->index();
                     break;
-
+                case "edit":
+                    $controller->edit();
+                    break;
+                case "update":
+                    $controller->update();
+                    break;
+                
                 default:
                     $errorController->index('empresa/index');
                     break;
