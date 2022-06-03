@@ -3,13 +3,16 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Produtos</h1>
+                <div class="col-sm-3">
+                    <h1 class="m-0">Selecionar Produto</h1>
                 </div><!-- /.col -->
-                <div class="col-sm-6">
+                <div class="col-sm-9">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
-                        <li class="breadcrumb-item active">Produtos</li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=show&id=<?=$id?>"><?=$id?></a></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=<?=$destiny . ($destiny == 'create'? '&id=' : '&idLinha=' .$id) ?>&id=<?=$id?>"><?=$destiny == 'create' ? 'Criar' : 'Alterar'?> Linha Fatura</a></li>
+                        <li class="breadcrumb-item active">Selecionar Produtos</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -22,13 +25,6 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <?php if($allowRegister) { ?>
-                                <a href="./router.php?c=produto&a=create" class="btn btn-primary btn-sm">Registar Produto</a>
-                            <?php } else { ?>
-                                <span class="d-inline-block" data-toggle="tooltip" data-placement="bottom" title="Crie e/ou ative Taxas e Unidades primeiro">
-                                    <a href="#" class="btn btn-primary btn-sm disabled">Registar Produto</a>
-                                </span>
-                            <?php } ?>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="Procurar">
@@ -74,9 +70,7 @@
                                             <td><?= $produto->preco_unitario ?>/<?= $produto->unidade->unidade ?></td>
                                             <td><?= $produto->taxa->valor ?>%</td>
                                             <td>
-                                                <a href="./router.php?c=produto&a=show&id=<?= $produto->id ?>" class="btn btn-success">Detalhes</a>
-                                                <a href="./router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $produto->id ?>, '<?= $produto->descricao ?>')">Apagar</a>
+                                                <a href="./router.php?c=linhafatura&a=<?=$destiny. ($destiny == 'create'? '&id=' : '&idLinha='). $id . '&idProduto=' . $produto->id?>" class="btn btn-primary">Selecionar</a>
                                             </td>
                                         </tr>
                                         <?php
@@ -100,76 +94,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalDelete" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Pretende mesmo apagar <span id="entity_name"></span>?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="#" id="modal_delete_btn" class="btn btn-danger">Apagar</a>
-                <a href="#" class="btn btn-info" data-dismiss="modal">Cancelar</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-    function deleteEntity(id, name)
-    {
-        document.getElementById('modal_delete_btn').setAttribute('href', './router.php?c=produto&a=delete&id=' + id);
-        document.getElementById('entity_name').textContent = '"' + name + '"';
-
-        new bootstrap.Modal(document.getElementById('modalDelete'), {
-            keyboard: true
-        }).toggle();
-    }
-</script>
-
-<?php
-if(isset($_GET['status']))
-{
-    if($_GET['status'] == 0)
-    {
-        ?>
-        <script type="text/javascript">
-            window.onload = function()
-            {
-                Swal.fire({
-                    toast: true,
-                    position: 'top-right',
-                    icon: 'success',
-                    iconColor: 'green',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    title: 'Operação completa com sucesso!'
-                })
-            }
-        </script>
-        <?php
-    }
-    else
-    {
-        ?>
-        <script type="text/javascript">
-            window.onload = function()
-            {
-                Swal.fire({
-                    toast: true,
-                    position: 'top-right',
-                    icon: 'warning',
-                    iconColor: 'yellow',
-                    showConfirmButton: false,
-                    timer: 3500,
-                    timerProgressBar: true,
-                    title: 'O produto foi desativado ao invés de apagado visto que foi utilizado em faturas'
-                })
-            }
-        </script>
-        <?php
-    }
-}
-?>

@@ -12,6 +12,8 @@ require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
 require_once './controllers/ClienteController.php';
 require_once './controllers/DefinicoesController.php';
+require_once './controllers/FaturacaoController.php';
+require_once './controllers/LinhaFaturaController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -294,6 +296,97 @@ else
 
                 default:
                     $errorController->index('unidade/index');
+                    break;
+            }
+            break;
+
+        case "fatura":
+            $controller = new FaturacaoController();
+            switch($a)
+            {
+                case 'index':
+                    $controller->index();
+                    break;
+
+                case 'show':
+                    if(isset($_GET['id']))
+                        $controller->show($_GET['id']);
+                    else
+                        $controller->index();
+                    break;
+
+                case 'create':
+                    $controller->create();
+                    break;
+
+                case 'selectCliente':
+                    $controller->selectCliente();
+                    break;
+
+                case 'store':
+                    $controller->store();
+                    break;
+
+                case 'edit':
+                    $controller->edit($_GET['id']);
+                    break;
+
+                case 'update':
+                    $controller->update($_GET['id']);
+                    break;
+
+                case 'delete':
+                    if(isset($_GET['id']))
+                        $controller->delete($_GET['id']);
+                    else
+                        $controller->index();
+                    break;
+
+                default:
+                    $errorController->index('fatura/index');
+                    break;
+            }
+            break;
+
+        case "linhafatura":
+            $controllerFatura = new FaturacaoController();
+
+            if(!isset($_GET['id']) && !isset($_GET['idLinha']))
+                $controllerFatura->index();
+
+            $controller = new LinhaFaturaController();
+            switch($a)
+            {
+                case 'create':
+                    $controller->create($_GET['id']);
+                    break;
+
+                case 'selectProduto':
+                    if(isset($_GET['destiny'])){
+                        $id = $_GET['id'] ?? $_GET['idLinha'];
+                        $controller->selectProduto($id, $_GET['destiny']);
+                    }else
+                        $controllerFatura->index();
+                    break;
+
+                case 'store':
+                    $controller->store($_GET['id']);
+                    break;
+
+                case 'edit':
+                    $controller->edit($_GET['idLinha']);
+                    break;
+
+                case 'update':
+                    $controller->update($_GET['idLinha']);
+                    break;
+
+                case 'delete':
+                    $controller->delete($_GET['id']);
+                    break;
+
+                default:
+                    $errorController->index('fatura/index');
                     break;
             }
             break;
