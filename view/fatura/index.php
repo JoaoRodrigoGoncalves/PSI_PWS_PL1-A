@@ -61,23 +61,17 @@
                                             <td><?= $fatura->observacoes ?></td>
                                             <td>
                                                 <?php
-                                                if($fatura->estado->id == 1)
+                                                switch ($fatura->estado->id)
                                                 {
-                                                    ?>
-                                                    <span class="badge bg-warning"><?=$fatura->estado->estado?></span>
-                                                    <?php
-                                                }
-                                                else  if($fatura->estado->id == 2)
-                                                {
-                                                    ?>
-                                                    <span class="badge bg-success"><?=$fatura->estado->estado?></span>
-                                                    <?php
-                                                }
-                                                else  if($fatura->estado->id == 3)
-                                                {
-                                                    ?>
-                                                    <span class="badge bg-danger"><?=$fatura->estado->estado?></span>
-                                                    <?php
+                                                    case 1:
+                                                        echo '<span class="badge bg-warning">'.$fatura->estado->estado.'</span>';
+                                                        break;
+                                                    case 2:
+                                                        echo '<span class="badge bg-success">'.$fatura->estado->estado.'</span>';
+                                                        break;
+                                                    case 3:
+                                                        echo '<span class="badge bg-danger">'.$fatura->estado->estado.'</span>';
+                                                        break;
                                                 }
                                                 ?>
                                             </td>
@@ -102,12 +96,13 @@
                                              €</td>
                                             <td><?=$total?> €</td>
                                             <td>
-                                                <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-success">Detalhes</a>
+                                                <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-primary">Detalhes</a>
                                                 <?php
                                                 if ($fatura->estado->id == 1)
                                                 {
                                                 ?>
-                                                <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Cancelar</a>
+                                                    <a href="./router.php?c=fatura&a=update&id=<?= $fatura->id ?>" class="btn btn-success">Finalizar</a>
+                                                    <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Cancelar</a>
                                                 <?php
                                                 }
                                                 ?>

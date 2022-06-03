@@ -5,10 +5,10 @@ use ActiveRecord\Model;
     {
         static $validates_presence_of = array(
             array('fatura_id', 'msg' => 'Indique a fatura a que pertence'),
-            array('producto_id', 'msg' => 'Selecione um produto'),
+            array('produto_id', 'msg' => 'Selecione um produto'),
             array('valor', 'msg' => 'Indique o valor do produto'),
             array('quantidade', 'msg' => 'Indique a quantidade do produto'),
-            array('iva_id', 'msg' => 'Selecione uma taxa de iva')
+            array('taxa_id', 'msg' => 'Selecione uma taxa de iva')
         );
 
         static $validates_numericality_of = array(

@@ -284,6 +284,10 @@ else
                     $controller->create();
                     break;
 
+                case 'selectCliente':
+                    $controller->selectCliente();
+                    break;
+
                 case 'store':
                     $controller->store();
                     break;
@@ -312,26 +316,34 @@ else
         case "linhafatura":
             $controllerFatura = new FaturacaoController();
 
-            if(!isset($_GET['id']))
+            if(!isset($_GET['id']) && !isset($_GET['idLinha']))
                 $controllerFatura->index();
 
             $controller = new LinhaFaturaController();
             switch($a)
             {
                 case 'create':
-                    $controller->create();
+                    $controller->create($_GET['id']);
+                    break;
+
+                case 'selectProduto':
+                    if(isset($_GET['destiny'])){
+                        $id = $_GET['id'] ?? $_GET['idLinha'];
+                        $controller->selectProduto($id, $_GET['destiny']);
+                    }else
+                        $controllerFatura->index();
                     break;
 
                 case 'store':
-                    $controller->store();
+                    $controller->store($_GET['id']);
                     break;
 
                 case 'edit':
-                    $controller->edit($_GET['id']);
+                    $controller->edit($_GET['idLinha']);
                     break;
 
                 case 'update':
-                    $controller->update($_GET['id']);
+                    $controller->update($_GET['idLinha']);
                     break;
 
                 case 'delete':

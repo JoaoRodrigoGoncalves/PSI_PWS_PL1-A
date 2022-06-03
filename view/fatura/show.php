@@ -96,7 +96,7 @@
                                     if ($fatura->estado->id == 1)
                                     {
                                         ?>
-                                        <a href="./router.php?c=linhafatura&a=edit&id=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
+                                        <a href="./router.php?c=linhafatura&a=edit&idLinha=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
                                         <a href="./router.php?c=linhafatura&a=delete&id=<?= $linhafatura->id ?>" class="btn btn-danger">Apagar</a>
                                         <?php
                                     }
