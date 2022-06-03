@@ -21,7 +21,7 @@ class  AuthController extends BaseAuthController
             $auth = new Auth();
             if(!$auth->isLoggedIn())
             {
-                $this->RenderView('login', 'index', []);
+                $this->RenderView('login', 'index');
             }
             else
             {
@@ -51,7 +51,7 @@ class  AuthController extends BaseAuthController
             if(isset($_POST['email'],$_POST['password']))
             {
                 if ($auth->checkLogin($_POST['email'], $_POST['password'])){
-                    $this->RedirectToRoute('dashboard','index', []);
+                    $this->RedirectToRoute('dashboard','index');
                 }
                 else
                     $this->RenderView('login', 'index', ['fail' => true]);

@@ -13,7 +13,7 @@ class ClienteController extends BaseAuthController{
         $this->filterByRole(['funcionario', 'administrador']);
         try
         {
-            $cliente = User::find([$id]);
+            $cliente = User::find($id);
             $this->RenderView('cliente', 'show', ['cliente' => $cliente]);
         }
         catch (Exception $_)
@@ -88,7 +88,7 @@ class ClienteController extends BaseAuthController{
 
         try
         {
-            $cliente = User::find([$id]);
+            $cliente = User::find($id);
             $this->renderView('cliente', 'edit', ['cliente' => $cliente]);
         }
         catch (Exception $_)
@@ -104,7 +104,7 @@ class ClienteController extends BaseAuthController{
         {
             try
             {
-                $cliente = User::find([$id]);
+                $cliente = User::find($id);
 
                 $cliente->update_attributes(array(
                     'username' => $_POST['username'],
@@ -136,9 +136,11 @@ class ClienteController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
+        // TODO: Criar lógica de desativação ao invés de remoção
+
         try
         {
-            $cliente = User::find([$id]);
+            $cliente = User::find($id);
 
             if($cliente->delete())
             {

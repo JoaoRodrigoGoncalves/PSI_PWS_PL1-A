@@ -11,6 +11,7 @@ require_once './controllers/ProdutoController.php';
 require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
 require_once './controllers/ClienteController.php';
+require_once './controllers/DefinicoesController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -118,7 +119,21 @@ else
                     break;
             }
             break;
-        
+
+        case "definicoes":
+            $controller = new DefinicoesController();
+            switch ($a)
+            {
+                case "index":
+                    $controller->index();
+                    break;
+
+                default:
+                    $errorController->index('definicoes/index');
+                    break;
+            }
+            break;
+
         case "taxa":
                 $controller = new TaxaController();
                 switch($a)

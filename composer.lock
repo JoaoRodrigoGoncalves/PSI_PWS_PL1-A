@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7cae5c6d2f593ec9d9f2fddaa8503bf",
+    "content-hash": "09eb2920813629d80d45d0319d2eb497",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -427,26 +427,28 @@
             "time": "2022-04-25T19:31:17+00:00"
         },
         {
-            "name": "php-activerecord/php-activerecord",
-            "version": "v1.2.0",
+            "name": "php-patterns/activerecord",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jpfuentes2/php-activerecord.git",
-                "reference": "e6d2dad090617336dee730190be0294c5f132c69"
+                "url": "https://github.com/php-activerecord/activerecord.git",
+                "reference": "f169fb5edb74e2cb36a3377f8cf2a961a0f4b15c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jpfuentes2/php-activerecord/zipball/e6d2dad090617336dee730190be0294c5f132c69",
-                "reference": "e6d2dad090617336dee730190be0294c5f132c69",
+                "url": "https://api.github.com/repos/php-activerecord/activerecord/zipball/f169fb5edb74e2cb36a3377f8cf2a961a0f4b15c",
+                "reference": "f169fb5edb74e2cb36a3377f8cf2a961a0f4b15c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "pear/log": "~1.12",
-                "pear/pear_exception": "1.0-beta1",
-                "phpunit/phpunit": "4.*"
+                "friendsofphp/php-cs-fixer": "^2.1",
+                "pear/log": "~1.13",
+                "pear/pear_exception": "1.0",
+                "phpunit/phpunit": "4.* || 5.*",
+                "sami/sami": "^4.0"
             },
             "type": "library",
             "autoload": {
@@ -465,10 +467,10 @@
                 "orm"
             ],
             "support": {
-                "issues": "https://github.com/jpfuentes2/php-activerecord/issues",
-                "source": "https://github.com/jpfuentes2/php-activerecord/tree/master"
+                "issues": "https://github.com/php-activerecord/activerecord/issues",
+                "source": "https://github.com/php-activerecord/activerecord/tree/v1.0.3"
             },
-            "time": "2017-06-11T22:05:37+00:00"
+            "time": "2020-05-31T18:11:06+00:00"
         },
         {
             "name": "psr/http-client",

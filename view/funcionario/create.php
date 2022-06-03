@@ -61,15 +61,6 @@
                                        class="form-control" required maxlength="40"
                                     <?= (isset($func->errors) ) ? 'value="' . $func->localidade . '"' : '' ?>>
                             </div>
-                            <div class="col-6 mb-2">
-                                <label for="password">Palavra-Passe</label>
-                                <input type="password" name="password" id="password"
-                                       class="form-control" maxlength="100" required>
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label for="re_password">Repita a Palavra-Passe</label>
-                                <input type="password" name="re_password" id="re_password" class="form-control" required maxlength="100">
-                            </div>
                             <div class="col-12 mb-2">
                                 <input type="submit" class="btn btn-success mt-2 w-100" value="Gravar">
                             </div>
