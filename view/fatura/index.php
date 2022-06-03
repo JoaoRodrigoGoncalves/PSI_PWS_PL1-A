@@ -44,6 +44,8 @@
                                         <th>Estado</th>
                                         <th>Cliente</th>
                                         <th>Funcionario</th>
+                                        <th>SubTotal</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,17 +59,55 @@
                                             <td><?= $fatura->id?></td>
                                             <td><?= $fatura->data->format('d-m-Y') ?></td>
                                             <td><?= $fatura->observacoes ?></td>
-                                            <td><?= $fatura->estado->estado ?></td>
+                                            <td>
+                                                <?php
+                                                if($fatura->estado->id == 1)
+                                                {
+                                                    ?>
+                                                    <span class="badge bg-warning"><?=$fatura->estado->estado?></span>
+                                                    <?php
+                                                }
+                                                else  if($fatura->estado->id == 2)
+                                                {
+                                                    ?>
+                                                    <span class="badge bg-success"><?=$fatura->estado->estado?></span>
+                                                    <?php
+                                                }
+                                                else  if($fatura->estado->id == 3)
+                                                {
+                                                    ?>
+                                                    <span class="badge bg-danger"><?=$fatura->estado->estado?></span>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </td>
                                             <td><?= $fatura->cliente->username ?></td>
                                             <td><?= $fatura->funcionario->username ?></td>
                                             <td>
+                                            <?php
+                                            $subtotal = 0;
+                                            $total = 0;
+                                            if(count($fatura->linhafatura) > 0)
+                                            {
+
+                                                foreach ($fatura->linhafatura as $linhafatura)
+                                                {
+                                                    $total_linha = ($linhafatura->valor * $linhafatura->quantidade);
+                                                    $subtotal += $total_linha;
+                                                    $total += $total_linha + $total_linha * ($linhafatura->taxa->valor/100);
+                                                }
+                                            }
+                                            echo $subtotal;
+                                            ?>
+                                             €</td>
+                                            <td><?=$total?> €</td>
+                                            <td>
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-success">Detalhes</a>
                                                 <?php
-                                                if ($fatura->estado != "Fechado")
+                                                if ($fatura->estado->id == 1)
                                                 {
                                                 ?>
-                                                <a href="./router.php?c=fatura&a=edit&id=<?= $fatura->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Apagar</a>
+                                                <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Cancelar</a>
                                                 <?php
                                                 }
                                                 ?>

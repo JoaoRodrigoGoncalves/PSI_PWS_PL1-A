@@ -56,7 +56,7 @@
                                             <td><?= $cliente->username ?></td>
                                             <td><?= $cliente->email ?></td>
                                             <td><?= $cliente->nif ?></td>
-                                            <td><?= $cliente->morada . ' ' . $cliente->codigopostal . ' ' . $cliente->localidade ?></td>
+                                            <td><?= $cliente->morada . ', ' . $cliente->codigopostal . ', ' . $cliente->localidade ?></td>
                                             <td>
                                                 <a href="./router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="btn btn-warning">Editar</a>
                                                 <a href="#" class="btn btn-danger">Apagar</a>

@@ -12,6 +12,7 @@ require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
 require_once './controllers/ClienteController.php';
 require_once './controllers/FaturacaoController.php';
+require_once './controllers/LinhaFaturaController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -275,8 +276,48 @@ else
                 case 'show':
                     if(isset($_GET['id']))
                         $controller->show($_GET['id']);
+                    else
+                        $controller->index();
                     break;
 
+                case 'create':
+                    $controller->create();
+                    break;
+
+                case 'store':
+                    $controller->store();
+                    break;
+
+                case 'edit':
+                    $controller->edit($_GET['id']);
+                    break;
+
+                case 'update':
+                    $controller->update($_GET['id']);
+                    break;
+
+                case 'delete':
+                    if(isset($_GET['id']))
+                        $controller->delete($_GET['id']);
+                    else
+                        $controller->index();
+                    break;
+
+                default:
+                    $errorController->index('fatura/index');
+                    break;
+            }
+            break;
+
+        case "linhafatura":
+            $controllerFatura = new FaturacaoController();
+
+            if(!isset($_GET['id']))
+                $controllerFatura->index();
+
+            $controller = new LinhaFaturaController();
+            switch($a)
+            {
                 case 'create':
                     $controller->create();
                     break;

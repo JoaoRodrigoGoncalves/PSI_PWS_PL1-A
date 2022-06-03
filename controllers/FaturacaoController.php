@@ -20,13 +20,15 @@ class FaturacaoController extends BaseAuthController{
         }
         catch (Exception $_)
         {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
+            $this->RedirectToRoute('fatura','index');
+            //$this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
         }
     }
     
     public function create()
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        //
         $this->renderView('fatura', 'create');//mostrar a vista create
     }
     
@@ -48,11 +50,21 @@ class FaturacaoController extends BaseAuthController{
     public function delete($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        //Get the data
+        $fatura = Fatura::find([$id]);
+        $estado = Estado::find([3]);
+        try{
+            //TODO Check with activeRecords doesn't update it
+            var_dump($fatura);
+            exit;
+            $fatura->update_attributes(array(
+                'estado' => $estado
+            ));
+            $fatura->save();
+        }catch (Exception $_ex){
 
-        // TODO: Validar se o item existe
-
-        $faturas = Fatura::find([$id]);
-        $faturas->delete();
-        $this->RedirectToRoute('fatura', 'index');//redirecionar para o index
+        }
+        //redirecionar para o index
+        $this->RedirectToRoute('fatura', 'index');
     }
 }

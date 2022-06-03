@@ -28,9 +28,23 @@
                             <?= (isset($linhaFatura->produto->errors) ? $linhaFatura->produto->errors->on('descricao') : '') ?>
                         </div>
                         <div class="mb-3">
+                            <label for="valor">Valor do produto</label>
+                            <input type="text" id="descricao" name="valor" class="form-control" value="<?= (isset($linhaFatura->errors) ? $linhaFatura->produto->valor : '') ?>" disabled required>
+                            <?= (isset($linhaFatura->produto->errors) ? $linhaFatura->produto->errors->on('valor') : '') ?>
+                        </div>
+                        <div class="mb-3">
                             <label for="quantidade">Quantidade</label>
                             <input type="number" step="0.01" id="quantidade" name="quantidade" class="form-control" value="<?= (isset($linhaFatura->errors) ? $linhaFatura->quantidade : '') ?>" required>
                             <?= (isset($linhaFatura->errors) ? $linhaFatura->errors->on('quantidade') : '') ?>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="taxa_id">Taxa de IVA</label>
+                            <select class="form-select" id="taxa_id" name="taxa_id">
+                                <?php foreach ($taxas_iva as $taxa){ ?>
+                                    <option value="<?= $taxa->id ?>"><?= $taxa->descricao ?> (<?= $taxa->valor ?>%)</option>
+                                <?php } ?>
+                            </select>
+                            <?= (isset($produto->errors) ? $produto->errors->on('taxa_id') : '') ?>
                         </div>
                         <div class="mb-3">
                             <input type="submit" class="btn btn-primary" value="Guardar">

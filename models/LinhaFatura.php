@@ -6,6 +6,8 @@ use ActiveRecord\Model;
         static $validates_presence_of = array(
             array('fatura_id', 'msg' => 'Indique a fatura a que pertence'),
             array('producto_id', 'msg' => 'Selecione um produto'),
+            array('valor', 'msg' => 'Indique o valor do produto'),
+            array('quantidade', 'msg' => 'Indique a quantidade do produto'),
             array('iva_id', 'msg' => 'Selecione uma taxa de iva')
         );
 
@@ -15,11 +17,8 @@ use ActiveRecord\Model;
         );
 
         static $belongs_to = array(
-            array('fatura')
-        );
-
-        static $has_one = array(
+            array('fatura'),
             array('produto'),
-            array('taxa'),
+            array('taxa')
         );
     };
