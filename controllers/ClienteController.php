@@ -59,7 +59,7 @@ class ClienteController extends BaseAuthController{
                     if($mail->sendEmail($cliente->email, $cliente->username, 'Bem-vindo ao Fatura+', $body))
                     {
                         $cliente->save();
-                        $this->RedirectToRoute('cliente', 'index'); //redirecionar para o index
+                        $this->RedirectToRoute('cliente', 'index', ['success' => 1]); //redirecionar para o index
                     }
                     else
                     {
@@ -118,7 +118,7 @@ class ClienteController extends BaseAuthController{
 
                 if($cliente->is_valid()){
                     $cliente->save();
-                    $this->RedirectToRoute('cliente', 'index');//redirecionar para o index
+                    $this->RedirectToRoute('cliente', 'index', ['success' => 1]);//redirecionar para o index
                 }
                 else {
                     $this->renderView('cliente', 'edit', ['clientes' => $cliente]);
@@ -144,7 +144,7 @@ class ClienteController extends BaseAuthController{
 
             if($cliente->delete())
             {
-                $this->RedirectToRoute('cliente', 'index');//redirecionar para o index
+                $this->RedirectToRoute('cliente', 'index', ['success' => 1]);//redirecionar para o index
             }
             else
             {

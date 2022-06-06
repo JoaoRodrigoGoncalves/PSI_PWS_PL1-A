@@ -100,6 +100,9 @@ else
                 case 'delete':
                     $controller->delete($_GET['id']);
                     break;
+                case 'resetPassword':
+                    $controller->passwordReset($_GET['id']);
+                    break;
                 default:
                     $errorController->index('dashboard/index');
                     break;
@@ -126,6 +129,14 @@ else
             {
                 case "index":
                     $controller->index();
+                    break;
+
+                case "updatePassword":
+                    $controller->updatePassword();
+                    break;
+
+                case "updateEmail":
+                    $controller->updateEmail();
                     break;
 
                 default:

@@ -143,9 +143,10 @@ class ProdutoController extends BaseAuthController
 
         try{
             $produto = Produto::find($id);
+
             if($produto->delete())
             {
-                $this->RedirectToRoute('produto', 'index');
+                $this->RedirectToRoute('produto', 'index', ['status' => 0]);
             }
             else
             {

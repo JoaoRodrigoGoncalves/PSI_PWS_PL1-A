@@ -109,7 +109,7 @@ class FuncionarioController extends BaseAuthController{
                 if($funcionario->is_valid())
                 {
                     $funcionario->save();
-                    $this->RedirectToRoute('funcionario', 'index'); //redirecionar para o index
+                    $this->RedirectToRoute('funcionario', 'index', ['success' => 1]); //redirecionar para o index
                 }
                 else
                 {
@@ -136,7 +136,7 @@ class FuncionarioController extends BaseAuthController{
 
             if($funcionario->delete())
             {
-                $this->RedirectToRoute('funcionario', 'index');
+                $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
             }
             else
             {
@@ -144,6 +144,48 @@ class FuncionarioController extends BaseAuthController{
             }
         }
         catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+        }
+    }
+
+    public function passwordReset($id)
+    {
+        $this->filterByRole(['administrador']);
+
+        try
+        {
+            $funcionario = User::find($id);
+
+            $newPassword = bin2hex(random_bytes(10));
+
+            $funcionario->update_attribute('password', $newPassword);
+
+            if($funcionario->is_valid())
+            {
+                $body = "Olá " . $funcionario->username . "!<br>";
+                $body .= "Foi realizado um pedido de alteração da tua palavra-pase na plataforma Fatura+ pelo administrador.<br>";
+                $body .= "Sendo assim, a tua nova palavra-passe para entrar no Fatura+ é: " . $newPassword . '<br>';
+                $body .= "Cumprimentos,<br>A Equipa da Fatura+";
+
+                $email = new EmailSystem();
+
+                if($email->sendEmail($funcionario->email, $funcionario->username, "A tua palavra-passe foi alterada", $body))
+                {
+                    $funcionario->save();
+                    $this->RedirectToRoute('funcionario', 'index');
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+                }
+            }
+            else
+            {
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+            }
+        }
+        catch(Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }

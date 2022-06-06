@@ -20,6 +20,7 @@ class UnidadeController extends BaseAuthController
     public function store()
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        // TODO: Verificar se todos os dados necessários foram recebidos
         if(isset($_POST['unidade']))
         {
             $unidade = Unidade::create($_POST);
