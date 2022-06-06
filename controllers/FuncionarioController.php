@@ -13,7 +13,7 @@ class FuncionarioController extends BaseAuthController{
         $this->filterByRole(['administrador']);
         try
         {
-            $funcionario = User::find([$id]);
+            $funcionario = User::find($id);
             $this->RenderView('funcionario', 'show', ['funcionario' => $funcionario]);
         }
         catch (Exception $_)
@@ -31,13 +31,14 @@ class FuncionarioController extends BaseAuthController{
     public function store()
     {
         $this->filterByRole(['administrador']);
-        if(isset($_POST['username'], $_POST['password'], $_POST['re_password'],
-            $_POST['func_email'], $_POST['func_telefone'], $_POST['func_NIF'],
+        if(isset($_POST['username'], $_POST['func_email'], $_POST['func_telefone'], $_POST['func_NIF'],
             $_POST['func_morada'], $_POST['func_codigoPostal'], $_POST['func_localidade'])) {
+
+            $randomPassword = bin2hex(random_bytes(10));
 
             $funcionario = new User(array(
                 'username' => $_POST['username'],
-                'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
+                'password' => password_hash($randomPassword, PASSWORD_BCRYPT),
                 'email' => $_POST['func_email'],
                 'telefone' => $_POST['func_telefone'],
                 'nif' => $_POST['func_NIF'],
@@ -47,16 +48,31 @@ class FuncionarioController extends BaseAuthController{
                 'role' => 'funcionario'
             ));
 
-            // is_valid: Validação normal|is_valid: Validação Normal|validate: Validação de password
+
             if ($funcionario->is_valid()) {
-                $funcionario->save();
-                $this->RedirectToRoute('funcionario', 'index');
+
+                //TODO: Personalizar o corpo do email com dados da empresa
+                $body = "Bem-vindo ao Fatura+!<br>";
+                $body .= "O administrador da [empresa] adicionou-o ao sistema de faturação Fatura+. Para começar a utilizar a aplicação, utilize o seu email e a password: " . $randomPassword . "<br>";
+                $body .= "Cumprimentos,<br>A equipa Fatura+";
+
+                $email = new EmailSystem();
+
+                if($email->sendEmail($funcionario->email, $funcionario->username, 'Bem-vindo ao Fatura+', $body))
+                {
+                    $funcionario->save();
+                    $this->RedirectToRoute('funcionario', 'index');
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+                }
             } else {
                 // Mostrar erros
                 $this->RenderView('funcionario', 'create', ['funcionario' => $funcionario]);
             }
         }else{
-            $this->RenderView('funcionario', 'create',[]);
+            $this->RenderView('funcionario', 'create');
         }
     }
 
@@ -65,7 +81,7 @@ class FuncionarioController extends BaseAuthController{
         $this->filterByRole(['administrador']);
         try
         {
-            $funcionario = User::find([$id]);
+            $funcionario = User::find($id);
             $this->RenderView('funcionario', 'edit', ['funcionario' => $funcionario]);
         }
         catch (Exception $_)
@@ -87,13 +103,13 @@ class FuncionarioController extends BaseAuthController{
             {
                 $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
 
-                $funcionario = User::find([$id]);
+                $funcionario = User::find($id);
                 $funcionario->update_attributes($_POST);
 
                 if($funcionario->is_valid())
                 {
                     $funcionario->save();
-                    $this->RedirectToRoute('funcionario', 'index'); //redirecionar para o index
+                    $this->RedirectToRoute('funcionario', 'index', ['success' => 1]); //redirecionar para o index
                 }
                 else
                 {
@@ -112,13 +128,15 @@ class FuncionarioController extends BaseAuthController{
     {
         $this->filterByRole(['administrador']);
 
+        // TODO: Criar lógica de desativação ao invés de remoção
+
         try
         {
-            $funcionario = User::find([$id]);
+            $funcionario = User::find($id);
 
             if($funcionario->delete())
             {
-                $this->RedirectToRoute('funcionario', 'index');
+                $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
             }
             else
             {
@@ -126,6 +144,48 @@ class FuncionarioController extends BaseAuthController{
             }
         }
         catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+        }
+    }
+
+    public function passwordReset($id)
+    {
+        $this->filterByRole(['administrador']);
+
+        try
+        {
+            $funcionario = User::find($id);
+
+            $newPassword = bin2hex(random_bytes(10));
+
+            $funcionario->update_attribute('password', $newPassword);
+
+            if($funcionario->is_valid())
+            {
+                $body = "Olá " . $funcionario->username . "!<br>";
+                $body .= "Foi realizado um pedido de alteração da tua palavra-pase na plataforma Fatura+ pelo administrador.<br>";
+                $body .= "Sendo assim, a tua nova palavra-passe para entrar no Fatura+ é: " . $newPassword . '<br>';
+                $body .= "Cumprimentos,<br>A Equipa da Fatura+";
+
+                $email = new EmailSystem();
+
+                if($email->sendEmail($funcionario->email, $funcionario->username, "A tua palavra-passe foi alterada", $body))
+                {
+                    $funcionario->save();
+                    $this->RedirectToRoute('funcionario', 'index');
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+                }
+            }
+            else
+            {
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+            }
+        }
+        catch(Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
         }

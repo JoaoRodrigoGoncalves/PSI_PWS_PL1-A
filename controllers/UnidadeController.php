@@ -20,6 +20,7 @@ class UnidadeController extends BaseAuthController
     public function store()
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        // TODO: Verificar se todos os dados necessários foram recebidos
         if(isset($_POST['unidade']))
         {
             $unidade = Unidade::create($_POST);
@@ -44,7 +45,7 @@ class UnidadeController extends BaseAuthController
         $this->filterByRole(['funcionario', 'administrador']);
         try
         {
-            $unidade = Unidade::find([$id]);
+            $unidade = Unidade::find($id);
 
             if($unidade != null)
             {
@@ -66,19 +67,25 @@ class UnidadeController extends BaseAuthController
         $this->filterByRole(['funcionario', 'administrador']);
         
         // TODO: Verificar se todos os dados necessários foram recebidos
-        // TODO: Validar se o item existe
 
-        $unidade = Unidade::find([$id]);
+        try
+        {
+            $unidade = Unidade::find($id);
 
-        $unidade->update_attributes($_POST);
+            $unidade->update_attributes($_POST);
 
-        if($unidade->is_valid()){
-            $unidade->save();
-            $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
-        } 
-        else {
-            $this->renderView('unidade', 'update', ['unidade' => $unidade]);
-            //mostrar vista edit passando o modelo como parâmetro
+            if($unidade->is_valid()){
+                $unidade->save();
+                $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+            }
+            else {
+                $this->renderView('unidade', 'update', ['unidade' => $unidade]);
+                //mostrar vista edit passando o modelo como parâmetro
+            }
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
         }
     }
 
@@ -86,11 +93,18 @@ class UnidadeController extends BaseAuthController
     {
         $this->filterByRole(['funcionario', 'administrador']);
         
-        // TODO: Validar se o item existe
+        // TODO: Criar lógica de desativação ao invés de remoção
 
-        $unidade = Unidade::find([$id]);
-        $unidade->delete();
-        $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+        try
+        {
+            $unidade = Unidade::find($id);
+            $unidade->delete();
+            $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
+        }
     }
 
 }

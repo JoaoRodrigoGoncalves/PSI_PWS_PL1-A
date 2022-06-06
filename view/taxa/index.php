@@ -63,7 +63,7 @@
                                             <td><?= $taxa->valor ?></td>
                                             <td>
                                                 <a href="./router.php?c=taxa&a=edit&id=<?= $taxa->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Apagar</a>
+                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $taxa->id ?>)">Apagar</a>
                                             </td>
                                         </tr>
                                         <?php
@@ -96,9 +96,20 @@
                 <p>Pretende mesmo apagar esta Taxa?</p>
             </div>
             <div class="modal-footer">
-                <a href="./router.php?c=taxa&a=delete&id=<?= $taxa->id ?>" class="btn btn-danger">Apagar</a>
+                <a href="#" id="modal_delete_btn" class="btn btn-danger">Apagar</a>
                 <a href="#" class="btn btn-info" data-dismiss="modal">Cancelar</a>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function deleteEntity(id)
+    {
+        document.getElementById('modal_delete_btn').setAttribute('href', './router.php?c=taxa&a=delete&id=' + id);
+
+        new bootstrap.Modal(document.getElementById('modalDelete'), {
+            keyboard: true
+        }).toggle();
+    }
+</script>

@@ -11,6 +11,7 @@ require_once './controllers/ProdutoController.php';
 require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
 require_once './controllers/ClienteController.php';
+require_once './controllers/DefinicoesController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
@@ -99,6 +100,9 @@ else
                 case 'delete':
                     $controller->delete($_GET['id']);
                     break;
+                case 'resetPassword':
+                    $controller->passwordReset($_GET['id']);
+                    break;
                 default:
                     $errorController->index('dashboard/index');
                     break;
@@ -118,7 +122,29 @@ else
                     break;
             }
             break;
-        
+
+        case "definicoes":
+            $controller = new DefinicoesController();
+            switch ($a)
+            {
+                case "index":
+                    $controller->index();
+                    break;
+
+                case "updatePassword":
+                    $controller->updatePassword();
+                    break;
+
+                case "updateEmail":
+                    $controller->updateEmail();
+                    break;
+
+                default:
+                    $errorController->index('definicoes/index');
+                    break;
+            }
+            break;
+
         case "taxa":
                 $controller = new TaxaController();
                 switch($a)

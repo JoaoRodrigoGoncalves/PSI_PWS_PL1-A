@@ -20,6 +20,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+                    <?php if(isset($_GET['success'])){ ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Operação completada com sucesso!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php } ?>
                     <div class="card">
                         <div class="card-header">
                             <a href="./router.php?c=cliente&a=create" class="btn btn-primary btn-sm">Registar Cliente</a>
@@ -60,7 +68,7 @@
                                             <td>
                                                 <a href="./router.php?c=cliente&a=show&id=<?= $cliente->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Apagar</a>
+                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $cliente->id ?>)">Apagar</a>
                                             </td>
                                         </tr>
                                     <?php
@@ -93,9 +101,20 @@
                 <p>Pretende mesmo apagar este Cliente?</p>
             </div>
             <div class="modal-footer">
-                <a href="./router.php?c=cliente&a=delete&id=<?= $cliente->id ?>" class="btn btn-danger">Apagar</a>
+                <a href="#" id="modal_delete_btn" class="btn btn-danger">Apagar</a>
                 <a href="#" class="btn btn-info" data-dismiss="modal">Cancelar</a>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function deleteEntity(id)
+    {
+        document.getElementById('modal_delete_btn').setAttribute('href', './router.php?c=cliente&a=delete&id=' + id);
+
+        new bootstrap.Modal(document.getElementById('modalDelete'), {
+            keyboard: true
+        }).toggle();
+    }
+</script>

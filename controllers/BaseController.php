@@ -7,6 +7,12 @@ class BaseController
 
         $auth = new Auth();
 
+        if(in_array($prefix, ['error', 'login', 'setup'])) // Estas páginas fogem à regra sendo assim desenhadas de forma diferente.
+        {
+            require_once './view/' . $prefix . '/' . $view . '.php';
+            return;
+        }
+
         if($auth->isLoggedIn())
         {
             $username = $auth->getUsername();
@@ -18,16 +24,9 @@ class BaseController
         }
         else
         {
-            if($prefix == "login" || $prefix == "setup")
-            {
-                require_once './view/' . $prefix .'/' . $view . '.php';
-            }
-            else
-            {
-                require_once './view/layoutFO/header.php';
-                require_once './view/'.$prefix.'/'.$view.'.php';
-                require_once './view/layoutFO/footer.php';
-            }
+            require_once './view/layoutFO/header.php';
+            require_once './view/'.$prefix.'/'.$view.'.php';
+            require_once './view/layoutFO/footer.php';
         }
     }
 
