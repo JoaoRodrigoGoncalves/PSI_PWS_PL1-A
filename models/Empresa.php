@@ -24,8 +24,4 @@ class Empresa extends Model
         array('codigopostal', 'is' => 8),
         array('localidade', 'minimum' => 1, 'maximum' => 40)
     );
-
-    static $validates_pattern = array(
-        array('email', FILTER_VALIDATE_EMAIL),
-    );
 }
