@@ -20,6 +20,7 @@ class UnidadeController extends BaseAuthController
     public function store()
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        // TODO: Verificar se todos os dados necessários foram recebidos
         if(isset($_POST['unidade']))
         {
             $unidade = Unidade::create($_POST);
@@ -44,7 +45,7 @@ class UnidadeController extends BaseAuthController
         $this->filterByRole(['funcionario', 'administrador']);
         try
         {
-            $unidade = Unidade::find([$id]);
+            $unidade = Unidade::find($id);
 
             if($unidade != null)
             {
@@ -64,13 +65,46 @@ class UnidadeController extends BaseAuthController
     public function update($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        
+        // TODO: Verificar se todos os dados necessários foram recebidos
 
+        try
+        {
+            $unidade = Unidade::find($id);
+
+            $unidade->update_attributes($_POST);
+
+            if($unidade->is_valid()){
+                $unidade->save();
+                $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+            }
+            else {
+                $this->renderView('unidade', 'update', ['unidade' => $unidade]);
+                //mostrar vista edit passando o modelo como parâmetro
+            }
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
+        }
     }
 
     public function delete($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
+        
+        // TODO: Criar lógica de desativação ao invés de remoção
 
+        try
+        {
+            $unidade = Unidade::find($id);
+            $unidade->delete();
+            $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+        }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
+        }
     }
 
 }

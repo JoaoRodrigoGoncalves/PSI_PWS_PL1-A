@@ -76,7 +76,7 @@
                                             <td>
                                                 <a href="./router.php?c=produto&a=show&id=<?= $produto->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger">Apagar</a>
+                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $produto->id ?>, '<?= $produto->descricao ?>')">Apagar</a>
                                             </td>
                                         </tr>
                                         <?php
@@ -100,3 +100,76 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDelete" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Pretende mesmo apagar <span id="entity_name"></span>?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="modal_delete_btn" class="btn btn-danger">Apagar</a>
+                <a href="#" class="btn btn-info" data-dismiss="modal">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function deleteEntity(id, name)
+    {
+        document.getElementById('modal_delete_btn').setAttribute('href', './router.php?c=produto&a=delete&id=' + id);
+        document.getElementById('entity_name').textContent = '"' + name + '"';
+
+        new bootstrap.Modal(document.getElementById('modalDelete'), {
+            keyboard: true
+        }).toggle();
+    }
+</script>
+
+<?php
+if(isset($_GET['status']))
+{
+    if($_GET['status'] == 0)
+    {
+        ?>
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-right',
+                    icon: 'success',
+                    iconColor: 'green',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    title: 'Operação completa com sucesso!'
+                })
+            }
+        </script>
+        <?php
+    }
+    else
+    {
+        ?>
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-right',
+                    icon: 'warning',
+                    iconColor: 'yellow',
+                    showConfirmButton: false,
+                    timer: 3500,
+                    timerProgressBar: true,
+                    title: 'O produto foi desativado ao invés de apagado visto que foi utilizado em faturas'
+                })
+            }
+        </script>
+        <?php
+    }
+}
+?>
