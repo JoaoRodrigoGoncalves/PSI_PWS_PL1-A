@@ -43,7 +43,7 @@
                                         <th>Observações</th>
                                         <th>Estado</th>
                                         <th>Cliente</th>
-                                        <th>Funcionário</th>
+                                        <th>Funcionario</th>
                                         <th>SubTotal</th>
                                         <th>Total</th>
                                     </tr>
@@ -94,7 +94,7 @@
                                             echo $subtotal;
                                             ?>
                                              €</td>
-                                            <td><?=round($total, 2)?> €</td>
+                                            <td><?=$total?> €</td>
                                             <td>
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-primary">Detalhes</a>
                                                 <?php
@@ -102,13 +102,8 @@
                                                 {
                                                 ?>
                                                     <a href="./router.php?c=fatura&a=update&id=<?= $fatura->id ?>" class="btn btn-success">Finalizar</a>
-                                                    <?php
-                                                    if(in_array($fatura->estado->id, [1, 2]))
-                                                    {
-                                                        ?>
-                                                        <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Anular</a>
-                                                        <?php
-                                                    }
+                                                    <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Cancelar</a>
+                                                <?php
                                                 }
                                                 ?>
                                             </td>

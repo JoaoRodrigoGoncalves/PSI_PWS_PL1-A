@@ -23,7 +23,7 @@ class ProdutoController extends BaseAuthController
 
         try
         {
-            $produto = Produto::find($id);
+            $produto = Produto::find([$id]);
             $this->RenderView('produto', 'show', ['produto' => $produto]);
         }
         catch(Exception $_)
@@ -83,7 +83,7 @@ class ProdutoController extends BaseAuthController
 
         try
         {
-            $produto = Produto::find($id);
+            $produto = Produto::find([$id]);
             if($produto != null)
             {
                 $taxas_iva = Taxa::all();
@@ -112,7 +112,7 @@ class ProdutoController extends BaseAuthController
                 $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
                 $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
 
-                $produto = Produto::find($id);
+                $produto = Produto::find([$id]);
                 $produto->update_attributes($_POST);
 
                 if($produto->is_valid())
@@ -139,14 +139,11 @@ class ProdutoController extends BaseAuthController
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        // TODO: Criar lógica de desativação ao invés de remoção
-
         try{
-            $produto = Produto::find($id);
-
+            $produto = Produto::find([$id]);
             if($produto->delete())
             {
-                $this->RedirectToRoute('produto', 'index', ['status' => 0]);
+                $this->RedirectToRoute('produto', 'index');
             }
             else
             {

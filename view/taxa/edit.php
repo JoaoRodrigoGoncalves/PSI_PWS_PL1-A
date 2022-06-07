@@ -34,7 +34,7 @@
                             <label for="inputDescricao" class="form-label">Descrição:</label>
                             <input type="text" class="form-control" id="descricao" name="descricao" value="<?=$taxas->descricao?>">
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>   
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>

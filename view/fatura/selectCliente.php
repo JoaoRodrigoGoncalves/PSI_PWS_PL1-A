@@ -10,7 +10,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
                         <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=create">Nova Fatura</a></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=create">Criar Faturas</a></li>
                         <li class="breadcrumb-item active">Selecionar Cliente</li>
                     </ol>
                 </div><!-- /.col -->
@@ -59,7 +59,7 @@
                                             <td><?= $cliente->nif ?></td>
                                             <td><?= $cliente->morada . ', ' . $cliente->codigopostal . ', ' . $cliente->localidade ?></td>
                                             <td>
-                                                <a href="./router.php?c=fatura&a=create&idCliente=<?= $cliente->id ?>" class="btn btn-primary">Selecionar</a>
+                                                <a href="./router.php?c=fatura&a=create&idCliente=<?= $cliente->id ?>" class="btn btn-primary">Selcionar</a>
                                             </td>
                                         </tr>
                                     <?php

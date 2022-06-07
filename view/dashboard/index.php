@@ -19,9 +19,5 @@
     <div class="content">
         <!-- Inicio conteúdo -->
         <h1 class="display-6">Conteúdo Página Dashboard</h1>
-        <ul>
-            <li>Estatisticas de emails enviados (EmailSystem)</li>
-            <li>Estatisticas de produtos vendidos na última semana</li>
-        </ul>
     </div>
 </div>

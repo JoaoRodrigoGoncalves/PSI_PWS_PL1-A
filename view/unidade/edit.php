@@ -18,19 +18,6 @@
     </div>
     <!-- /.content-header -->
     <div class="content">
-        <div class="container-fluid">
-            <div class="form">
-                <form action="router.php?c=unidade&a=update&id=<?=$unidade->id?>" method="post" class="needs-validation row justify-content-center" novalidate>
-                    <div class="col col-6">
-                        <div class="mb-3">
-                            <label for="inputUnidade" class="form-label">Unidade:</label>
-                            <input type="text" class="form-control" id="unidade" name="unidade" value="<?=$unidade->unidade?>"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button> 
-                        <a href="./router.php?c=unidade&a=index" class="btn btn-danger">Cancelar</a>  
-                    </div>
-                </form>
-            </div>
-        </div>
+
     </div>
 </div>

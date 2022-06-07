@@ -32,8 +32,8 @@ class TaxaController extends BaseAuthController{
             $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
         } 
         else {
-            //mostrar vista create passando o modelo como parâmetro
             $this->renderView('taxa', 'create', ['taxas' => $taxas]);
+            //mostrar vista create passando o modelo como parâmetro
         }
     }
 
@@ -41,20 +41,15 @@ class TaxaController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        try
-        {
-            $taxas = Taxa::find($id);
-            if (is_null($taxas)) {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'taxa/index']);
-            }
-            else {
-                //mostrar a vista edit passando os dados por parâmetro
-                $this->renderView('taxa', 'edit', ['taxas' => $taxas]);
-            }
-        }
-        catch(Exception $_)
-        {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'taxa/index']);
+        // TODO: Validar se o item existe
+
+        $taxas = Taxa::find([$id]);
+        if (is_null($taxas)) {
+        //TODO redirect to standard error page
+        } 
+        else {
+            $this->renderView('taxa', 'edit', ['taxas' => $taxas]);
+            //mostrar a vista edit passando os dados por parâmetro
         }
     }
 
@@ -63,31 +58,25 @@ class TaxaController extends BaseAuthController{
         $this->filterByRole(['funcionario', 'administrador']);
 
         // TODO: Verificar se todos os dados necessários foram recebidos
+        // TODO: Validar se o item existe
 
-        try
-        {
-            $taxas = Taxa::find($id);
-
-            if(isset($_POST['emvigor'])){
-                $_POST['emvigor'] = 1;
-            }else{
-                $_POST['emvigor'] = 0;
-            }
-
-            $taxas->update_attributes($_POST);
-
-            if($taxas->is_valid()){
-                $taxas->save();
-                $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
-            }
-            else {
-                //mostrar vista edit passando o modelo como parâmetro
-                $this->renderView('taxa', 'update', ['taxas' => $taxas]);
-            }
+        $taxas = Taxa::find([$id]);
+        
+        if(isset($_POST['emvigor'])){
+            $_POST['emvigor'] = 1;
+        }else{
+            $_POST['emvigor'] = 0;
         }
-        catch(Exception $_)
-        {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'taxa/index']);
+        $taxas->update_attributes($_POST);
+        
+
+        if($taxas->is_valid()){
+            $taxas->save();
+            $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
+        } 
+        else {
+            $this->renderView('taxa', 'update', ['taxas' => $taxas]);
+            //mostrar vista edit passando o modelo como parâmetro
         }
     }
 
@@ -95,17 +84,10 @@ class TaxaController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        // TODO: Criar lógica de desativação do invés de remoção
+        // TODO: Validar se o item existe
 
-        try
-        {
-            $taxas = Taxa::find($id);
-            $taxas->delete();
-            $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
-        }
-        catch(Exception $_)
-        {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'taxa/index']);
-        }
+        $taxas = Taxa::find([$id]);
+        $taxas->delete();
+        $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
     }
 }

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="./public/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="./public/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="./public/plugins/sweetalert2/sweetalert2.min.css">
     <title><?=APP_NAME ?></title>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -31,8 +30,12 @@
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-item dropdown-header"><?= $username ?></span>
                         <div class="dropdown-divider"></div>
-                        <a href="./router.php?c=definicoes&a=index" class="dropdown-item">
+                        <a href="#" class="dropdown-item">
                             <i class="fas fa-cog mr-2"></i> Definições
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="./router.php?c=empresa&a=index" class="dropdown-item">
+                            <i class="fas fa-cogs mr-2"></i> Configuração da Empresa
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="./router.php?c=login&a=logout" class="dropdown-item">
@@ -46,7 +49,7 @@
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="./router.php" class="brand-link">
+            <a href="#" class="brand-link">
 <!--                <img src="dist/img/AdminLTELogo.png" alt="Fatura+" class="brand-image img-circle elevation-3" style="opacity: .8">-->
                 <span class="brand-text font-weight-light">Fatura+</span>
             </a>
@@ -115,16 +118,6 @@
                                     <i class="nav-icon fas fa-coins"></i>
                                     <p>
                                         Taxas
-                                    </p>
-                                </a>
-                            </li>
-                        <?php } ?>
-                        <?php if(in_array($userRole, ['administrador'])) {?>
-                            <li class="nav-item">
-                                <a href="./router.php?c=empresa&a=index" class="nav-link">
-                                    <i class="nav-icon fas fa-cogs"></i>
-                                    <p>
-                                        Empresa
                                     </p>
                                 </a>
                             </li>

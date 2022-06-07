@@ -1,7 +1,6 @@
 {
     "require": {
         "nesbot/carbon": "^2.58",
-        "guzzlehttp/guzzle": "^7.4",
-        "php-patterns/activerecord": "^1.0"
+        "php-activerecord/php-activerecord": "^1.2"
     }
 }
