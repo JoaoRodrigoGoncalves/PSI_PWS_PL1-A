@@ -43,7 +43,7 @@
                                         <th>Observações</th>
                                         <th>Estado</th>
                                         <th>Cliente</th>
-                                        <th>Funcionario</th>
+                                        <th>Funcionário</th>
                                         <th>SubTotal</th>
                                         <th>Total</th>
                                     </tr>
@@ -94,7 +94,7 @@
                                             echo $subtotal;
                                             ?>
                                              €</td>
-                                            <td><?=$total?> €</td>
+                                            <td><?=round($total, 2)?> €</td>
                                             <td>
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-primary">Detalhes</a>
                                                 <?php
@@ -102,8 +102,13 @@
                                                 {
                                                 ?>
                                                     <a href="./router.php?c=fatura&a=update&id=<?= $fatura->id ?>" class="btn btn-success">Finalizar</a>
-                                                    <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Cancelar</a>
-                                                <?php
+                                                    <?php
+                                                    if(in_array($fatura->estado->id, [1, 2]))
+                                                    {
+                                                        ?>
+                                                        <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Anular</a>
+                                                        <?php
+                                                    }
                                                 }
                                                 ?>
                                             </td>

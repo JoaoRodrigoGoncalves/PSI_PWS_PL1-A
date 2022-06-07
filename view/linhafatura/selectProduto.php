@@ -10,9 +10,9 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
                         <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=show&id=<?=$id?>"><?=$id?></a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=<?=$destiny . ($destiny == 'create'? '&id=' : '&idLinha=' .$id) ?>&id=<?=$id?>"><?=$destiny == 'create' ? 'Criar' : 'Alterar'?> Linha Fatura</a></li>
-                        <li class="breadcrumb-item active">Selecionar Produtos</li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=show&id=<?=$id?>">Fatura Nº<?=$id?></a></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=create&id=<?=$id?>">Adicionar Artigo</a></li>
+                        <li class="breadcrumb-item active">Selecionar Artigo</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -40,10 +40,8 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
-                                    <th>Estado</th>
                                     <th>Descrição</th>
                                     <th>Stock</th>
-                                    <th>Unidade</th>
                                     <th>Preço</th>
                                     <th>Taxa</th>
                                     <th>Ações</th>
@@ -57,20 +55,12 @@
                                     {
                                         ?>
                                         <tr>
-                                            <td>
-                                                <?php if($produto->ativo == 1){ ?>
-                                                    <span class="badge bg-success">Ativo</span>
-                                                <?php } else { ?>
-                                                    <span class="badge bg-danger">Desativado</span>
-                                                <?php } ?>
-                                            </td>
                                             <td><?= $produto->descricao ?></td>
-                                            <td><?= $produto->stock ?></td>
-                                            <td><?= $produto->unidade->unidade ?></td>
+                                            <td><?= $produto->stock ?>&nbsp;<?= $produto->unidade->unidade ?></td>
                                             <td><?= $produto->preco_unitario ?>/<?= $produto->unidade->unidade ?></td>
                                             <td><?= $produto->taxa->valor ?>%</td>
                                             <td>
-                                                <a href="./router.php?c=linhafatura&a=<?=$destiny. ($destiny == 'create'? '&id=' : '&idLinha='). $id . '&idProduto=' . $produto->id?>" class="btn btn-primary">Selecionar</a>
+                                                <a href="./router.php?c=linhafatura&a=create&idProduto=<?=$produto->id?>" class="btn btn-primary" <?= $produto->stock == 0 ? 'disabled' : '' ?>>Selecionar</a>
                                             </td>
                                         </tr>
                                         <?php

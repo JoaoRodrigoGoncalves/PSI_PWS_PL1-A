@@ -16,6 +16,7 @@ class Empresa extends Model
     );
 
     static $validates_size_of = array(
+//        array('designacaosocial', 'minimum' => 1, 'maximum' => 100),
         array('designacaosocial', 'maximum' => 100),
         array('email', 'maximum' => 100),
         array('telefone', 'is' => 9),
@@ -23,5 +24,9 @@ class Empresa extends Model
         array('morada', 'maximum' => 100),
         array('codigopostal', 'is' => 8),
         array('localidade', 'maximum' => 40)
+    );
+
+    static $validates_pattern = array(
+        array('email', FILTER_VALIDATE_EMAIL),
     );
 }

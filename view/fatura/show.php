@@ -31,7 +31,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
                         <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item active"><?= $fatura->id ?></li>
+                        <li class="breadcrumb-item active">Fatura Nº<?= $fatura->id ?></li>
                     </ol>
                 </div>
             </div><!-- /.row -->
@@ -42,26 +42,20 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    Empresa: <?= $empresa->designacaosocial ?><br>
-                    Morada: <?= $empresa->morada ?><br>
-                    Codigo Postal: <?= $empresa->codigopostal ?>, <?= $empresa->localidade ?> <br>
-                    Contacto: <?= $empresa->telefone ?> <br>
-                    Email: <?= $empresa->email?> <br>
-                    Nif: <?= $empresa->nif ?>
+                    <?= $empresa->designacaosocial ?><br>
+                    <?= $empresa->morada ?><br>
+                    <?= $empresa->codigopostal ?>, <?= $empresa->localidade ?> <br>
+                    <?= $empresa->telefone ?> <br>
+                    <?= $empresa->email?> <br>
+                    <?= $empresa->nif ?>
                 </div>
                 <div class="col-md-6 col-12">
                     <b>Cliente:</b> <br>
                     <?= $fatura->cliente->username ?> <br>
-                    Morada: <?= $fatura->cliente->morada ?> <br>
-                    Codigo Postal: <?= $fatura->cliente->codigopostal ?>, <?= $fatura->cliente->localidade ?> <br>
-                    Nif: <?= $fatura->cliente->nif ?>
+                    <?= $fatura->cliente->morada ?> <br>
+                    <?= $fatura->cliente->codigopostal ?>, <?= $fatura->cliente->localidade ?> <br>
+                    <?= $fatura->cliente->nif ?>
                 </div>
-            </div>
-            <div class="mt-3">
-                <a class="btn btn-primary"
-                   href="./router.php?c=linhafatura&a=create&id=<?= $fatura->id ?>">
-                    Adicionar Artigo
-                </a>
             </div>
             <div class="card-body" >
                 <table class="table table-hover text-nowrap">
@@ -71,7 +65,6 @@
                             <th>Produto</th>
                             <th>Qtd</th>
                             <th>Preço un.</th>
-                            <th>IVA</th>
                             <th>Taxa</th>
                             <th>Subtotal</th>
                         </tr>
@@ -88,8 +81,7 @@
                                 <td><?= $linhafatura->produto->descricao?></td>
                                 <td><?= $linhafatura->quantidade ?></td>
                                 <td><?= $linhafatura->valor ?></td>
-                                <td><?= $linhafatura->taxa->descricao ?></td>
-                                <td>%<?= $linhafatura->taxa->valor ?></td>
+                                <td><?= $linhafatura->taxa->valor ?>%</td>
                                 <td><?= $linhafatura->valor * $linhafatura->quantidade?> €</td>
                                 <td>
                                     <?php
@@ -110,7 +102,7 @@
                     {
                         ?>
                         <tr>
-                            <td colspan="5"><strong>Sem faturas</strong></td>
+                            <td colspan="5"><strong>Sem Artigos</strong></td>
                         </tr>
                         <?php
                     }
@@ -118,8 +110,13 @@
                     </tbody>
                 </table>
                 <?php
-
-                ?>
+                    if($fatura->estado->id == 1)
+                    {
+                        ?>
+                        <a class="btn btn-primary" href="./router.php?c=linhafatura&a=create&id=<?= $fatura->id ?>">Adicionar Artigo</a>
+                        <?php
+                    }
+                        ?>
             </div>
         </div>
         <div class="container-fluid">

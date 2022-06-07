@@ -4,14 +4,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Adicionar Produto Fatura nº<?=$fatura->id?></h1>
+                    <h1 class="m-0">Adicionar Artigo (Fatura nº<?=$fatura->id?>)</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
                         <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=show&id=<?=$fatura->id?>"><?=$fatura->id?></a></li>
-                        <li class="breadcrumb-item active">Criar Linha Fatura</li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=show&id=<?=$fatura->id?>">Fatura Nº<?=$fatura->id?></a></li>
+                        <li class="breadcrumb-item active">Adicionar Artigo</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -24,18 +24,12 @@
                 <div class="col">
                     <form action="./router.php?c=linhafatura&a=store&id=<?= $fatura->id ?>" method="post">
                         <div class="row">
-                            <div class="col-2 mb-2">
-                                <h4>Produto</h4>
-                            </div>
-                            <div class="col-10 mb-2">
-                                <a href="./router.php?c=linhafatura&a=selectProduto&id=<?=$fatura->id?>&destiny=create" class="btn btn-primary">Select Produto</a>
-                            </div>
-                            <div class="col-2">
+                            <div class="col col-sm-2">
                                 <label for="idProduto">Id</label>
                                 <input type="text" id="idProduto" name="idProduto" class="form-control"
                                        value="<?= (isset($produto) ? $produto->id : '') ?>" readonly required>
                             </div>
-                            <div class="col-9 mb-3">
+                            <div class="col col-sm-9 mb-3">
                                 <label for="descricao">Descrição</label>
                                 <input type="text" id="descricao" name="descricao" class="form-control"
                                        value="<?= (isset($produto) ? $produto->descricao : '') ?>" readonly required>
@@ -58,8 +52,13 @@
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <input type="submit" class="btn btn-primary" value="Guardar">
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <a href="./router.php?c=linhafatura&a=selectProduto&id=<?=$fatura->id?>&destiny=create" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>&nbsp;Selecionar Artigo
+                                </a>
+                                <input type="submit" class="btn btn-success" value="Adicionar">
                             </div>
                         </div>
                     </form>

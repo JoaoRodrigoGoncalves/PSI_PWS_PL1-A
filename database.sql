@@ -33,9 +33,10 @@ CREATE TABLE estados
 	id INTEGER not null AUTO_INCREMENT PRIMARY KEY,
     estado VARCHAR(30) UNIQUE NOT NULL
 )ENGINE=InnoDB;
+
 Insert into estados value(default, 'Pedente');
-Insert into estados value(default, 'Fechada');
-Insert into estados value(default, 'Cancelada');
+Insert into estados value(default, 'Finalizada');
+Insert into estados value(default, 'Anulada');
 
 CREATE TABLE faturas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificação fatura',

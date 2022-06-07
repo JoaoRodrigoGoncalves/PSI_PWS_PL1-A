@@ -112,7 +112,7 @@ class ProdutoController extends BaseAuthController
                 $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
                 $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
 
-                $produto = Produto::find([$id]);
+                $produto = Produto::find($id);
                 $produto->update_attributes($_POST);
 
                 if($produto->is_valid())

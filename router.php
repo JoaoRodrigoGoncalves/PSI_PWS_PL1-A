@@ -11,12 +11,13 @@ require_once './controllers/ProdutoController.php';
 require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
 require_once './controllers/ClienteController.php';
-require_once './controllers/FaturacaoController.php';
+require_once './controllers/DefinicoesController.php';
+require_once './controllers/FaturaController.php';
 require_once './controllers/LinhaFaturaController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
 {
-    // omissão, enviar para site
+    // omissão, enviar para o front-office
     $controller = new SiteController();
     $controller->index();
 }
@@ -101,6 +102,9 @@ else
                 case 'delete':
                     $controller->delete($_GET['id']);
                     break;
+                case 'resetPassword':
+                    $controller->passwordReset($_GET['id']);
+                    break;
                 default:
                     $errorController->index('dashboard/index');
                     break;
@@ -120,7 +124,29 @@ else
                     break;
             }
             break;
-        
+
+        case "definicoes":
+            $controller = new DefinicoesController();
+            switch ($a)
+            {
+                case "index":
+                    $controller->index();
+                    break;
+
+                case "updatePassword":
+                    $controller->updatePassword();
+                    break;
+
+                case "updateEmail":
+                    $controller->updateEmail();
+                    break;
+
+                default:
+                    $errorController->index('definicoes/index');
+                    break;
+            }
+            break;
+
         case "taxa":
                 $controller = new TaxaController();
                 switch($a)
@@ -155,7 +181,10 @@ else
             switch($a)
             {
                 case "index":
-                    $controller->index();
+                    $controller -> index();
+                    break;
+                case "show":
+                    $controller -> show($_GET['id']);
                     break;
                 case 'create':
                     $controller -> create();
@@ -186,7 +215,13 @@ else
                 case "index":
                     $controller->index();
                     break;
-
+                case "edit":
+                    $controller->edit();
+                    break;
+                case "update":
+                    $controller->update();
+                    break;
+                
                 default:
                     $errorController->index('empresa/index');
                     break;
@@ -266,7 +301,7 @@ else
             break;
 
         case "fatura":
-            $controller = new FaturacaoController();
+            $controller = new FaturaController();
             switch($a)
             {
                 case 'index':
@@ -292,10 +327,6 @@ else
                     $controller->store();
                     break;
 
-                case 'edit':
-                    $controller->edit($_GET['id']);
-                    break;
-
                 case 'update':
                     $controller->update($_GET['id']);
                     break;
@@ -314,11 +345,6 @@ else
             break;
 
         case "linhafatura":
-            $controllerFatura = new FaturacaoController();
-
-            if(!isset($_GET['id']) && !isset($_GET['idLinha']))
-                $controllerFatura->index();
-
             $controller = new LinhaFaturaController();
             switch($a)
             {
@@ -327,11 +353,7 @@ else
                     break;
 
                 case 'selectProduto':
-                    if(isset($_GET['destiny'])){
-                        $id = $_GET['id'] ?? $_GET['idLinha'];
-                        $controller->selectProduto($id, $_GET['destiny']);
-                    }else
-                        $controllerFatura->index();
+                    $controller->selectProduto($_GET['id']);
                     break;
 
                 case 'store':
