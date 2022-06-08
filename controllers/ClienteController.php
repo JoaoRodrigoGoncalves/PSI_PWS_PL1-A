@@ -140,20 +140,12 @@ class ClienteController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        // TODO: Criar lógica de desativação ao invés de remoção
-
         try
         {
             $cliente = User::find($id);
-
-            if($cliente->delete())
-            {
-                $this->RedirectToRoute('cliente', 'index', ['success' => 1]);//redirecionar para o index
-            }
-            else
-            {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
-            }
+            $cliente->update_attribute('ativo', 0);
+            $cliente->save();
+            $this->RedirectToRoute('cliente', 'index', ['success' => 1]);//redirecionar para o index
         }
         catch (Exception $_)
         {

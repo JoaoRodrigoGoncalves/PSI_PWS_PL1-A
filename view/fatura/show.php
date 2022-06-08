@@ -65,8 +65,8 @@
                     <div class="card-header">
                         <div class="card-tools">
                             <a class="btn btn-primary" href="./router.php?c=linhafatura&a=create&id=<?= $fatura->id ?>">Adicionar Artigo</a>
-                            <a class="btn btn-success" href="#">Finalizar</a>
-                            <a class="btn btn-danger" href="#">Anular</a>
+                            <a class="btn btn-success" href="#" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?')">Finalizar</a>
+                            <a class="btn btn-danger" href="#" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?')">Anular</a>
                         </div>
                     </div>
                     <?php
@@ -148,3 +148,30 @@
         </div>
     </div>
 </div>
+
+<!-- Modals Finalizar / Anular -->
+<div class="modal fade" id="modalAction" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p id="modal_question">&nbsp;</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="modal_action_btn" class="btn btn-primary">Sim</a>
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function openModal(action, question)
+    {
+        document.getElementById('modal_question').innerText = question;
+        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=cliente&a=' + action + '&id=<?= $fatura->id ?>');
+
+        new bootstrap.Modal(document.getElementById('modalAction'), {
+            keyboard: true
+        }).toggle();
+    }
+</script>

@@ -68,7 +68,7 @@
                                             <td>
                                                 <a href="./router.php?c=cliente&a=show&id=<?= $cliente->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $cliente->id ?>)">Apagar</a>
+                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $cliente->id ?>)">Desativar</a>
                                             </td>
                                         </tr>
                                     <?php

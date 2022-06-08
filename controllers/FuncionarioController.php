@@ -129,25 +129,9 @@ class FuncionarioController extends BaseAuthController{
         try
         {
             $funcionario = User::find($id);
-
-            if(Fatura::count(array('conditions' => array('funcionario_id=?', $id))) == 0)
-            {
-                // Remover funcionário visto que nunca fez nenhuma operação
-                if($funcionario->delete())
-                {
-                    $this->RedirectToRoute('funcionario', 'index', ['success' => 0]);
-                }
-                else
-                {
-                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
-                }
-            }
-            else
-            {
-                $funcionario->update_attribute('ativo', 0);
-                $funcionario->save();
-                $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
-            }
+            $funcionario->update_attribute('ativo', 0);
+            $funcionario->save();
+            $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
         }
         catch (Exception $_)
         {

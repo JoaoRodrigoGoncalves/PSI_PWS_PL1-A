@@ -82,8 +82,8 @@
                                                 if ($fatura->estado->id == 1)
                                                 {
                                                 ?>
-                                                    <a href="./router.php?c=fatura&a=update&id=<?= $fatura->id ?>" class="btn btn-success">Finalizar</a>
-                                                    <a href="./router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="btn btn-danger">Cancelar</a>
+                                                    <a href="#" class="btn btn-success" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?', <?= $fatura->id ?>)">Finalizar</a>
+                                                    <a href="#" class="btn btn-danger" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?', <?= $fatura->id ?>)">Anular</a>
                                                 <?php
                                                 }
                                                 ?>
@@ -110,3 +110,30 @@
         </div>
     </div>
 </div>
+
+<!-- Modals Finalizar / Anular -->
+<div class="modal fade" id="modalAction" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p id="modal_question">&nbsp;</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="modal_action_btn" class="btn btn-primary">Sim</a>
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function openModal(action, question, id)
+    {
+        document.getElementById('modal_question').innerText = question;
+        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=cliente&a=' + action + '&id=' + id);
+
+        new bootstrap.Modal(document.getElementById('modalAction'), {
+            keyboard: true
+        }).toggle();
+    }
+</script>
