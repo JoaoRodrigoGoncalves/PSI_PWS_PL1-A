@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="./public/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="./public/plugins/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="./public/dist/css/faturamais_custom.css">
     <title><?=APP_NAME ?></title>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -64,6 +65,14 @@
                             </a>
                         </li>
                         <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                            <li class="nav-item">
+                                <a href="./router.php?c=fatura&a=index" class="nav-link">
+                                    <i class="nav-icon fas fa-file-invoice"></i>
+                                    <p>
+                                        Faturas
+                                    </p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="./router.php?c=cliente&a=index" class="nav-link">
                                     <i class="nav-icon fas fa-user"></i>

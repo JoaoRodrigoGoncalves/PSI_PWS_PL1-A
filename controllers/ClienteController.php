@@ -51,12 +51,16 @@ class ClienteController extends BaseAuthController{
                 ));
 
                 if($cliente->is_valid()){
-                    $body = "Bem-Vindo à plataforma Fatura+<br><br>";
-                    $body .= "Para iniciar sessão na aplicação, utilize o seu email e a palavra-passe: " . $randomPassword . "<br><br>";
+
+                    $empresa = Empresa::first();
+
+                    $body = "Bem-Vindo/a à plataforma Fatura+ da empresa " . $empresa->designacaosocial . "<br><br>";
+                    $body .= "Aqui poderá consultar todas as suas faturas de compras realizadas na empresa " . $empresa->designacaosocial . ".<br>";
+                    $body .= "Para iniciar sessão na aplicação, utilize o seu e-mail e a palavra-passe: " . $randomPassword . "<br><br>";
                     $body .= "Cumprimentos,<br> A equipa Fatura+";
 
                     $mail = new EmailSystem();
-                    if($mail->sendEmail($cliente->email, $cliente->username, 'Bem-vindo ao Fatura+', $body))
+                    if($mail->sendEmail($cliente->email, $cliente->username, 'Conta cliente em ' . $empresa->designacaosocial, $body))
                     {
                         $cliente->save();
                         $this->RedirectToRoute('cliente', 'index', ['success' => 1]); //redirecionar para o index
@@ -152,6 +156,49 @@ class ClienteController extends BaseAuthController{
             }
         }
         catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+        }
+    }
+
+    public function resetPassword($id)
+    {
+        // TODO: Mudar função para sitio certo e deixar de duplicar código com FuncionarioController.php
+        $this->filterByRole(['funcionario', 'administrador']);
+
+        try
+        {
+            $cliente = User::find($id);
+
+            $newPassword = bin2hex(random_bytes(10));
+
+            $cliente->update_attribute('password', $newPassword);
+
+            if($cliente->is_valid())
+            {
+                $body = "Olá " . $cliente->username . "!<br>";
+                $body .= "Foi realizado um pedido de alteração da tua palavra-pase na plataforma Fatura+ pelo administrador.<br>";
+                $body .= "Sendo assim, a tua nova palavra-passe para entrar no Fatura+ é: " . $newPassword . '<br>';
+                $body .= "Cumprimentos,<br>A Equipa da Fatura+";
+
+                $email = new EmailSystem();
+
+                if($email->sendEmail($cliente->email, $cliente->username, "A tua palavra-passe foi alterada", $body))
+                {
+                    $cliente->save();
+                    $this->RedirectToRoute('cliente', 'index');
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+                }
+            }
+            else
+            {
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
+            }
+        }
+        catch(Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }

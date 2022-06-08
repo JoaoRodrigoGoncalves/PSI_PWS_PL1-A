@@ -1,7 +1,5 @@
 <?php
 
-use ActiveRecord\RecordNotFound;
-
 class ProdutoController extends BaseAuthController
 {
     public function index()
@@ -112,7 +110,7 @@ class ProdutoController extends BaseAuthController
                 $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
                 $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
 
-                $produto = Produto::find([$id]);
+                $produto = Produto::find($id);
                 $produto->update_attributes($_POST);
 
                 if($produto->is_valid())
@@ -139,18 +137,25 @@ class ProdutoController extends BaseAuthController
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        // TODO: Criar lógica de desativação ao invés de remoção
-
         try{
             $produto = Produto::find($id);
 
-            if($produto->delete())
+            if(LinhaFatura::count(array('conditions' => array('produto_id=?', $id))) == 0)
             {
-                $this->RedirectToRoute('produto', 'index', ['status' => 0]);
+                if($produto->delete())
+                {
+                    $this->RedirectToRoute('produto', 'index', ['status' => 0]);
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+                }
             }
             else
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
+                $produto->update_attribute('ativo', 0);
+                $produto->save();
+                $this->RedirectToRoute('produto', 'index', ['status' => 1]); // OK, mas com aviso de desativação
             }
         }
         catch(Exception $_)

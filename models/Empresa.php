@@ -16,12 +16,12 @@ class Empresa extends Model
     );
 
     static $validates_size_of = array(
-        array('designacaosocial', 'minimum' => 1, 'maximum' => 100),
-        array('email', 'minimum' => 1, 'maximum' => 100),
+        array('designacaosocial', 'maximum' => 100),
+        array('email', 'maximum' => 100),
         array('telefone', 'is' => 9),
         array('nif', 'is' => 9),
-        array('morada', 'minimum' => 1, 'maximum' => 100),
+        array('morada', 'maximum' => 100),
         array('codigopostal', 'is' => 8),
-        array('localidade', 'minimum' => 1, 'maximum' => 40)
+        array('localidade', 'maximum' => 40)
     );
 }

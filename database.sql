@@ -14,7 +14,7 @@ CREATE TABLE users (
     codigopostal VARCHAR(8) NOT NULL COMMENT 'Código Postal do Utilizador',
     localidade VARCHAR(40) NOT NULL COMMENT 'Localidade da morada do Utilizador',
     role VARCHAR(15) DEFAULT 'cliente' NOT NULL COMMENT 'Role do utilizador'
-)  ENGINE=INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE empresas (
     id INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificação Empresa',
@@ -26,21 +26,22 @@ CREATE TABLE empresas (
     morada VARCHAR(100) NOT NULL COMMENT 'Morada da empresa',
     codigopostal CHAR(8) NOT NULL COMMENT 'Codigo postal da Empresa',
     localidade VARCHAR(40) NOT NULL COMMENT 'Localidade da Empresa'
-)  ENGINE=INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE estados
 (
 	id INTEGER not null AUTO_INCREMENT PRIMARY KEY,
     estado VARCHAR(30) UNIQUE NOT NULL
 )ENGINE=InnoDB;
-Insert into estados value(default, 'Pedente');
-Insert into estados value(default, 'Fechada');
-Insert into estados value(default, 'Cancelada');
+
+INSERT INTO estados (estado) VALUES -- não mudar ordem destes valores
+                        ('Pendente'),
+                        ('Finalizada'),
+                        ('Anulada');
 
 CREATE TABLE faturas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificação fatura',
     data DATETIME NOT NULL DEFAULT NOW() COMMENT 'Data criação fatura',
-    observacoes TEXT NOT NULL COMMENT 'Observações da fatura',
     estado_id INTEGER NOT NULL COMMENT 'Identificador do estado da fatura',
     cliente_id INTEGER NOT NULL COMMENT 'Identificador do cliente da fatura',
     funcionario_id INTEGER NOT NULL COMMENT 'Identificador do funcionario da fatura',
@@ -48,20 +49,31 @@ CREATE TABLE faturas (
         REFERENCES users (id),
     CONSTRAINT IDFUNCIONARIO_FK FOREIGN KEY (funcionario_id)
         REFERENCES users (id)
-)  ENGINE=INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE taxas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador da Taxa',
     valor INTEGER NOT NULL COMMENT 'Valor da taxa', -- guarda-se o valor completo e no código divide-se por 100 para contas, caso necessário
     descricao VARCHAR(100) NOT NULL COMMENT 'Descrição da taxa',
     emvigor TINYINT(1) DEFAULT 0 NOT NULL COMMENT 'Bool estado em vigor ou não da taxa'
-)  ENGINE=INNODB;
+)ENGINE=INNODB;
 
+INSERT INTO taxas (valor, descricao, emvigor) VALUES
+                      (23, 'Taxa Normal', 1),
+                      (13, 'Taxa Intermédia', 1),
+                      (6, 'Taxa Reduzida', 1),
+                      (0, 'Isento', 1);
 CREATE TABLE unidades
 (
 	id INTEGER PRIMARY KEY AUTO_INCREMENT comment 'Identificador da unidade',
     unidade VARCHAR(10) NOT NULL comment '?'
 )ENGINE=InnoDB;
+
+INSERT INTO unidades (unidade) VALUES
+                         ('Un'),
+                         ('Kg'),
+                         ('M'),
+                         ('M2');
 
 CREATE TABLE produtos (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador do produto',
@@ -75,7 +87,7 @@ CREATE TABLE produtos (
         REFERENCES taxas (id),
     CONSTRAINT IDUNIDADE_FK FOREIGN KEY (unidade_id)
         REFERENCES unidades (id)
-)  ENGINE=INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE linhas_faturas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador da linha de faturas',
@@ -90,4 +102,4 @@ CREATE TABLE linhas_faturas (
         REFERENCES produtos (id),
     CONSTRAINT IDIVA_LF_FK FOREIGN KEY (iva_id)
         REFERENCES taxas (id)
-)  ENGINE=INNODB;
+)ENGINE=INNODB;

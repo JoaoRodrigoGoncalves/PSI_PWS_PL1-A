@@ -61,7 +61,7 @@
                                        class="form-control" required maxlength="40"
                                     <?= (isset($func->errors) ) ? 'value="' . $func->localidade . '"' : '' ?>>
                             </div>
-                            <input type="submit" class="btn btn-success" value="Gravar">
+                            <input type="submit" class="btn btn-primary" value="Gravar">
                             <a href="./router.php?c=cliente&a=index" class="btn btn-danger">Cancelar</a>
                         </div>
                     </form>

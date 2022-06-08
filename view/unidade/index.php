@@ -39,7 +39,7 @@
                                 <thead>
                                 <tr>
                                     <th>Unidade</th>
-                                    <th>Ações</th>
+                                    <th class="fit_column">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>

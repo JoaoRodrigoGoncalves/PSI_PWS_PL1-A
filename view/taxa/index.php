@@ -41,7 +41,7 @@
                                     <th>Estado</th>
                                     <th>Descrição</th>
                                     <th>Valor</th>
-                                    <th>Ações</th>
+                                    <th class="fit_column">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>

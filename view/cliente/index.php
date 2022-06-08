@@ -50,7 +50,7 @@
                                     <th>Email</th>
                                     <th>NIF</th>
                                     <th>Morada</th>
-                                    <th>Ações</th>
+                                    <th class="fit_column">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>

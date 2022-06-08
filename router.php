@@ -12,7 +12,7 @@ require_once './controllers/UnidadeController.php';
 require_once './controllers/FuncionarioController.php';
 require_once './controllers/ClienteController.php';
 require_once './controllers/DefinicoesController.php';
-require_once './controllers/FaturacaoController.php';
+require_once './controllers/FaturaController.php';
 require_once './controllers/LinhaFaturaController.php';
 
 if(!isset($_GET['c'], $_GET['a']))
@@ -202,6 +202,10 @@ else
                     $controller -> delete($_GET['id']);
                     break;
 
+                case 'resetPassword':
+                    $controller->resetPassword($_GET['id']);
+                    break;
+
                 default:
                     $errorController->index('registo/index');
                     break;
@@ -301,7 +305,7 @@ else
             break;
 
         case "fatura":
-            $controller = new FaturacaoController();
+            $controller = new FaturaController();
             switch($a)
             {
                 case 'index':
@@ -327,10 +331,6 @@ else
                     $controller->store();
                     break;
 
-                case 'edit':
-                    $controller->edit($_GET['id']);
-                    break;
-
                 case 'update':
                     $controller->update($_GET['id']);
                     break;
@@ -349,7 +349,7 @@ else
             break;
 
         case "linhafatura":
-            $controllerFatura = new FaturacaoController();
+            $controllerFatura = new FaturaController();
 
             if(!isset($_GET['id']) && !isset($_GET['idLinha']))
                 $controllerFatura->index();

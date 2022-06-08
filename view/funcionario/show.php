@@ -30,7 +30,7 @@
                                         <a href="router.php?c=funcionario&a=edit&id=<?=$funcionario->id ?>" class="btn" role="button"><i class="fas fa-edit" data-toggle="tooltip" data-placement="left" title="Editar"></i></a>
                                     </div>
                                     <div class="btn-group mr-2">
-                                        <a href="./router.php?c=funcionario&a=resetPassword&id=<?= $funcionario->id ?>" class="btn"><i class="fas fa-key" data-toggle="tooltip" data-placement="left" title="Editar Palavra-Passe"></i></a>
+                                        <a href="./router.php?c=funcionario&a=resetPassword&id=<?= $funcionario->id ?>" class="btn"><i class="fas fa-key" data-toggle="tooltip" data-placement="left" title="Repor Palavra-Passe"></i></a>
                                     </div>
                                     <div class="btn-group">
                                         <a href="#" class="btn" data-toggle="modal" data-target="#modalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="left" title="Apagar"></i></a>

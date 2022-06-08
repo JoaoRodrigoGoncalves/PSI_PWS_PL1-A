@@ -15,16 +15,8 @@ class EmpresaController extends BaseAuthController
     {
         $this->filterByRole(['administrador']);
 
-        // TODO: Validar se o item existe
-
         $empresa = Empresa::first();
-        if (is_null($empresa)) {
-        //TODO redirect to standard error page
-        } 
-        else {
-            $this->renderView('empresa', 'edit', ['empresa' => $empresa]);
-            //mostrar a vista edit passando os dados por parâmetro
-        }
+        $this->renderView('empresa', 'edit', ['empresa' => $empresa]);
     }
 
     public function update()
@@ -52,7 +44,8 @@ class EmpresaController extends BaseAuthController
                     $empresa->save();
                     $this->RedirectToRoute('empresa', 'index');//redirecionar para o index
                 }
-                else {
+                else
+                {
                     $this->renderView('empresa', 'edit', ['empresa' => $empresa]);
                     //mostrar vista edit passando o modelo como parâmetro
                 }

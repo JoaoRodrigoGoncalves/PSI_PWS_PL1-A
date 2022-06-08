@@ -26,11 +26,14 @@
                             <h2 class="d-inline p-2"><?=$cliente->username?></h2>
                             <div class="card-tools">
                                 <div class="btn-toolbar">
-                                    <div class="btn-group mr-2" style="width: 150px; float:right;">
-                                        <a href="router.php?c=cliente&a=edit&id=<?=$cliente->id ?>" class="btn btn-primary" role="button">Editar</a>
+                                    <div class="btn-group mr-2">
+                                        <a href="router.php?c=cliente&a=edit&id=<?=$cliente->id ?>" class="btn" role="button"><i class="fas fa-edit" data-toggle="tooltip" data-placement="left" title="Editar"></i></a>
                                     </div>
-                                    <div class="btn-group" style="width: 150px; float:right;">
-                                        <a href="#" class="btn btn-danger " data-toggle="modal" data-target="#modalDelete">Apagar</a>
+                                    <div class="btn-group mr-2">
+                                        <a href="router.php?c=cliente&a=resetPassword&id=<?=$cliente->id ?>" class="btn" role="button"><i class="fas fa-key" data-toggle="tooltip" data-placement="left" title="Repor Palavra-Passe"></i></a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="#" class="btn" data-toggle="modal" data-target="#modalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="left" title="Apagar"></i></a>
                                     </div>
                                 </div>
                             </div>

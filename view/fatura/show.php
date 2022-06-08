@@ -31,7 +31,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
                         <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item active"><?= $fatura->id ?></li>
+                        <li class="breadcrumb-item active">Fatura Nº<?= $fatura->id ?></li>
                     </ol>
                 </div>
             </div><!-- /.row -->
@@ -42,107 +42,109 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    Empresa: <?= $empresa->designacaosocial ?><br>
-                    Morada: <?= $empresa->morada ?><br>
-                    Codigo Postal: <?= $empresa->codigopostal ?>, <?= $empresa->localidade ?> <br>
-                    Contacto: <?= $empresa->telefone ?> <br>
-                    Email: <?= $empresa->email?> <br>
-                    Nif: <?= $empresa->nif ?>
+                    <?= $empresa->designacaosocial ?><br>
+                    <?= $empresa->morada ?><br>
+                    <?= $empresa->codigopostal ?>, <?= $empresa->localidade ?><br>
+                    NIF: <?= $empresa->nif ?><br>
+                    Telefone: <?= $empresa->telefone ?><br>
+                    Email: <?= $empresa->email?>
                 </div>
                 <div class="col-md-6 col-12">
                     <b>Cliente:</b> <br>
                     <?= $fatura->cliente->username ?> <br>
-                    Morada: <?= $fatura->cliente->morada ?> <br>
-                    Codigo Postal: <?= $fatura->cliente->codigopostal ?>, <?= $fatura->cliente->localidade ?> <br>
+                    <?= $fatura->cliente->morada ?> <br>
+                    <?= $fatura->cliente->codigopostal ?>, <?= $fatura->cliente->localidade ?> <br>
                     Nif: <?= $fatura->cliente->nif ?>
                 </div>
             </div>
-            <div class="mt-3">
-                <a class="btn btn-primary"
-                   href="./router.php?c=linhafatura&a=create&id=<?= $fatura->id ?>">
-                    Adicionar Artigo
-                </a>
-            </div>
-            <div class="card-body" >
-                <table class="table table-hover text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>REF</th>
-                            <th>Produto</th>
-                            <th>Qtd</th>
-                            <th>Preço un.</th>
-                            <th>IVA</th>
-                            <th>Taxa</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="card mt-3">
+                <?php
+                if($fatura->estado->id == 1)
+                {
+                    ?>
+                    <div class="card-header">
+                        <div class="card-tools">
+                            <a class="btn btn-primary" href="./router.php?c=linhafatura&a=create&id=<?= $fatura->id ?>">Adicionar Artigo</a>
+                            <a class="btn btn-success" href="#">Finalizar</a>
+                            <a class="btn btn-danger" href="#">Anular</a>
+                        </div>
+                    </div>
                     <?php
-                    if(count($fatura->linhafatura) > 0)
-                    {
-                        foreach ($fatura->linhafatura as $linhafatura)
+                }
+                ?>
+                <div class="card-body" >
+
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th class="fit_column">Referência</th>
+                            <th>Produto</th>
+                            <th class="fit_column">Qtd</th>
+                            <th class="fit_column">Preço un.</th>
+                            <th class="fit_column">Taxa</th>
+                            <th class="fit_column">Total Sem IVA</th>
+                            <th class="fit_column">&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        if(count($fatura->linhafatura) > 0)
                         {
+                            foreach ($fatura->linhafatura as $linhafatura)
+                            {
+                                ?>
+                                <tr>
+                                    <td><?= $linhafatura->produto->id?></td>
+                                    <td><?= $linhafatura->produto->descricao?></td>
+                                    <td><?= $linhafatura->quantidade ?></td>
+                                    <td><?= $linhafatura->valor ?>€</td>
+                                    <td><?= $linhafatura->taxa->valor ?>%</td>
+                                    <td><?= $linhafatura->valor * $linhafatura->quantidade?> €</td>
+                                    <td>
+                                        <?php
+                                        if ($fatura->estado->id == 1)
+                                        {
+                                            ?>
+                                            <a href="./router.php?c=linhafatura&a=edit&idLinha=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
+                                            <a href="./router.php?c=linhafatura&a=delete&id=<?= $linhafatura->id ?>" class="btn btn-danger">Apagar</a>
+                                            <?php
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
                             ?>
                             <tr>
-                                <td><?= $linhafatura->id?></td>
-                                <td><?= $linhafatura->produto->descricao?></td>
-                                <td><?= $linhafatura->quantidade ?></td>
-                                <td><?= $linhafatura->valor ?></td>
-                                <td><?= $linhafatura->taxa->descricao ?></td>
-                                <td>%<?= $linhafatura->taxa->valor ?></td>
-                                <td><?= $linhafatura->valor * $linhafatura->quantidade?> €</td>
-                                <td>
-                                    <?php
-                                    if ($fatura->estado->id == 1)
-                                    {
-                                        ?>
-                                        <a href="./router.php?c=linhafatura&a=edit&idLinha=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
-                                        <a href="./router.php?c=linhafatura&a=delete&id=<?= $linhafatura->id ?>" class="btn btn-danger">Apagar</a>
-                                        <?php
-                                    }
-                                    ?>
-                                </td>
+                                <td colspan="4">&nbsp;</td>
+                                <td>Total Líquido</td>
+                                <td><?= $fatura->getSubtotal() ?>€</td>
+                            </tr>
+                            <?= $fatura->taxBox() ?>
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                                <td>Total Bruto</td>
+                                <td><?= $fatura->getTotal() ?>€</td>
                             </tr>
                             <?php
                         }
-                    }
-                    else
-                    {
+                        else
+                        {
+                            ?>
+                            <tr>
+                                <td colspan="5"><strong>Sem faturas</strong></td>
+                            </tr>
+                            <?php
+                        }
                         ?>
-                        <tr>
-                            <td colspan="5"><strong>Sem faturas</strong></td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                    </tbody>
-                </table>
-                <?php
+                        </tbody>
+                    </table>
+                    <?php
 
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>
-        <div class="container-fluid">
-            <div class="text-right mx-5">
-                <?php
-                $subtotal = 0;
-                $iva = 0;
-                $total = 0;
-                if(count($fatura->linhafatura) > 0){
-                    foreach ($fatura->linhafatura as $linhafatura)
-                    {
-                        if($iva <= 0)
-                            $iva = $linhafatura->taxa->valor;
-                        $total_linha = $linhafatura->valor * $linhafatura->quantidade;
-                        $subtotal += $total_linha;
-                        $total += $total_linha + $total_linha * ($linhafatura->taxa->valor/100);
-                    }
-                }
-                ?>
-                Subtotal: <?= $subtotal ?> €<br>
-                Taxa IVA: <?= $iva?> %<br>
-                Total: <?= $total ?> €<br>
-            </div>
+            <p>Fatura processada por <?= $fatura->funcionario->username ?></p>
         </div>
     </div>
 </div>

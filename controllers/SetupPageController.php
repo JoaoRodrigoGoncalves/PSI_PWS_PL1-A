@@ -57,19 +57,6 @@ class SetupPageController extends BaseController
             if ($administrador->is_valid() && $empresa->is_valid() && $administrador->validar_password($_POST['password'], $_POST['re_password'])) {
                 $administrador->save();
                 $empresa->save();
-
-                $unidade = new Unidade(
-                    array('unidade' => 'Un')
-                );
-                $unidade->save();
-
-                $taxa = new Taxa(array(
-                    'valor' => 23,
-                    'descricao' => 'Taxa Normal',
-                    'emvigor' => 1
-                ));
-                $taxa->save();
-
                 $this->RedirectToRoute('login', 'index');
             } else {
                 // Mostrar erros

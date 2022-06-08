@@ -20,7 +20,6 @@ class UnidadeController extends BaseAuthController
     public function store()
     {
         $this->filterByRole(['funcionario', 'administrador']);
-        // TODO: Verificar se todos os dados necessários foram recebidos
         if(isset($_POST['unidade']))
         {
             $unidade = Unidade::create($_POST);
@@ -66,12 +65,13 @@ class UnidadeController extends BaseAuthController
     {
         $this->filterByRole(['funcionario', 'administrador']);
         
-        // TODO: Verificar se todos os dados necessários foram recebidos
-
         try
         {
-            $unidade = Unidade::find($id);
+            if(!isset($_POST['unidade']))
+                throw new Exception('Campos em falta');
 
+
+            $unidade = Unidade::find($id);
             $unidade->update_attributes($_POST);
 
             if($unidade->is_valid()){
@@ -79,8 +79,8 @@ class UnidadeController extends BaseAuthController
                 $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
             }
             else {
-                $this->renderView('unidade', 'update', ['unidade' => $unidade]);
                 //mostrar vista edit passando o modelo como parâmetro
+                $this->renderView('unidade', 'update', ['unidade' => $unidade]);
             }
         }
         catch (Exception $_)
@@ -92,14 +92,20 @@ class UnidadeController extends BaseAuthController
     public function delete($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
-        
-        // TODO: Criar lógica de desativação ao invés de remoção
 
         try
         {
             $unidade = Unidade::find($id);
-            $unidade->delete();
-            $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+
+            if(Produto::count(array('conditions' => array('unidade_id=?', $id))) == 0)
+            {
+                $unidade->delete();
+                $this->RedirectToRoute('unidade', 'index', ['success' => 1]); //redirecionar para o index (sucesso)
+            }
+            else
+            {
+                $this->RedirectToRoute('unidade', 'index', ['success' => 0]); //redirecionar para o index (erro)
+            }
         }
         catch (Exception $_)
         {

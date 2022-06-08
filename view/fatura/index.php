@@ -38,14 +38,13 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Data da Fatura</th>
-                                        <th>Observações</th>
-                                        <th>Estado</th>
+                                        <th class="fit_column">Nº</th>
+                                        <th class="fit_column">Data da Fatura</th>
+                                        <th class="fit_column">Estado</th>
                                         <th>Cliente</th>
-                                        <th>Funcionario</th>
-                                        <th>SubTotal</th>
-                                        <th>Total</th>
+                                        <th class="fit_column">Funcionario</th>
+                                        <th class="fit_column">Total</th>
+                                        <th class="fit_column">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,7 +57,6 @@
                                         <tr>
                                             <td><?= $fatura->id?></td>
                                             <td><?= $fatura->data->format('d-m-Y') ?></td>
-                                            <td><?= $fatura->observacoes ?></td>
                                             <td>
                                                 <?php
                                                 switch ($fatura->estado->id)
@@ -77,24 +75,7 @@
                                             </td>
                                             <td><?= $fatura->cliente->username ?></td>
                                             <td><?= $fatura->funcionario->username ?></td>
-                                            <td>
-                                            <?php
-                                            $subtotal = 0;
-                                            $total = 0;
-                                            if(count($fatura->linhafatura) > 0)
-                                            {
-
-                                                foreach ($fatura->linhafatura as $linhafatura)
-                                                {
-                                                    $total_linha = ($linhafatura->valor * $linhafatura->quantidade);
-                                                    $subtotal += $total_linha;
-                                                    $total += $total_linha + $total_linha * ($linhafatura->taxa->valor/100);
-                                                }
-                                            }
-                                            echo $subtotal;
-                                            ?>
-                                             €</td>
-                                            <td><?=$total?> €</td>
+                                            <td><?= $fatura->getTotal() ?>€</td>
                                             <td>
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-primary">Detalhes</a>
                                                 <?php

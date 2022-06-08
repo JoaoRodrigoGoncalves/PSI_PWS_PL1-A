@@ -21,4 +21,4 @@ use ActiveRecord\Model;
             array('produto'),
             array('taxa')
         );
-    };
+    }

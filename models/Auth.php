@@ -24,7 +24,7 @@ class Auth
         try
         {
             $user = User::find_by_email($email);
-            if($user != null)
+            if($user->ativo == 1)
             {
                 if(password_verify($password, $user->password))
                 {

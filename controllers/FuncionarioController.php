@@ -51,14 +51,12 @@ class FuncionarioController extends BaseAuthController{
 
             if ($funcionario->is_valid()) {
 
-                //TODO: Personalizar o corpo do email com dados da empresa
+                $empresa = Empresa::first();
                 $body = "Bem-vindo ao Fatura+!<br>";
-                $body .= "O administrador da [empresa] adicionou-o ao sistema de faturação Fatura+. Para começar a utilizar a aplicação, utilize o seu email e a password: " . $randomPassword . "<br>";
+                $body .= "O administrador da empresa <b>" . $empresa->designacaosocial . "</b> adicionou-o ao sistema de faturação Fatura+. Para começar a utilizar a aplicação, utilize o seu e-mail e a password: " . $randomPassword . "<br>";
                 $body .= "Cumprimentos,<br>A equipa Fatura+";
 
-                $email = new EmailSystem();
-
-                if($email->sendEmail($funcionario->email, $funcionario->username, 'Bem-vindo ao Fatura+', $body))
+                if(EmailSystem::sendEmail($funcionario->email, $funcionario->username, 'Bem-vindo ao Fatura+', $body))
                 {
                     $funcionario->save();
                     $this->RedirectToRoute('funcionario', 'index');
@@ -128,19 +126,27 @@ class FuncionarioController extends BaseAuthController{
     {
         $this->filterByRole(['administrador']);
 
-        // TODO: Criar lógica de desativação ao invés de remoção
-
         try
         {
             $funcionario = User::find($id);
 
-            if($funcionario->delete())
+            if(Fatura::count(array('conditions' => array('funcionario_id=?', $id))) == 0)
             {
-                $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
+                // Remover funcionário visto que nunca fez nenhuma operação
+                if($funcionario->delete())
+                {
+                    $this->RedirectToRoute('funcionario', 'index', ['success' => 0]);
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+                }
             }
             else
             {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+                $funcionario->update_attribute('ativo', 0);
+                $funcionario->save();
+                $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
             }
         }
         catch (Exception $_)
@@ -151,6 +157,7 @@ class FuncionarioController extends BaseAuthController{
 
     public function passwordReset($id)
     {
+        // TODO: Mudar função para sitio certo e deixar de duplicar código com ClienteController.php
         $this->filterByRole(['administrador']);
 
         try

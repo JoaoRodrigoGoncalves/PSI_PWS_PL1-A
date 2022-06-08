@@ -50,7 +50,7 @@
                                     <th>Unidade</th>
                                     <th>Preço</th>
                                     <th>Taxa</th>
-                                    <th>Ações</th>
+                                    <th class="fit_column">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
