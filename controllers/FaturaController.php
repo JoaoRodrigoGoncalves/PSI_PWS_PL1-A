@@ -138,8 +138,8 @@ class FaturaController extends BaseAuthController{
             $fatura = Fatura::find($id);
             $empresa = Empresa::find(1);
             $dompdf = new Dompdf();
-            // TODO Try to acces external css
-            //$dompdf->setBasePath("./public/dist/css");
+            // TODO Try to correct access external css
+            $dompdf->setBasePath("./public/dist/css");
             //Load heather
             $html = '<!DOCTYPE html>
             <html lang="pt">
@@ -234,13 +234,13 @@ class FaturaController extends BaseAuthController{
             <tr style="text-align: right">
                 <td colspan="4">&nbsp;</td>
                 <td>Total Líquido</td>
-                <td>'. $fatura->getSubtotal() .'€</td>
+                <td>'. round($fatura->getSubtotal(),2) .'€</td>
             </tr>
             '. $fatura->taxBox() .'
             <tr style="text-align: right">
                 <td colspan="4">&nbsp;</td>
                 <td>Total Bruto</td>
-                <td>'. $fatura->getTotal() .'€</td>
+                <td>'. round($fatura->getTotal(),2) .'€</td>
             </tr>
             ';
             $html .= '</tbody></table></div></div><p>Fatura processada por '. $fatura->funcionario->username .'</p></div></div></div></body>';
