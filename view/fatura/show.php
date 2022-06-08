@@ -64,6 +64,9 @@
                     ?>
                     <div class="card-header">
                         <div class="card-tools">
+                            <a class="btn btn-sencondary text-right" href="./router.php?c=fatura&a=pdf&id=<?= $fatura->id ?>">
+                                <img src="./public/dist/img/pdf-icon.png" height="30">
+                            </a>
                             <a class="btn btn-primary" href="./router.php?c=linhafatura&a=create&id=<?= $fatura->id ?>">Adicionar Artigo</a>
                             <a class="btn btn-success" href="#" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?')">Finalizar</a>
                             <a class="btn btn-danger" href="#" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?')">Anular</a>

@@ -342,6 +342,13 @@ else
                         $controller->index();
                     break;
 
+                case 'pdf':
+                    if(isset($_GET['id']))
+                        $controller->pdf($_GET['id']);
+                    else
+                        $controller->index();
+                    break;
+
                 default:
                     $errorController->index('fatura/index');
                     break;
