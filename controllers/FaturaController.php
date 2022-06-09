@@ -15,6 +15,7 @@ class FaturaController extends BaseAuthController{
         {
             $fatura = Fatura::find($id);
             $empresa = Empresa::find(1);
+
             $this->RenderView('fatura', 'show', ['fatura' => $fatura, 'empresa' => $empresa]);
         }
         catch (Exception $_)
@@ -29,12 +30,6 @@ class FaturaController extends BaseAuthController{
 
         $cliente = isset($_GET['idCliente'])? User::find_by_id_and_role($_GET['idCliente'], 'cliente') : new User();
         $this->RenderView('fatura', 'create', ['cliente' => $cliente]); //mostrar a vista create
-    }
-
-    public function selectCliente(){
-        $this->filterByRole(['funcionario', 'administrador']);
-        $clientes = User::find_all_by_role('cliente');
-        $this->RenderView('fatura', 'selectCliente', ['clientes' => $clientes]);
     }
 
     public function store()
@@ -56,7 +51,7 @@ class FaturaController extends BaseAuthController{
         {
             if($fatura->is_valid()){
                 $fatura->save();
-                $this->RedirectToRoute('linhafatura', 'create', ['id' => $fatura->id]); //redirecionar para o index
+                $this->RedirectToRoute('fatura', 'show', ['id' => $fatura->id]); //redirecionar para o index
             }
             else
             {

@@ -44,12 +44,12 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
-                                    <th>Estado</th>
+                                    <th class="fit_column">Estado</th>
                                     <th>Descrição</th>
-                                    <th>Stock</th>
-                                    <th>Unidade</th>
-                                    <th>Preço</th>
-                                    <th>Taxa</th>
+                                    <th class="fit_column">Stock</th>
+                                    <th class="fit_column">Unidade</th>
+                                    <th class="fit_column">Preço</th>
+                                    <th class="fit_column">Taxa</th>
                                     <th class="fit_column">Ações</th>
                                 </tr>
                                 </thead>
@@ -71,12 +71,12 @@
                                             <td><?= $produto->descricao ?></td>
                                             <td><?= $produto->stock ?></td>
                                             <td><?= $produto->unidade->unidade ?></td>
-                                            <td><?= $produto->preco_unitario ?>/<?= $produto->unidade->unidade ?></td>
+                                            <td><?= $produto->preco_unitario ?>€/<?= $produto->unidade->unidade ?></td>
                                             <td><?= $produto->taxa->valor ?>%</td>
                                             <td>
                                                 <a href="./router.php?c=produto&a=show&id=<?= $produto->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $produto->id ?>, '<?= $produto->descricao ?>')">Apagar</a>
+                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $produto->id ?>, '<?= $produto->descricao ?>')">Desativar</a>
                                             </td>
                                         </tr>
                                         <?php

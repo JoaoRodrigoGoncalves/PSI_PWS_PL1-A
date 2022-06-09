@@ -20,10 +20,10 @@ class UnidadeController extends BaseAuthController
     public function store()
     {
         $this->filterByRole(['funcionario', 'administrador']);
-        if(isset($_POST['unidade']))
+
+        try
         {
             $unidade = Unidade::create($_POST);
-
             if($unidade->is_valid())
             {
                 $this->RedirectToRoute('unidade', 'index');
@@ -33,7 +33,7 @@ class UnidadeController extends BaseAuthController
                 $this->RenderView('unidade', 'create', ['unidade' => $unidade]);
             }
         }
-        else
+        catch (Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'unidade/index']);
         }

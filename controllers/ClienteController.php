@@ -195,4 +195,11 @@ class ClienteController extends BaseAuthController{
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
+
+    public function select()
+    {
+        $this->filterByRole(['funcionario', 'administrador']);
+        $clientes = User::find_all_by_role('cliente');
+        $this->RenderView('cliente', 'select', ['clientes' => $clientes]);
+    }
 }

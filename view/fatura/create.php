@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <a href="./router.php?c=fatura&a=selectCliente" class="btn btn-primary">Selecionar Cliente</a>
+                            <a href="./router.php?c=cliente&a=select" class="btn btn-primary">Selecionar Cliente</a>
                             <input type="submit" class="btn btn-success" value="Continuar">
                         </div>
                     </form>

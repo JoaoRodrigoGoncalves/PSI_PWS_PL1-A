@@ -206,6 +206,10 @@ else
                     $controller->resetPassword($_GET['id']);
                     break;
 
+                case 'select':
+                    $controller->select();
+                    break;
+
                 default:
                     $errorController->index('registo/index');
                     break;
@@ -262,6 +266,10 @@ else
 
                 case 'delete':
                     $controller->delete($_GET['id']);
+                    break;
+
+                case 'select':
+                    $controller->select($_GET['callbackRoute']);
                     break;
 
                 default:
@@ -323,10 +331,6 @@ else
                     $controller->create();
                     break;
 
-                case 'selectCliente':
-                    $controller->selectCliente();
-                    break;
-
                 case 'store':
                     $controller->store();
                     break;
@@ -336,10 +340,7 @@ else
                     break;
 
                 case 'delete':
-                    if(isset($_GET['id']))
-                        $controller->delete($_GET['id']);
-                    else
-                        $controller->index();
+                    $controller->delete($_GET['id']);
                     break;
 
                 default:
@@ -351,6 +352,7 @@ else
         case "linhafatura":
             $controllerFatura = new FaturaController();
 
+            // Impedir aceder à linha fatura sem ter um id de fatura e um idLinha
             if(!isset($_GET['id']) && !isset($_GET['idLinha']))
                 $controllerFatura->index();
 
@@ -359,14 +361,6 @@ else
             {
                 case 'create':
                     $controller->create($_GET['id']);
-                    break;
-
-                case 'selectProduto':
-                    if(isset($_GET['destiny'])){
-                        $id = $_GET['id'] ?? $_GET['idLinha'];
-                        $controller->selectProduto($id, $_GET['destiny']);
-                    }else
-                        $controllerFatura->index();
                     break;
 
                 case 'store':
@@ -382,7 +376,7 @@ else
                     break;
 
                 case 'delete':
-                    $controller->delete($_GET['id']);
+                    $controller->delete($_GET['idLinha']);
                     break;
 
                 default:

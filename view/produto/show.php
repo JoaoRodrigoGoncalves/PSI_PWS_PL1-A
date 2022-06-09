@@ -26,11 +26,11 @@
                             <h2 class="d-inline p-2"><?=$produto->descricao?></h2>
                             <div class="card-tools">
                                 <div class="btn-toolbar">
-                                    <div class="btn-group mr-2" style="width: 150px; float:right;">
-                                        <a href="router.php?c=cliente&a=edit&id=<?=$produto->id ?>" class="btn btn-primary" role="button">Editar</a>
+                                    <div class="btn-group mr-2">
+                                        <a href="router.php?c=produto&a=edit&id=<?=$produto->id ?>" class="btn" role="button"><i class="fas fa-edit" data-toggle="tooltip" data-placement="left" title="Editar"></i></a>
                                     </div>
-                                    <div class="btn-group" style="width: 150px; float:right;">
-                                        <a href="#" class="btn btn-danger " data-toggle="modal" data-target="#modalDelete">Apagar</a>
+                                    <div class="btn-group">
+                                        <a href="#" class="btn" data-toggle="modal" data-target="#modalDelete"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="left" title="Apagar"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +39,10 @@
                             <div class="blockquote mb-0">
                                 <div class="row">
                                     <div class="col-12 pt-4">
-                                        <p><b>Ref:</b> <?=$produto->id ?></p>
+                                        <p><b>Referência:</b> <?=$produto->id ?></p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p><b>Estado:</b> <?=$produto->ativo ? '<span class="badge bg-success">Ativo</span>' : '<span class="badge bg-danger">Desativado</span>' ?></p>
                                     </div>
                                     <div class="col-12">
                                         <p><b>Descrição:</b> <?=$produto->descricao?></p>
