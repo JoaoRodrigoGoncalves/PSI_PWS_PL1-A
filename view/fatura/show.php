@@ -171,7 +171,7 @@
     function openModal(action, question)
     {
         document.getElementById('modal_question').innerText = question;
-        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=cliente&a=' + action + '&id=<?= $fatura->id ?>');
+        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=fatura&a=' + action + '&id=<?= $fatura->id ?>');
 
         new bootstrap.Modal(document.getElementById('modalAction'), {
             keyboard: true
