@@ -121,7 +121,19 @@ class FaturaController extends BaseAuthController{
             $fatura->update_attributes(array(
                 'estado_id' => 3
             ));
-            $fatura->save();
+            
+            foreach ($fatura->linhafatura as $linhafatura){
+                $produto = Produto::find($linhafatura->produto->id);
+                $produto->update_attributes(array(
+                    'stock' => $produto->stock + $linhafatura->quantidade
+                ));
+
+                if($produto->is_valid()) {
+                    $produto->save();
+                    $fatura->save();
+                }
+            }
+
             $this->RedirectToRoute('fatura', 'index');
         }catch (Exception $_ex){
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
