@@ -241,21 +241,47 @@ class FaturaController extends BaseAuthController{
                 </tr>
                 ';
             }
-            //Load valores da fatura
+            $html .= '</tbody></table>';
+            //Load Taxas da fatura
             $html .= '
-            <tr style="text-align: right">
-                <td colspan="4">&nbsp;</td>
-                <td>Total Líquido</td>
-                <td>'. round($fatura->getSubtotal(),2) .'€</td>
-            </tr>
-            '. $fatura->taxBox() .'
-            <tr style="text-align: right">
-                <td colspan="4">&nbsp;</td>
-                <td>Total Bruto</td>
-                <td>'. round($fatura->getTotal(),2) .'€</td>
-            </tr>
+            <div class="row">
+                <div class="column">
+                    <table class="info-iva">
+                        <thead>
+                            <tr>
+                                <th>Taxa IVA</th>
+                                <th>Base</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        '. $fatura->taxBox() .'
+                        </tbody>
+                    </table>
+                    <table> 
+                </div>
+                <div class="column">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="total-fatura">Total IVA:</th>
+                                <td>'.round($fatura->getTotal() - $fatura->getSubtotal(),2).' €</td>
+                            </tr>
+                            <tr>
+                                <th class="total-fatura">Total Líquido:</th>
+                                <td>'.round( $fatura->getSubtotal(),2).' €</td>
+                            </tr>
+                            <tr>
+                                <th class="total-fatura">Total:</th>
+                                <td><b>'.round( $fatura->getTotal(),2).' €</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p>Fatura processada por '. $fatura->funcionario->username .'</p>
+            </div></div></body>
             ';
-            $html .= '</tbody></table></div></div><p>Fatura processada por '. $fatura->funcionario->username .'</p></div></div></div></body>';
             //
             $dompdf->loadHtml($html);
             $dompdf->setPaper('A4');

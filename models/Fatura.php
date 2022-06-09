@@ -60,7 +60,7 @@ use ActiveRecord\Model;
 
                 foreach ($valores_taxas as $taxa => $valor)
                 {
-                    $return_string .= '<tr><td colspan="4">&nbsp;</td><td>IVA ' . $taxa . '%</td><td>' . ($valor * ($taxa/100)) . '€</td></tr>';
+                    $return_string .= '<tr><td>' . $taxa . '%</td><td>'. $valor .' €</td><td>' . ($valor * ($taxa/100)) . '€</td></tr>';
                 }
             }
 

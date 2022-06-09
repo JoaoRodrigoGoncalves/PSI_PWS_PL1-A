@@ -1,20 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+
+.row {
+    margin-left:-5px;
+    margin-right:-5px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+}
 
 .info-fatura{
     margin-bottom: 15px;
 }
 
-table.info-fatura{
-    border:0px;
-}
-
-td.info-fatura{
-    border: 0px;
-    text-align: left;
-}
-
-th.info-fatura{
-    border: 0px;
-}
 
 table, th, td {
     border: 1px solid;
@@ -31,4 +33,49 @@ th {
 td {
     padding: 10px;
     text-align: right;
+}
+
+table.info-fatura{
+    border:0px;
+}
+
+td.info-fatura{
+    border: 0px;
+    text-align: left;
+}
+
+th.info-fatura{
+    border: 1px;
+}
+
+
+.iva-div{
+    display: inline-block;
+    float: left;
+}
+
+.total-div {
+    display: inline-block;
+    float: right;
+}
+
+table.info-iva{
+    border: 1px solid;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th.info-iva{
+    border: 1px solid;
+    padding: 10px;
+}
+
+td.info-iva{
+    border: 1px solid;
+    padding: 10px;
+    text-align: right;
+}
+
+th.total-fatura{
+    text-align: left;
 }
