@@ -76,7 +76,9 @@
                                             <td>
                                                 <a href="./router.php?c=produto&a=show&id=<?= $produto->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $produto->id ?>, '<?= $produto->descricao ?>')">Desativar</a>
+                                                <?php if($produto->ativo == 1){ ?>
+                                                    <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $produto->id ?>, '<?= $produto->descricao ?>')">Desativar</a>
+                                                <?php } ?>
                                             </td>
                                         </tr>
                                         <?php

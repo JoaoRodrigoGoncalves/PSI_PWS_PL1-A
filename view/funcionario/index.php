@@ -64,26 +64,13 @@
                                             <td><?= $funcionario->username ?></td>
                                             <td><?= $funcionario->email ?></td>
                                             <td><?= $funcionario->nif ?></td>
-                                            <td>
-                                                <?php
-                                                if($funcionario->ativo == 1)
-                                                {
-                                                ?>
-                                                    <span class="badge bg-success">Ativo</span>
-                                                <?php
-                                                }
-                                                else
-                                                {
-                                                ?>
-                                                    <span class="badge bg-danger">Desativado</span>
-                                                <?php
-                                                }
-                                                ?>
-                                            </td>
+                                            <td><?= $funcionario->ativo == 1 ? '<span class="badge bg-success">Ativo</span>': '<span class="badge bg-danger">Desativado</span>' ?></td>
                                             <td>
                                                 <a href="./router.php?c=funcionario&a=show&id=<?= $funcionario->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=funcionario&a=edit&id=<?= $funcionario->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?=  $funcionario->id ?>)">Apagar</a>
+                                                <?php if($funcionario->ativo == 1){ ?>
+                                                    <a href="#" class="btn btn-danger" onclick="deleteEntity(<?=  $funcionario->id ?>)">Desativar</a>
+                                                <?php } ?>
                                             </td>
                                         </tr>
                                         <?php

@@ -50,6 +50,7 @@
                                     <th>Email</th>
                                     <th>NIF</th>
                                     <th>Morada</th>
+                                    <th class="fit_column">Estado</th>
                                     <th class="fit_column">Ações</th>
                                 </tr>
                                 </thead>
@@ -65,10 +66,13 @@
                                             <td><?= $cliente->email ?></td>
                                             <td><?= $cliente->nif ?></td>
                                             <td><?= $cliente->morada . ' ' . $cliente->codigopostal . ' ' . $cliente->localidade ?></td>
+                                            <td><?= $cliente->ativo == 1 ? '<span class="badge bg-success">Ativo</span>': '<span class="badge bg-danger">Desativado</span>' ?></td>
                                             <td>
                                                 <a href="./router.php?c=cliente&a=show&id=<?= $cliente->id ?>" class="btn btn-success">Detalhes</a>
                                                 <a href="./router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $cliente->id ?>)">Desativar</a>
+                                                <?php if($cliente->ativo == 1) {?>
+                                                    <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $cliente->id ?>)">Desativar</a>
+                                                <?php } ?>
                                             </td>
                                         </tr>
                                     <?php
