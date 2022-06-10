@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./public/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="./public/plugins/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="./public/dist/css/faturamais_custom.css">
+    <link rel="icon" href="./public/dist/img/FaturaMaisLogo.png">
     <title><?=APP_NAME ?></title>
 </head>
 <body class="hold-transition sidebar-mini">

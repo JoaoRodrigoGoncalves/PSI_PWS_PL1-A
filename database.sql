@@ -89,7 +89,7 @@ CREATE TABLE produtos (
         REFERENCES unidades (id)
 )ENGINE=INNODB;
 
-CREATE TABLE linhas_faturas (
+CREATE TABLE linha_faturas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador da linha de faturas',
     fatura_id INTEGER NOT NULL COMMENT 'Identificador da fatura asociada',
     produto_id INTEGER NOT NULL COMMENT 'Identificador do produto asociado',
