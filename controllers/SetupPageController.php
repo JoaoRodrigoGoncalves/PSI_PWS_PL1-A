@@ -1,5 +1,7 @@
 <?php
 require_once './controllers/BaseController.php';
+require_once 'models/Empresa.php';
+require_once 'models/User.php';
 
 class SetupPageController extends BaseController
 {
@@ -16,7 +18,7 @@ class SetupPageController extends BaseController
         }
         else
         {
-            $this->RenderView('setup', 'index');
+            $this->RenderView('setup', 'index', ['admin' => new User(), 'empresa' => new Empresa()]);
         }
     }
 
@@ -60,7 +62,7 @@ class SetupPageController extends BaseController
                 $this->RedirectToRoute('login', 'index');
             } else {
                 // Mostrar erros
-                $this->RenderView('setup', 'index', ['admin' => $administrador, 'empresa' => $empresa]);
+                $this->RenderView('setup', 'index');
             }
         }
         else

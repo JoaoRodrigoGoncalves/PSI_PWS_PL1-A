@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/LinhaFatura.php';
+
 class LinhaFaturaController extends BaseAuthController{
 
     public function create($idFatura)
@@ -12,7 +14,7 @@ class LinhaFaturaController extends BaseAuthController{
             $taxas_iva = Taxa::all(array('conditions' => array('emVigor = 1')));
             $produto = isset($_GET['idProduto']) ? Produto::find($_GET['idProduto']) : new Produto();
 
-            $this->renderView('linhafatura', 'create', ['fatura' => $fatura, 'taxas_iva' => $taxas_iva, 'produto' => $produto]); //mostrar a vista create
+            $this->renderView('linhafatura', 'create', ['fatura' => $fatura, 'taxas_iva' => $taxas_iva, 'produto' => $produto, 'linhaFatura' => new LinhaFatura()]); //mostrar a vista create
         }
         catch(Exception $_)
         {
@@ -26,7 +28,7 @@ class LinhaFaturaController extends BaseAuthController{
 
         if(!isset($_POST['idProduto'], $_POST['quantidade'], $_POST['taxa_id']) && !is_numeric($_POST['quantidade']))
             $this->RedirectToRoute('linhafatura', 'create',['id' => $idFatura, 'idProduto' => $_POST['idProduto']]);
-
+        
         try
         {
             $produto = Produto::find($_POST['idProduto']);
@@ -35,12 +37,13 @@ class LinhaFaturaController extends BaseAuthController{
             if(LinhaFatura::count(array('conditions' => array('fatura_id=? and produto_id=?', $idFatura, $_POST['idProduto']))) == 0)
             {
                 $linhaFatura = new LinhaFatura(array(
-                    'valor' => $produto->preco_unitario,
-                    'quantidade' => $_POST['quantidade'],
-                    'produto_id' => $_POST['idProduto'],
-                    'taxa_id' => $_POST['taxa_id'],
-                    'fatura_id' => $idFatura
+                    'valor'         => $produto->preco_unitario,
+                    'quantidade'    => $_POST['quantidade'],
+                    'produto_id'    => $_POST['idProduto'],
+                    'taxa_id'       => $_POST['taxa_id'],
+                    'fatura_id'     => $idFatura
                 ));
+                
             }
             else
             {

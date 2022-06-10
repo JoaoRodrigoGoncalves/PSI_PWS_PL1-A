@@ -22,7 +22,7 @@
         <div class="container">
             <div class="row mt-2">
                 <div class="col">
-                    <form action="./router.php?c=linhafatura&a=store&id=<?= $fatura->id ?>" method="post">
+                    <form action="./router.php?c=linhafatura&a=store&id=<?=$fatura->id?>" method="post">
                         <div class="row">
                             <div class="col-12 col-sm-2">
                                 <label for="idProduto">Referência</label>
@@ -40,6 +40,9 @@
                                 <label for="quantidade">Quantidade</label>
                                 <input type="number" step="0.01" id="quantidade" name="quantidade" class="form-control"
                                        value="<?= (isset($linhaFatura) ? $linhaFatura->quantidade : '1') ?>" required>
+                                <?php if($linhaFatura -> errors && $linhaFatura -> errors -> is_invalid('quantidade')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $linhaFatura->errors->on('quantidade') ?></span>
+                                <?php } ?>  
                             </div>
                             <div class="col-12 col-sm-10">
                                 <label class="d-none d-sm-block">&nbsp;</label> <!-- HACK -->
@@ -54,7 +57,7 @@
                             </div>
                             <div class="mb-3">
                                 <input type="submit" class="btn btn-success" value="Adicionar">
-                                <a href="./router.php?c=produto&a=select&idLinha=<?=$fatura->id?>&callbackRoute=linhafatura/create" class="btn btn-primary">Trocar Artigo</a>
+                                <a href="./router.php?c=produto&a=select&idFatura=<?=$fatura->id?>&callbackRoute=linhafatura/create" class="btn btn-primary">Trocar Artigo</a>
                             </div>
                         </div>
                     </form>

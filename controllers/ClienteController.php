@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/User.php';
+
 class ClienteController extends BaseAuthController{
     public function index()
     {
@@ -25,7 +27,7 @@ class ClienteController extends BaseAuthController{
     public function create()
     {
         $this->loginFilter();
-        $this->RenderView('cliente', 'create'); //mostrar a vista create
+        $this->RenderView('cliente', 'create', ['cliente' => new User()]); //mostrar a vista create
     }
 
     public function store()
@@ -63,7 +65,7 @@ class ClienteController extends BaseAuthController{
                     if($mail->sendEmail($cliente->email, $cliente->username, 'Conta cliente em ' . $empresa->designacaosocial, $body))
                     {
                         $cliente->save();
-                        $this->RedirectToRoute('cliente', 'index', ['success' => 1]); //redirecionar para o index
+                        $this->RedirectToRoute('cliente', 'index'); //redirecionar para o index
                     }
                     else
                     {
@@ -73,7 +75,7 @@ class ClienteController extends BaseAuthController{
                 }
                 else {
                     //mostrar vista create passando o modelo como parâmetro
-                    $this->renderView('cliente', 'create', ['clientes' => $cliente]);
+                    $this->renderView('cliente', 'create', ['cliente' => $cliente]);
                 }
             }
             else
@@ -86,6 +88,7 @@ class ClienteController extends BaseAuthController{
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
+
     public function edit($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
@@ -100,41 +103,32 @@ class ClienteController extends BaseAuthController{
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
+    
     public function update($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
-
-        if(isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'], $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
+        
+        try
         {
-            try
+            $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
+            $cliente = User::find($id);
+            $cliente->update_attributes($_POST);
+            if($cliente->is_valid())
             {
-                $cliente = User::find($id);
-
-                $cliente->update_attributes(array(
-                    'username' => $_POST['username'],
-                    'email' => $_POST['email'],
-                    'telefone' => $_POST['telefone'],
-                    'nif' => $_POST['nif'],
-                    'morada' => $_POST['morada'],
-                    'codigopostal' => $_POST['codigopostal'],
-                    'localidade' => $_POST['localidade']
-                ));
-
-                if($cliente->is_valid()){
-                    $cliente->save();
-                    $this->RedirectToRoute('cliente', 'index', ['success' => 1]);//redirecionar para o index
-                }
-                else {
-                    $this->renderView('cliente', 'edit', ['clientes' => $cliente]);
-                    //mostrar vista edit passando o modelo como parâmetro
-                }
+                $cliente->save();
+                $this->RedirectToRoute('cliente', 'index', ['success' => 1]);//redirecionar para o index
             }
-            catch (Exception $_)
-            {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'client/index']);
+            else {
+                $this->renderView('cliente', 'edit', ['cliente' => $cliente]);
+                //mostrar vista edit passando o modelo como parâmetro
             }
         }
+        catch (Exception $_)
+        {
+            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'client/index']);
+        }
     }
+    
     
     public function delete($id)
     {
@@ -195,7 +189,6 @@ class ClienteController extends BaseAuthController{
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
-
     public function select()
     {
         $this->filterByRole(['funcionario', 'administrador']);

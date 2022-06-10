@@ -1,19 +1,32 @@
 <?php
 
 use Dompdf\Dompdf;
+require_once 'models/Fatura.php';
+require_once 'models/User.php';
+require_once 'models/Auth.php';
 
 class FaturaController extends BaseAuthController{
 
     public function index()
     {
-        $this->filterByRole(['funcionario', 'administrador']);
-        $faturas = Fatura::all();
-        $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
+        $auth = new Auth();
+        
+        if(in_array($auth->getRole(), ['funcionario', 'administrador'])){
+            $faturas = Fatura::all();
+            $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
+        }
+        
+        if(in_array($auth->getRole(), ['cliente'])){
+            $cliente = User::find_by_email($_SESSION['email']);
+            $faturas = Fatura::find('all', array('conditions' => array('estado_id =? AND cliente_id =?', 2, 'cliente' => $cliente->id)));
+            $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
+        }
+        
     }
 
     public function show($id)
     {
-        $this->filterByRole(['funcionario', 'administrador']);
+        $this->filterByRole(['cliente', 'funcionario', 'administrador']);
         try
         {
             $fatura = Fatura::find($id);

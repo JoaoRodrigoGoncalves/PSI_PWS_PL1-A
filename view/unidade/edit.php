@@ -25,6 +25,9 @@
                         <div class="mb-3">
                             <label for="inputUnidade" class="form-label">Unidade:</label>
                             <input type="text" class="form-control" id="unidade" name="unidade" value="<?=$unidade->unidade?>"/>
+                            <?php if($unidade -> errors && $unidade -> errors -> is_invalid('unidade')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $unidade->errors->on('unidade') ?></span>
+                            <?php } ?>  
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button> 
                         <a href="./router.php?c=unidade&a=index" class="btn btn-danger">Cancelar</a>  

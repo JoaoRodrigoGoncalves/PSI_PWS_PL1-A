@@ -25,41 +25,52 @@
                         <div class="col col-6">
                             <div class="mb-3">
                                 <label for="username">Nome de utilizador</label>
-                                <input type="text" name="username" id="username"
-                                       class="form-control" maxlength="100"
-                                       required <?= (isset($func->errors) ? 'value="' . $func->username . '"' : '') ?>>
+                                <input type="text" name="username" id="username" class="form-control" maxlength="100" required value="<?= $funcionario->username ?>">
+                                <?php if($funcionario -> errors && $funcionario -> errors -> is_invalid('username')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $funcionario->errors->on('username') ?></span>
+                                <?php } ?>  
                             </div>
                             <div class="mb-3">
                                 <label for="func_email">Email</label>
-                                <input type="email" name="func_email" id="func_email"
-                                       class="form-control" maxlength="100"
-                                       required <?= (isset($func->errors)) ? 'value="' . $func->email . '"' : '' ?>>
+                                <input type="email" name="func_email" id="func_email" class="form-control" maxlength="100" required value="<?= $funcionario->email ?>">
+                                <?php if($funcionario -> errors && $funcionario -> errors -> is_invalid('email')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $funcionario->errors->on('email') ?></span>
+                                <?php } ?> 
                             </div>
                             <div class="mb-3">
                                 <label for="func_telefone">Telefone</label>
-                                <input type="number" name="func_telefone" id="func_telefone"
-                                       class="form-control" required maxlength="9"
-                                    <?= (isset($func->errors) ) ? 'value="' . $func->telefone . '"' : '' ?>>
+                                <input type="number" name="func_telefone" id="func_telefone" class="form-control" required maxlength="9" value="<?= $funcionario->telefone ?>">
+                                <?php if($funcionario -> errors && $funcionario -> errors -> is_invalid('telefone')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $funcionario->errors->on('telefone') ?></span>
+                                <?php } ?> 
                             </div>
                             <div class="mb-3">
                                 <label for="func_NIF">Número de Identificação Fiscal</label>
-                                <input type="number" name="func_NIF" id="func_NIF"
-                                       class="form-control" required maxlength="9"
-                                    <?= (isset($func->errors) ) ? 'value="' . $func->nif . '"' : '' ?>>
+                                <input type="number" name="func_NIF" id="func_NIF" class="form-control" required maxlength="9" value="<?= $funcionario->nif ?>">
+                                <?php if($funcionario -> errors && $funcionario -> errors -> is_invalid('nif')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $funcionario->errors->on('nif') ?></span>
+                                <?php } ?> 
                             </div>
                             <div class="mb-3">
                                 <label for="func_morada">Morada</label>
-                                <input type="text" name="func_morada" id="func_morada" class="form-control" required maxlength="100" <?= (isset($func->errors) ) ? 'value="' . $func->morada . '"' : '' ?>>
+                                <input type="text" name="func_morada" id="func_morada" class="form-control" required maxlength="100" value="<?= $funcionario->morada ?>">
+                                <?php if($funcionario -> errors && $funcionario -> errors -> is_invalid('morada')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $funcionario->errors->on('morada') ?></span>
+                                <?php } ?> 
                             </div>
                             <div class="mb-3">
                                 <label for="func_codigoPostal">Código Postal</label>
-                                <input type="text" name="func_codigoPostal" id="func_codigoPostal" class="form-control" required maxlength="8" <?= (isset($func->errors) ) ? 'value="' . $func->codigopostal . '"' : '' ?>>
+                                <input type="text" name="func_codigoPostal" id="func_codigoPostal" class="form-control" required maxlength="8" value="<?= $funcionario->codigopostal ?>">
+                                <?php if($funcionario -> errors && $funcionario -> errors -> is_invalid('codigopostal')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $funcionario->errors->on('codigopostal') ?></span>
+                                <?php } ?> 
                             </div>
                             <div class="mb-3">
                                 <label for="func_localidade">Localidade</label>
-                                <input type="text" name="func_localidade" id="func_localidade"
-                                       class="form-control" required maxlength="40"
-                                    <?= (isset($func->errors) ) ? 'value="' . $func->localidade . '"' : '' ?>>
+                                <input type="text" name="func_localidade" id="func_localidade" class="form-control" required maxlength="40" value="<?= $funcionario->localidade ?>">
+                                <?php if($funcionario -> errors && $funcionario -> errors -> is_invalid('localidade')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $funcionario->errors->on('localidade') ?></span>
+                                <?php } ?> 
                             </div>
                             <input type="submit" class="btn btn-primary" value="Gravar">
                             <a href="./router.php?c=cliente&a=index" class="btn btn-danger">Cancelar</a>

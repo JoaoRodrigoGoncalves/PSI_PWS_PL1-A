@@ -1,7 +1,6 @@
 <?php
 
-use ActiveRecord\ActiveRecordException;
-use ActiveRecord\RecordNotFound;
+require_once 'models/Empresa.php';
 
 class EmpresaController extends BaseAuthController
 {

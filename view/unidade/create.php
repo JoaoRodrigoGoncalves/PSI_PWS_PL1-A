@@ -23,7 +23,10 @@
                 <div class="col">
                     <form action="./router.php?c=unidade&a=store" method="post">
                         <label for="unidade">Unidade</label>
-                        <input type="text" id="unidade" name="unidade" class="form-control">
+                        <input type="text" id="unidade" name="unidade" class="form-control" value="<?= $unidade->unidade ?>">
+                        <?php if($unidade -> errors && $unidade -> errors -> is_invalid('unidade')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $unidade->errors->on('unidade') ?></span>
+                        <?php } ?>  
                         <input type="submit" class="btn btn-primary mt-2" value="Guardar">
                     </form>
                 </div>

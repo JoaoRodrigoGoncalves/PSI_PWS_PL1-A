@@ -65,7 +65,7 @@
                                 </p>
                             </a>
                         </li>
-                        <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                        <?php if(in_array($userRole, ['cliente', 'funcionario', 'administrador'])){ ?>
                             <li class="nav-item">
                                 <a href="./router.php?c=fatura&a=index" class="nav-link">
                                     <i class="nav-icon fas fa-file-invoice"></i>
@@ -74,6 +74,8 @@
                                     </p>
                                 </a>
                             </li>
+                        <?php } ?>
+                        <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
                             <li class="nav-item">
                                 <a href="./router.php?c=cliente&a=index" class="nav-link">
                                     <i class="nav-icon fas fa-user"></i>

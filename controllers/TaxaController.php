@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/Taxa.php';
+
 class TaxaController extends BaseAuthController{
     public function index()
     {
@@ -11,12 +13,14 @@ class TaxaController extends BaseAuthController{
     public function create()
     {
         $this->filterByRole(['funcionario', 'administrador']);
-        $this->renderView('taxa', 'create');//mostrar a vista create
+        $this->renderView('taxa', 'create', ['taxa' => new Taxa()]);//mostrar a vista create
     }
     
     public function store()
     {
         $this->filterByRole(['funcionario', 'administrador']);
+
+        // TODO: Verificar se todos os dados necessários foram recebidos
 
         if($_POST['emvigor']){
             $_POST['emvigor'] = 1;
@@ -42,7 +46,13 @@ class TaxaController extends BaseAuthController{
         try
         {
             $taxas = Taxa::find($id);
-            $this->renderView('taxa', 'edit', ['taxas' => $taxas]);
+            if (is_null($taxas)) {
+                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'taxa/index']);
+            }
+            else {
+                //mostrar a vista edit passando os dados por parâmetro
+                $this->renderView('taxa', 'edit', ['taxas' => $taxas]);
+            }
         }
         catch(Exception $_)
         {
@@ -53,6 +63,8 @@ class TaxaController extends BaseAuthController{
     public function update($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
+
+        // TODO: Verificar se todos os dados necessários foram recebidos
 
         try
         {
@@ -66,14 +78,14 @@ class TaxaController extends BaseAuthController{
 
             $taxas->update_attributes($_POST);
 
-            if($taxas->is_valid()){
+            if($taxas->is_valid())
+            {
                 $taxas->save();
                 $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
             }
-            else
-            {
+            else {
                 //mostrar vista edit passando o modelo como parâmetro
-                $this->renderView('taxa', 'update', ['taxas' => $taxas]);
+                $this->renderView('taxa', 'edit', ['taxas' => $taxas]);
             }
         }
         catch(Exception $_)
@@ -86,11 +98,12 @@ class TaxaController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
+        // TODO: Criar lógica de desativação do invés de remoção
+
         try
         {
             $taxas = Taxa::find($id);
-            $taxas->update_attribute('emvigor', 0);
-            $taxas->save();
+            $taxas->delete();
             $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
         }
         catch(Exception $_)

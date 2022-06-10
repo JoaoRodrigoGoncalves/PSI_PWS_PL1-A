@@ -29,13 +29,16 @@
                         </div>
                         <div class="mb-3">
                             <label for="descricao">Descrição</label>
-                            <input type="text" id="descricao" name="descricao" class="form-control" value="<?= (isset($produto->errors) ? $produto->descricao : '') ?>" required>
-                            <?= (isset($produto->errors) ? $produto->errors->on('descricao') : '') ?>
-                        </div>
+                            <input type="text" id="descricao" name="descricao" class="form-control" value="<?= $produto->descricao ?>" required>
+                            <?php if($produto -> errors && $produto -> errors -> is_invalid('descricao')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $produto->errors->on('descricao') ?></span>
+                            <?php } ?> </div>
                         <div class="mb-3">
                             <label for="preco_unitario">Preço Unitário</label>
-                            <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" class="form-control" value="<?= (isset($produto->errors) ? $produto->preco_unitario : '') ?>" required>
-                            <?= (isset($produto->errors) ? $produto->errors->on('preco_unitario') : '') ?>
+                            <input type="number" step="0.01" id="preco_unitario" name="preco_unitario" class="form-control" value="<?= $produto->preco_unitario ?>" required>
+                            <?php if($produto -> errors && $produto -> errors -> is_invalid('preco_unitario')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $produto->errors->on('preco_unitario') ?></span>
+                            <?php } ?> 
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="taxa_id">Taxa de IVA</label>

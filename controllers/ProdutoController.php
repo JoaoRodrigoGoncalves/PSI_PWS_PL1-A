@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/Produto.php';
+
 class ProdutoController extends BaseAuthController
 {
     public function index()
@@ -44,7 +46,7 @@ class ProdutoController extends BaseAuthController
         }
         else
         {
-            $this->RenderView('produto', 'create', ['taxas_iva' => $taxas_iva, 'unidades' => $unidades]);
+            $this->RenderView('produto', 'create', ['produto' => new Produto(), 'taxas_iva' => $taxas_iva, 'unidades' => $unidades]);
         }
     }
 
@@ -52,21 +54,21 @@ class ProdutoController extends BaseAuthController
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
-        $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
-        $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
+            $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
+            $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
+            $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
 
-        $produto = Produto::create($_POST);
+            $produto = Produto::create($_POST);
 
-        if($produto->is_valid())
-        {
-            $this->RedirectToRoute('produto', 'index');
+            if($produto->is_valid())
+            {
+                $this->RedirectToRoute('produto', 'index');
+            }
+            else
+            {
+                $this->RenderView('produto', 'create', ['produto' => $produto]);
+            }
         }
-        else
-        {
-            $this->RenderView('produto', 'create', ['produto' => $produto]);
-        }
-    }
 
     public function edit($id)
     {
@@ -90,22 +92,23 @@ class ProdutoController extends BaseAuthController
 
         try
         {
-            $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
-            $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
-            $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
+                $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
+                $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
+                $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
 
-            $produto = Produto::find($id);
-            $produto->update_attributes($_POST);
+                $produto = Produto::find($id);
+                $produto->update_attributes($_POST);
 
-            if($produto->is_valid())
-            {
-                $produto->save();
-                $this->RedirectToRoute('produto', 'index');
-            }
-            else
-            {
-                $this->RenderView('produto', 'create', ['produto' => $produto]);
-            }
+                if($produto->is_valid())
+                {
+                    $produto->save();
+                    $this->RedirectToRoute('produto', 'index');
+                }
+                else
+                {
+                    $this->RenderView('produto', 'edit', ['produto' => $produto, 'taxas_iva' => Taxa::all(array('conditions' => array('emvigor=1'))), 'unidades' => Unidade::all()]);
+                }
+
         }catch (Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
@@ -120,14 +123,14 @@ class ProdutoController extends BaseAuthController
             $produto = Produto::find($id);
             $produto->update_attribute('ativo', 0);
             $produto->save();
-            $this->RedirectToRoute('produto', 'index', ['status' => 1]);
+            $this->RedirectToRoute('produto', 'index', ['status' => 1]); // OK, mas com aviso de desativação
         }
         catch(Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
-
+    
     public function select($callbackRoute){
 
         $this->filterByRole(['funcionario', 'administrador']);
@@ -138,5 +141,4 @@ class ProdutoController extends BaseAuthController
 
         $this->RenderView('produto', 'select', ['produtos' => $produtos, 'callbackRoute' => $callbackRoute]);
     }
-
 }

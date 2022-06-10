@@ -40,6 +40,9 @@
                                 <label for="quantidade">Quantidade</label>
                                 <input type="number" step="0.01" id="quantidade" name="quantidade" class="form-control"
                                        value="<?= (isset($linhafatura) ? $linhafatura->quantidade : '1') ?>" required>
+                                <?php if($linhaFatura -> errors && $linhaFatura -> errors -> is_invalid('quantidade')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $linhaFatura->errors->on('quantidade') ?></span>
+                                <?php } ?>  
                             </div>
                             <div class="col-12 col-sm-10">
                                 <label class="d-none d-sm-block">&nbsp;</label> <!-- HACK -->

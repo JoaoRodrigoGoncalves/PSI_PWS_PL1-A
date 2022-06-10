@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/User.php';
+
 class FuncionarioController extends BaseAuthController{
     public function index()
     {
@@ -25,50 +27,51 @@ class FuncionarioController extends BaseAuthController{
     public function create()
     {
         $this->filterByRole(['administrador']);
-        $this->renderView('funcionario', 'create');//mostrar a vista create
+        $this->renderView('funcionario', 'create', ['funcionario' => new User()]);//mostrar a vista create
     }
     
     public function store()
     {
         $this->filterByRole(['administrador']);
+        if(isset($_POST['username'], $_POST['func_email'], $_POST['func_telefone'], $_POST['func_NIF'],
+            $_POST['func_morada'], $_POST['func_codigoPostal'], $_POST['func_localidade'])) {
 
-        $randomPassword = bin2hex(random_bytes(10));
+            $randomPassword = bin2hex(random_bytes(10));
 
-        $funcionario = new User(array(
-            'username' => $_POST['username'],
-            'password' => password_hash($randomPassword, PASSWORD_BCRYPT),
-            'email' => $_POST['func_email'],
-            'telefone' => $_POST['func_telefone'],
-            'nif' => $_POST['func_NIF'],
-            'morada' => $_POST['func_morada'],
-            'codigopostal' => $_POST['func_codigoPostal'],
-            'localidade' => $_POST['func_localidade'],
-            'role' => 'funcionario'
-        ));
+            $funcionario = new User(array(
+                'username' => $_POST['username'],
+                'password' => password_hash($randomPassword, PASSWORD_BCRYPT),
+                'email' => $_POST['func_email'],
+                'telefone' => $_POST['func_telefone'],
+                'nif' => $_POST['func_NIF'],
+                'morada' => $_POST['func_morada'],
+                'codigopostal' => $_POST['func_codigoPostal'],
+                'localidade' => $_POST['func_localidade'],
+                'role' => 'funcionario'
+            ));
+            if ($funcionario->is_valid()) {
+                $empresa = Empresa::first();
+                $body = "Bem-vindo ao Fatura+!<br>";
+                $body .= "O administrador da empresa <b>" . $empresa->designacaosocial . "</b> adicionou-o ao sistema de faturação Fatura+. Para começar a utilizar a aplicação, utilize o seu e-mail e a password: " . $randomPassword . "<br>";
+                $body .= "Cumprimentos,<br>A equipa Fatura+";
 
-
-        if ($funcionario->is_valid()) {
-
-            $empresa = Empresa::first();
-            $body = "Bem-vindo ao Fatura+!<br>";
-            $body .= "O administrador da empresa <b>" . $empresa->designacaosocial . "</b> adicionou-o ao sistema de faturação Fatura+. Para começar a utilizar a aplicação, utilize o seu e-mail e a password: " . $randomPassword . "<br>";
-            $body .= "Cumprimentos,<br>A equipa Fatura+";
-
-            if(EmailSystem::sendEmail($funcionario->email, $funcionario->username, 'Bem-vindo ao Fatura+', $body))
-            {
-                $funcionario->save();
-                $this->RedirectToRoute('funcionario', 'index');
+                if(EmailSystem::sendEmail($funcionario->email, $funcionario->username, 'Bem-vindo ao Fatura+', $body))
+                {
+                    $funcionario->save();
+                    $this->RedirectToRoute('funcionario', 'index');
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
+                }
+            } 
+            else {
+                // Mostrar erros
+                $this->RenderView('funcionario', 'create', ['funcionario' => $funcionario]);
             }
-            else
-            {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
-            }
-        } else {
-            // Mostrar erros
-            $this->RenderView('funcionario', 'create', ['funcionario' => $funcionario]);
         }
     }
-
+    
     public function edit($id)
     {
         $this->filterByRole(['administrador']);

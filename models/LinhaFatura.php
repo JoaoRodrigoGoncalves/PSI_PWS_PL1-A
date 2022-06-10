@@ -4,11 +4,11 @@ use ActiveRecord\Model;
     class LinhaFatura extends Model
     {
         static $validates_presence_of = array(
-            array('fatura_id', 'msg' => 'Indique a fatura a que pertence'),
-            array('produto_id', 'msg' => 'Selecione um produto'),
-            array('valor', 'msg' => 'Indique o valor do produto'),
-            array('quantidade', 'msg' => 'Indique a quantidade do produto'),
-            array('taxa_id', 'msg' => 'Selecione uma taxa de iva')
+            array('fatura_id', 'message' => 'Indique a fatura a que pertence'),
+            array('produto_id', 'message' => 'Selecione um produto'),
+            array('valor', 'message' => 'Indique o valor do produto'),
+            array('quantidade', 'message' => 'Indique a quantidade do produto'),
+            array('taxa_id', 'message' => 'Selecione uma taxa de iva')
         );
 
         static $validates_numericality_of = array(
