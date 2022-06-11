@@ -65,7 +65,7 @@
                             </a>
                             <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
                                 <?php if($fatura->estado->id == 1){ ?>
-                                    <a class="btn btn-primary" href="./router.php?c=produto&a=select&idFatura=<?=$fatura->id?>&callbackRoute=linhafatura/create">Adicionar Artigo</a>
+                                    <a class="btn btn-primary" href="./router.php?c=produto&a=select&callbackID=<?=$fatura->id?>&callbackRoute=linhafatura/create">Adicionar Artigo</a>
                                     <a class="btn btn-success" href="#" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?')">Finalizar</a>
                                     <a class="btn btn-danger" href="#" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?')">Anular</a>
                                 <?php } ?>
@@ -105,7 +105,7 @@
                                         if ($fatura->estado->id == 1)
                                         {
                                             ?>
-                                            <a href="./router.php?c=linhafatura&a=edit&idLinha=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
+                                            <a href="./router.php?c=linhafatura&a=edit&id=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
                                             <a href="./router.php?c=linhafatura&a=delete&idLinha=<?= $linhafatura->id ?>" class="btn btn-danger">Apagar</a>
                                             <?php
                                         }

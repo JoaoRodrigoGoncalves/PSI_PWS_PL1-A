@@ -31,6 +31,9 @@ class User extends Model
     {
         if($pwd != $re_pwd)
         {
+            if(!isset($this->errors))
+                $this->is_valid(); // Inicializar objeto de erros
+
             $this->errors->add('password', 'Palavras-passe não coincidem');
             $this->errors->add('re_password', 'Palavras-passe não coincidem');
             return false;

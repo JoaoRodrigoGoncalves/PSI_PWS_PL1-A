@@ -137,7 +137,7 @@ class ProdutoController extends BaseAuthController
         $produtos = Produto::find_all_by_ativo(1);
 
         $callback = explode('/', $callbackRoute);
-        $callbackRoute = "./router.php?c=" . $callback[0] . "&a=" . $callback[1] . "&id=" . $_GET['idFatura'];
+        $callbackRoute = "./router.php?c=" . $callback[0] . "&a=" . $callback[1] . "&id=" . $_GET['callbackID'];
 
         $this->RenderView('produto', 'select', ['produtos' => $produtos, 'callbackRoute' => $callbackRoute]);
     }

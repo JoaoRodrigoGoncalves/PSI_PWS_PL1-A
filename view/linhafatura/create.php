@@ -58,6 +58,7 @@
                             <div class="mb-3">
                                 <input type="submit" class="btn btn-success" value="Adicionar">
                                 <a href="./router.php?c=produto&a=select&idFatura=<?=$fatura->id?>&callbackRoute=linhafatura/create" class="btn btn-primary">Trocar Artigo</a>
+                                <a href="./router.php?c=fatura&a=show&id=<?=$fatura->id?>" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
                     </form>

@@ -357,12 +357,6 @@ else
             break;
 
         case "linhafatura":
-            $controllerFatura = new FaturaController();
-
-            // Impedir aceder à linha fatura sem ter um id de fatura e um idLinha
-            if(!isset($_GET['id']) && !isset($_GET['idLinha']))
-                $controllerFatura->index();
-
             $controller = new LinhaFaturaController();
             switch($a)
             {
@@ -375,7 +369,7 @@ else
                     break;
 
                 case 'edit':
-                    $controller->edit($_GET['idLinha']);
+                    $controller->edit($_GET['id']);
                     break;
 
                 case 'update':

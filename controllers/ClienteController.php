@@ -158,7 +158,7 @@ class ClienteController extends BaseAuthController{
 
             $newPassword = bin2hex(random_bytes(10));
 
-            $cliente->update_attribute('password', $newPassword);
+            $cliente->update_attribute('password', password_hash($newPassword, PASSWORD_BCRYPT));
 
             if($cliente->is_valid())
             {

@@ -59,10 +59,10 @@
                                             <td><?= $produto->descricao ?></td>
                                             <td class="fit_column"><?= $produto->stock ?></td>
                                             <td class="fit_column"><?= $produto->unidade->unidade ?></td>
-                                            <td class="fit_column"><?= $produto->preco_unitario ?>/<?= $produto->unidade->unidade ?></td>
+                                            <td class="fit_column"><?= $produto->preco_unitario ?>€/<?= $produto->unidade->unidade ?></td>
                                             <td class="fit_column"><?= $produto->taxa->valor ?>%</td>
                                             <td>
-                                                <a href="<?= $callbackRoute . '&idProduto=' . $produto->id?>" class="btn btn-primary">Selecionar</a>
+                                                <a href="<?= $callbackRoute . '&idProduto=' . $produto->id?>"><button class="btn btn-primary" <?= $produto->stock == 0 ? 'disabled' : '' ?>>Selecionar</button></a>
                                             </td>
                                         </tr>
                                         <?php

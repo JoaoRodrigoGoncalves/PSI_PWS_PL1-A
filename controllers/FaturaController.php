@@ -9,16 +9,16 @@ class FaturaController extends BaseAuthController{
 
     public function index()
     {
+        $this->loginFilter();
         $auth = new Auth();
-        
         if(in_array($auth->getRole(), ['funcionario', 'administrador'])){
-            $faturas = Fatura::all();
+            $faturas = Fatura::all(array('order' => 'id desc'));
             $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
         }
         
         if(in_array($auth->getRole(), ['cliente'])){
             $cliente = User::find_by_email($_SESSION['email']);
-            $faturas = Fatura::find('all', array('conditions' => array('estado_id =? AND cliente_id =?', 2, 'cliente' => $cliente->id)));
+            $faturas = Fatura::find('all', array('conditions' => array('estado_id =? AND cliente_id =?', 2, $cliente->id), 'order' => 'id desc'));
             $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
         }
         
@@ -26,7 +26,8 @@ class FaturaController extends BaseAuthController{
 
     public function show($id)
     {
-        $this->filterByRole(['cliente', 'funcionario', 'administrador']);
+        $this->loginFilter();
+
         try
         {
             $fatura = Fatura::find($id);
@@ -89,25 +90,32 @@ class FaturaController extends BaseAuthController{
         try{
             $fatura = Fatura::find($id);
 
-            $this_funcionario = User::find_by_email($_SESSION['email']);
-
-            $fatura->update_attributes(array(
-                'estado_id' => 2,
-                'funcionario_id' => $this_funcionario->id // Atribui o ID do funcionário que finaliza a fatura
-            ));
-            $fatura->save();
-
-            $emailSystem = new EmailSystem();
-            $empresa = Empresa::find(1);
-
-            $body = "Olá <b>" . $fatura->cliente->username . "</b>,<br>";
-            $body .= "Obrigado pela tua compra em " . $empresa->designacaosocial . "!<br>";
-            $body .= "Podes consultar mais dados da tua compa na area de cliente, iniciando sessão com o teu e-mail e palavra-passe.<br><br>";
-            $body .= "Cumprimentos,<br><b>" . $empresa->designacaosocial . "</b>";
-
-            if($emailSystem->sendEmail($fatura->cliente->email, $fatura->cliente->username, "Confirmação de compra em " . $empresa->designacaosocial, $body))
+            if(count($fatura->linhafatura) > 0)
             {
-                $this->RedirectToRoute('fatura', 'index');
+                $this_funcionario = User::find_by_email($_SESSION['email']);
+
+                $fatura->update_attributes(array(
+                    'estado_id' => 2,
+                    'funcionario_id' => $this_funcionario->id // Atribui o ID do funcionário que finaliza a fatura
+                ));
+                $fatura->save();
+
+                $emailSystem = new EmailSystem();
+                $empresa = Empresa::find(1);
+
+                $body = "Olá <b>" . $fatura->cliente->username . "</b>,<br>";
+                $body .= "Obrigado pela tua compra em " . $empresa->designacaosocial . "!<br>";
+                $body .= "Podes consultar mais dados da tua compa na area de cliente, iniciando sessão com o teu e-mail e palavra-passe.<br><br>";
+                $body .= "Cumprimentos,<br><b>" . $empresa->designacaosocial . "</b>";
+
+                if($emailSystem->sendEmail($fatura->cliente->email, $fatura->cliente->username, "Confirmação de compra em " . $empresa->designacaosocial, $body))
+                {
+                    $this->RedirectToRoute('fatura', 'index');
+                }
+                else
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
+                }
             }
             else
             {
@@ -147,10 +155,9 @@ class FaturaController extends BaseAuthController{
         }
     }
 
-    // Download fatura como pdf
+    // Mostrar fatura como pdf
     public function pdf($id){
-
-        $this->filterByRole(['funcionario', 'administrador']);
+        $this->loginFilter();
 
         try
         {

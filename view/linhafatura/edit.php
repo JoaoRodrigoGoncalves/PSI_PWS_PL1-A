@@ -10,7 +10,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
                         <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=show&id=<?=$linhafatura->fatura->id?>"><?=$linhafatura->fatura->id?></a></li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=show&id=<?=$linhafatura->fatura->id?>">Fatura Nº<?=$linhafatura->fatura->id?></a></li>
                         <li class="breadcrumb-item active">Alterar Linha Fatura</li>
                     </ol>
                 </div><!-- /.col -->
@@ -40,8 +40,8 @@
                                 <label for="quantidade">Quantidade</label>
                                 <input type="number" step="0.01" id="quantidade" name="quantidade" class="form-control"
                                        value="<?= (isset($linhafatura) ? $linhafatura->quantidade : '1') ?>" required>
-                                <?php if($linhaFatura -> errors && $linhaFatura -> errors -> is_invalid('quantidade')){ ?>
-                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $linhaFatura->errors->on('quantidade') ?></span>
+                                <?php if($linhafatura -> errors && $linhafatura -> errors -> is_invalid('quantidade')){ ?>
+                                    <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $linhafatura->errors->on('quantidade') ?></span>
                                 <?php } ?>  
                             </div>
                             <div class="col-12 col-sm-10">
@@ -57,7 +57,8 @@
                             </div>
                             <div class="mb-3">
                                 <input type="submit" class="btn btn-success" value="Guardar">
-                                <a href="./router.php?c=produto&a=select&id=<?=$linhafatura->id?>&callbackRoute=linhafatura/edit" class="btn btn-primary">Trocar Produto</a>
+                                <a href="./router.php?c=produto&a=select&callbackID=<?=$linhafatura->id?>&callbackRoute=linhafatura/edit" class="btn btn-primary">Trocar Produto</a>
+                                <a href="./router.php?c=fatura&a=show&id=<?= $linhafatura->fatura->id ?>" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
                     </form>
