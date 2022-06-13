@@ -95,11 +95,11 @@ CREATE TABLE linha_faturas (
     produto_id INTEGER NOT NULL COMMENT 'Identificador do produto asociado',
     valor DECIMAL(10 , 2 ) NOT NULL COMMENT 'Valor da fatura',
     quantidade int not null default 1 comment 'Quantidade de produto',
-    iva_id INTEGER NOT NULL COMMENT 'Identificador do tipo de iva da fatura',
+    taxa_id INTEGER NOT NULL COMMENT 'Identificador do tipo de iva da fatura',
     CONSTRAINT IDFATURA_FK FOREIGN KEY (fatura_id)
         REFERENCES faturas (id),
     CONSTRAINT IDPRODUTO_FK FOREIGN KEY (produto_id)
         REFERENCES produtos (id),
-    CONSTRAINT IDIVA_LF_FK FOREIGN KEY (iva_id)
+    CONSTRAINT IDIVA_LF_FK FOREIGN KEY (taxa_id)
         REFERENCES taxas (id)
 )ENGINE=INNODB;
