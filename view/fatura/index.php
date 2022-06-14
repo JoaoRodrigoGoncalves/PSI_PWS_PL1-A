@@ -78,8 +78,6 @@
                                             <td><?= $fatura->cliente->username ?></td>
                                             <td><?= $fatura->funcionario->username ?></td>
                                             <td><?= round($fatura->getTotal(), 2) ?>€</td>
-                                            
-                                            
                                             <td>
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-primary">Detalhes</a>
                                                 <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>

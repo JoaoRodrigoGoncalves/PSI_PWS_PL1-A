@@ -121,7 +121,7 @@
                                 <td><?= $fatura->getSubtotal() ?>€</td>
                                 <td><b>Incidência</b></td>
                             </tr>
-                            <?= $fatura->taxBox() ?>
+                                <?= $fatura->taxBox(4) ?>
                             <tr>
                                 <td colspan="4"></td>
                                 <td><b>Total Bruto</b></td>

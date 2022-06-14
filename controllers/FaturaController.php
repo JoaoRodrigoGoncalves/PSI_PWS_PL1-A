@@ -255,44 +255,23 @@ class FaturaController extends BaseAuthController{
                 </tr>
                 ';
             }
+            $html .= '
+                <tr>
+                    <td colspan="3"></td>
+                    <td><b>Total Líquido</b></td>
+                    <td>'. $fatura->getSubtotal() .'€</td>
+                    <td><b>Incidência</b></td>
+                </tr>
+                    '.$fatura->taxBox(3).'
+                <tr>
+                    <td colspan="3"></td>
+                    <td><b>Total Bruto</b></td>
+                    <td>'. round($fatura->getTotal(), 2) .'€</td>
+                    <td></td>
+                </tr>';
             $html .= '</tbody></table>';
             //Load Taxas da fatura
             $html .= '
-            <div class="row">
-                <div class="column">
-                    <table class="info-iva">
-                        <thead>
-                            <tr>
-                                <th>Taxa IVA</th>
-                                <th>Base</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        '. $fatura->taxBox() .'
-                        </tbody>
-                    </table>
-                    <table> 
-                </div>
-                <div class="column">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th class="total-fatura">Total IVA:</th>
-                                <td>'.round($fatura->getTotal() - $fatura->getSubtotal(),2).' €</td>
-                            </tr>
-                            <tr>
-                                <th class="total-fatura">Total Líquido:</th>
-                                <td>'.round( $fatura->getSubtotal(),2).' €</td>
-                            </tr>
-                            <tr>
-                                <th class="total-fatura">Total:</th>
-                                <td><b>'.round( $fatura->getTotal(),2).' €</b></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
             <p>Fatura processada por '. $fatura->funcionario->username .'</p>
             </div></div></body>
             ';

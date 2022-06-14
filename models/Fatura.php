@@ -37,7 +37,7 @@ use ActiveRecord\Model;
         /**
          * Calcula e desenha a tabela de aplicação das diferentes taxas de IVA
          */
-        public function taxBox()
+        public function taxBox($colspan)
         {
             $return_string = "";
 
@@ -60,7 +60,7 @@ use ActiveRecord\Model;
 
                 foreach ($valores_taxas as $taxa => $valor)
                 {
-                    $return_string .= '<tr><td>' . $taxa . '%</td><td>'. $valor .' €</td><td>' . ($valor * ($taxa/100)) . '€</td></tr>';
+                    $return_string .= '<tr><td colspan="'.$colspan.'"></td><td>' . $taxa . '%</td><td>'. $valor .' €</td><td>' . ($valor * ($taxa/100)) . '€</td></tr>';
                 }
             }
 
