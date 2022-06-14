@@ -178,9 +178,7 @@ class FaturaController extends BaseAuthController{
             $html .=
             '<body>
             <style>'. file_get_contents('./public/dist/css/faturamais_custom.css').'</style>
-            <style>
-            '. file_get_contents('./public/dist/css/pdf.css') .'
-            </style>
+            <style>'. file_get_contents('./public/dist/css/pdf.css') .'</style>
             <div>
                 <!-- Content Header (Page header) -->
                 <div >
@@ -197,8 +195,9 @@ class FaturaController extends BaseAuthController{
                 $html .= '<span ><b>'.$fatura->estado->estado.'</b></span>';
             //Load Empresa e Cliente data
             $html .= '
+                                
                                 <p>Data: '.$fatura->data->format('d-m-Y').'</p>
-                                </div><!-- /.col -->
+                            </div><!-- /.col -->
                         </div><!-- /.row -->
                     </div><!-- /.container-fluid -->
                 </div>
@@ -210,18 +209,20 @@ class FaturaController extends BaseAuthController{
                             <tr>
                                 <td class="info-fatura">
                                     '. $empresa->designacaosocial .'<br>
+                                    <b>Localidade:</b><br>
                                     '. $empresa->morada .'<br>
                                     '. $empresa->codigopostal .', '. $empresa->localidade .'<br>
-                                    NIF: '. $empresa->nif .'<br>
-                                    Telefone: '. $empresa->telefone .'<br>
-                                    Email: '. $empresa->email.'
+                                    <b>NIF:</b> '. $empresa->nif .'<br>
+                                    <b>Telefone:</b> '. $empresa->telefone .'<br>
+                                    <b>Email:</b> '. $empresa->email.'
                                 </td>
                                 <td class="info-fatura">
                                     <b>Cliente:</b> <br>
                                     '. $fatura->cliente->username .' <br>
+                                    <b>Morada:</b> <br>
                                     '. $fatura->cliente->morada .' <br>
                                     '. $fatura->cliente->codigopostal .', '. $fatura->cliente->localidade .' <br>
-                                    Nif: '. $fatura->cliente->nif .'
+                                    <b>NIF:</b> '. $fatura->cliente->nif .'
                                 </td>
                             </tr>
                         </table>
@@ -263,6 +264,12 @@ class FaturaController extends BaseAuthController{
                     <td><b>Incidência</b></td>
                 </tr>
                     '.$fatura->taxBox(3).'
+                <tr>
+                    <td colspan="3"></td>
+                    <td><b>Total IVA</b></td>
+                    <td>'. round($fatura->getTotal() - $fatura->getSubtotal(), 2) .'€</td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td colspan="3"></td>
                     <td><b>Total Bruto</b></td>
