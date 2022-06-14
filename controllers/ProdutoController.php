@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/Produto.php';
+
 class ProdutoController extends BaseAuthController
 {
     public function index()
@@ -44,7 +46,7 @@ class ProdutoController extends BaseAuthController
         }
         else
         {
-            $this->RenderView('produto', 'create', ['taxas_iva' => $taxas_iva, 'unidades' => $unidades]);
+            $this->RenderView('produto', 'create', ['produto' => new Produto(), 'taxas_iva' => $taxas_iva, 'unidades' => $unidades]);
         }
     }
 
@@ -52,8 +54,6 @@ class ProdutoController extends BaseAuthController
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        if(isset($_POST['descricao'], $_POST['preco_unitario'], $_POST['stock']))
-        {
             $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
             $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
             $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
@@ -69,11 +69,6 @@ class ProdutoController extends BaseAuthController
                 $this->RenderView('produto', 'create', ['produto' => $produto]);
             }
         }
-        else
-        {
-            $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
-        }
-    }
 
     public function edit($id)
     {
@@ -82,16 +77,9 @@ class ProdutoController extends BaseAuthController
         try
         {
             $produto = Produto::find($id);
-            if($produto != null)
-            {
-                $taxas_iva = Taxa::all();
-                $unidades = Unidade::all();
-                $this->RenderView('produto', 'edit', ['produto' => $produto, 'taxas_iva' => $taxas_iva, 'unidades' => $unidades]);
-            }
-            else
-            {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
-            }
+            $taxas_iva = Taxa::all();
+            $unidades = Unidade::all();
+            $this->RenderView('produto', 'edit', ['produto' => $produto, 'taxas_iva' => $taxas_iva, 'unidades' => $unidades]);
         }catch (Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
@@ -104,8 +92,6 @@ class ProdutoController extends BaseAuthController
 
         try
         {
-            if(isset($_POST['descricao'], $_POST['preco_unitario'], $_POST['stock']))
-            {
                 $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
                 $_POST['preco_unitario'] = str_replace(',', '.', $_POST['preco_unitario']);
                 $_POST['stock'] = str_replace(',', '.', $_POST['stock']);
@@ -120,13 +106,9 @@ class ProdutoController extends BaseAuthController
                 }
                 else
                 {
-                    $this->RenderView('produto', 'create', ['produto' => $produto]);
+                    $this->RenderView('produto', 'edit', ['produto' => $produto, 'taxas_iva' => Taxa::all(array('conditions' => array('emvigor=1'))), 'unidades' => Unidade::all()]);
                 }
-            }
-            else
-            {
-                $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
-            }
+
         }catch (Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
@@ -139,29 +121,24 @@ class ProdutoController extends BaseAuthController
 
         try{
             $produto = Produto::find($id);
-
-            if(LinhaFatura::count(array('conditions' => array('produto_id=?', $id))) == 0)
-            {
-                if($produto->delete())
-                {
-                    $this->RedirectToRoute('produto', 'index', ['status' => 0]);
-                }
-                else
-                {
-                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
-                }
-            }
-            else
-            {
-                $produto->update_attribute('ativo', 0);
-                $produto->save();
-                $this->RedirectToRoute('produto', 'index', ['status' => 1]); // OK, mas com aviso de desativação
-            }
+            $produto->update_attribute('ativo', 0);
+            $produto->save();
+            $this->RedirectToRoute('produto', 'index', ['status' => 1]); // OK, mas com aviso de desativação
         }
         catch(Exception $_)
         {
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'produto/index']);
         }
     }
+    
+    public function select($callbackRoute){
 
+        $this->filterByRole(['funcionario', 'administrador']);
+        $produtos = Produto::find_all_by_ativo(1);
+
+        $callback = explode('/', $callbackRoute);
+        $callbackRoute = "./router.php?c=" . $callback[0] . "&a=" . $callback[1] . "&id=" . $_GET['callbackID'];
+
+        $this->RenderView('produto', 'select', ['produtos' => $produtos, 'callbackRoute' => $callbackRoute]);
+    }
 }

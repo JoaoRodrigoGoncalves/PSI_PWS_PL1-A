@@ -4,9 +4,9 @@ use ActiveRecord\Model;
     class Fatura extends Model
     {
         static $validates_presence_of = array(
-            array('estado_id', 'msg' => 'Indique o estado da fatura'),
-            array('cliente_id', 'msg' => 'Selecione o um cliente para a fatura'),
-            array('funcionario_id', 'msg' => 'Selecione um funcionario para a fatura')
+            array('estado_id', 'message' => 'Indique o estado da fatura'),
+            array('cliente_id', 'message' => 'Selecione o um cliente para a fatura'),
+            array('funcionario_id', 'message' => 'Selecione um funcionario para a fatura')
         );
 
         static $belongs_to = array(

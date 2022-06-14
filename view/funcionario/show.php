@@ -42,6 +42,9 @@
                             <div class="blockquote mb-0">
                                 <div class="row">
                                     <div class="col-12 pt-4">
+                                        <p><b>Estado:</b> <?= $funcionario->ativo == 1 ? '<span class="badge bg-success">Ativo</span>': '<span class="badge bg-danger">Desativado</span>' ?>
+                                    </div>
+                                    <div class="col-12">
                                         <p><b>Email:</b> <?=$funcionario->email?></p>
                                     </div>
                                     <div class="col-12">

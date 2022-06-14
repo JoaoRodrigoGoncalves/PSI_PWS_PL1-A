@@ -58,23 +58,20 @@
                 </div>
             </div>
             <div class="card mt-3">
-                <?php
-                if($fatura->estado->id == 1)
-                {
-                    ?>
                     <div class="card-header">
                         <div class="card-tools">
                             <a class="btn btn-sencondary text-right" href="./router.php?c=fatura&a=pdf&id=<?= $fatura->id ?>">
                                 <img src="./public/dist/img/pdf-icon.png" height="30">
                             </a>
-                            <a class="btn btn-primary" href="./router.php?c=linhafatura&a=create&id=<?= $fatura->id ?>">Adicionar Artigo</a>
-                            <a class="btn btn-success" href="#" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?')">Finalizar</a>
-                            <a class="btn btn-danger" href="#" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?')">Anular</a>
+                            <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                                <?php if($fatura->estado->id == 1){ ?>
+                                    <a class="btn btn-primary" href="./router.php?c=produto&a=select&callbackID=<?=$fatura->id?>&callbackRoute=linhafatura/create">Adicionar Artigo</a>
+                                    <a class="btn btn-success" href="#" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?')">Finalizar</a>
+                                    <a class="btn btn-danger" href="#" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?')">Anular</a>
+                                <?php } ?>
+                            <?php } ?>
                         </div>
                     </div>
-                    <?php
-                }
-                ?>
                 <div class="card-body" >
 
                     <table class="table table-hover text-nowrap">
@@ -86,7 +83,7 @@
                             <th class="fit_column">Preço un.</th>
                             <th class="fit_column">Taxa</th>
                             <th class="fit_column">Total Sem IVA</th>
-                            <th class="fit_column">&nbsp;</th>
+                            <th class="fit_column"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -108,8 +105,8 @@
                                         if ($fatura->estado->id == 1)
                                         {
                                             ?>
-                                            <a href="./router.php?c=linhafatura&a=edit&idLinha=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
-                                            <a href="./router.php?c=linhafatura&a=delete&id=<?= $linhafatura->id ?>" class="btn btn-danger">Apagar</a>
+                                            <a href="./router.php?c=linhafatura&a=edit&id=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>
+                                            <a href="./router.php?c=linhafatura&a=delete&idLinha=<?= $linhafatura->id ?>" class="btn btn-danger">Apagar</a>
                                             <?php
                                         }
                                         ?>
@@ -119,15 +116,17 @@
                             }
                             ?>
                             <tr>
-                                <td colspan="4">&nbsp;</td>
-                                <td>Total Líquido</td>
+                                <td colspan="4"></td>
+                                <td><b>Total Líquido</b></td>
                                 <td><?= $fatura->getSubtotal() ?>€</td>
+                                <td><b>Incidência</b></td>
                             </tr>
                             <?= $fatura->taxBox() ?>
                             <tr>
-                                <td colspan="4">&nbsp;</td>
-                                <td>Total Bruto</td>
-                                <td><?= $fatura->getTotal() ?>€</td>
+                                <td colspan="4"></td>
+                                <td><b>Total Bruto</b></td>
+                                <td><?= round($fatura->getTotal(), 2) ?>€</td>
+                                <td></td>
                             </tr>
                             <?php
                         }
@@ -135,7 +134,7 @@
                         {
                             ?>
                             <tr>
-                                <td colspan="5"><strong>Sem faturas</strong></td>
+                                <td colspan="7"><strong>Sem Produtos a Listar</strong></td>
                             </tr>
                             <?php
                         }
@@ -171,7 +170,7 @@
     function openModal(action, question)
     {
         document.getElementById('modal_question').innerText = question;
-        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=cliente&a=' + action + '&id=<?= $fatura->id ?>');
+        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=fatura&a=' + action + '&id=<?= $fatura->id ?>');
 
         new bootstrap.Modal(document.getElementById('modalAction'), {
             keyboard: true

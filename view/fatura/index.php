@@ -22,7 +22,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                                <a href="./router.php?c=fatura&a=create" class="btn btn-primary btn-sm">Registar Fatura</a>
+                            <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                                <a href="./router.php?c=cliente&a=select" class="btn btn-primary btn-sm">Registar Fatura</a>
+                            <?php } ?>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="Procurar">
@@ -75,18 +77,17 @@
                                             </td>
                                             <td><?= $fatura->cliente->username ?></td>
                                             <td><?= $fatura->funcionario->username ?></td>
-                                            <td><?= $fatura->getTotal() ?>€</td>
+                                            <td><?= round($fatura->getTotal(), 2) ?>€</td>
+                                            
+                                            
                                             <td>
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-primary">Detalhes</a>
-                                                <?php
-                                                if ($fatura->estado->id == 1)
-                                                {
-                                                ?>
-                                                    <a href="#" class="btn btn-success" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?', <?= $fatura->id ?>)">Finalizar</a>
-                                                    <a href="#" class="btn btn-danger" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?', <?= $fatura->id ?>)">Anular</a>
-                                                <?php
-                                                }
-                                                ?>
+                                                <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                                                    <?php if ($fatura->estado->id == 1){ ?>
+                                                        <a href="#" class="btn btn-success" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?', <?= $fatura->id ?>)">Finalizar</a>
+                                                        <a href="#" class="btn btn-danger" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?', <?= $fatura->id ?>)">Anular</a>
+                                                    <?php } ?>
+                                                <?php } ?>
                                             </td>
                                         </tr>
                                         <?php
@@ -130,7 +131,7 @@
     function openModal(action, question, id)
     {
         document.getElementById('modal_question').innerText = question;
-        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=cliente&a=' + action + '&id=' + id);
+        document.getElementById('modal_action_btn').setAttribute('href', './router.php?c=fatura&a=' + action + '&id=' + id);
 
         new bootstrap.Modal(document.getElementById('modalAction'), {
             keyboard: true

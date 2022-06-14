@@ -29,10 +29,16 @@
                         <div class="mb-3">
                             <label for="inputValor" class="form-label">Valor:</label>
                             <input type="number" class="form-control" id="valor" name="valor" value="<?=$taxas->valor?>"/>
+                            <?php if($taxas -> errors && $taxas -> errors -> is_invalid('valor')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $taxas->errors->on('valor') ?></span>
+                            <?php } ?>  
                         </div>
                         <div class="mb-3">
                             <label for="inputDescricao" class="form-label">Descrição:</label>
                             <input type="text" class="form-control" id="descricao" name="descricao" value="<?=$taxas->descricao?>">
+                            <?php if($taxas -> errors && $taxas -> errors -> is_invalid('descricao')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $taxas->errors->on('descricao') ?></span>
+                            <?php } ?>  
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>   
                     </div>

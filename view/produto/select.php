@@ -9,10 +9,8 @@
                 <div class="col-sm-9">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="./router.php?c=dashboard&a=index">Fatura+</a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Faturas</a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=show&id=<?=$id?>"><?=$id?></a></li>
-                        <li class="breadcrumb-item"><a href="./router.php?c=linhafatura&a=<?=$destiny . ($destiny == 'create'? '&id=' : '&idLinha=' .$id) ?>&id=<?=$id?>"><?=$destiny == 'create' ? 'Criar' : 'Alterar'?> Linha Fatura</a></li>
-                        <li class="breadcrumb-item active">Selecionar Produtos</li>
+                        <li class="breadcrumb-item"><a href="./router.php?c=fatura&a=index">Produtos</a></li>
+                        <li class="breadcrumb-item active">Selecionar Produto</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -40,13 +38,13 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
-                                    <th>Estado</th>
+                                    <th>Referência</th>
                                     <th>Descrição</th>
                                     <th>Stock</th>
                                     <th>Unidade</th>
                                     <th>Preço</th>
                                     <th>Taxa</th>
-                                    <th>Ações</th>
+                                    <th class="fit_column">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -57,20 +55,14 @@
                                     {
                                         ?>
                                         <tr>
-                                            <td>
-                                                <?php if($produto->ativo == 1){ ?>
-                                                    <span class="badge bg-success">Ativo</span>
-                                                <?php } else { ?>
-                                                    <span class="badge bg-danger">Desativado</span>
-                                                <?php } ?>
-                                            </td>
+                                            <td class="fit_column"><?= $produto->id ?></td>
                                             <td><?= $produto->descricao ?></td>
-                                            <td><?= $produto->stock ?></td>
-                                            <td><?= $produto->unidade->unidade ?></td>
-                                            <td><?= $produto->preco_unitario ?>/<?= $produto->unidade->unidade ?></td>
-                                            <td><?= $produto->taxa->valor ?>%</td>
+                                            <td class="fit_column"><?= $produto->stock ?></td>
+                                            <td class="fit_column"><?= $produto->unidade->unidade ?></td>
+                                            <td class="fit_column"><?= $produto->preco_unitario ?>€/<?= $produto->unidade->unidade ?></td>
+                                            <td class="fit_column"><?= $produto->taxa->valor ?>%</td>
                                             <td>
-                                                <a href="./router.php?c=linhafatura&a=<?=$destiny. ($destiny == 'create'? '&id=' : '&idLinha='). $id . '&idProduto=' . $produto->id?>" class="btn btn-primary">Selecionar</a>
+                                                <a href="<?= $callbackRoute . '&idProduto=' . $produto->id?>"><button class="btn btn-primary" <?= $produto->stock == 0 ? 'disabled' : '' ?>>Selecionar</button></a>
                                             </td>
                                         </tr>
                                         <?php

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./public/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="./public/plugins/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="./public/dist/css/faturamais_custom.css">
+    <link rel="icon" href="./public/dist/img/FaturaMaisLogo.png">
     <title><?=APP_NAME ?></title>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -48,7 +49,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="./router.php" class="brand-link">
-<!--                <img src="dist/img/AdminLTELogo.png" alt="Fatura+" class="brand-image img-circle elevation-3" style="opacity: .8">-->
+                <img src="./public/dist/img/FaturaMaisLogo.png" alt="Fatura+" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">Fatura+</span>
             </a>
 
@@ -64,7 +65,7 @@
                                 </p>
                             </a>
                         </li>
-                        <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                        <?php if(in_array($userRole, ['cliente', 'funcionario', 'administrador'])){ ?>
                             <li class="nav-item">
                                 <a href="./router.php?c=fatura&a=index" class="nav-link">
                                     <i class="nav-icon fas fa-file-invoice"></i>
@@ -73,6 +74,8 @@
                                     </p>
                                 </a>
                             </li>
+                        <?php } ?>
+                        <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
                             <li class="nav-item">
                                 <a href="./router.php?c=cliente&a=index" class="nav-link">
                                     <i class="nav-icon fas fa-user"></i>

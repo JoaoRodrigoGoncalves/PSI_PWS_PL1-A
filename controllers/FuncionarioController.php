@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/User.php';
+
 class FuncionarioController extends BaseAuthController{
     public function index()
     {
@@ -25,7 +27,7 @@ class FuncionarioController extends BaseAuthController{
     public function create()
     {
         $this->filterByRole(['administrador']);
-        $this->renderView('funcionario', 'create');//mostrar a vista create
+        $this->renderView('funcionario', 'create', ['funcionario' => new User()]);//mostrar a vista create
     }
     
     public function store()
@@ -47,10 +49,7 @@ class FuncionarioController extends BaseAuthController{
                 'localidade' => $_POST['func_localidade'],
                 'role' => 'funcionario'
             ));
-
-
             if ($funcionario->is_valid()) {
-
                 $empresa = Empresa::first();
                 $body = "Bem-vindo ao Fatura+!<br>";
                 $body .= "O administrador da empresa <b>" . $empresa->designacaosocial . "</b> adicionou-o ao sistema de faturação Fatura+. Para começar a utilizar a aplicação, utilize o seu e-mail e a password: " . $randomPassword . "<br>";
@@ -65,15 +64,14 @@ class FuncionarioController extends BaseAuthController{
                 {
                     $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'funcionario/index']);
                 }
-            } else {
+            } 
+            else {
                 // Mostrar erros
                 $this->RenderView('funcionario', 'create', ['funcionario' => $funcionario]);
             }
-        }else{
-            $this->RenderView('funcionario', 'create');
         }
     }
-
+    
     public function edit($id)
     {
         $this->filterByRole(['administrador']);
@@ -93,27 +91,20 @@ class FuncionarioController extends BaseAuthController{
         $this->filterByRole(['administrador']);
         try
         {
-            if(!isset($_POST['username'], $_POST['email'], $_POST['telefone'], $_POST['nif'], $_POST['morada'], $_POST['codigopostal'], $_POST['localidade']))
+            $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
+
+            $funcionario = User::find($id);
+            $funcionario->update_attributes($_POST);
+
+            if($funcionario->is_valid())
             {
-                $this->RedirectToRoute('error', 'index', ['callbaclRoute' => 'funcionario/index']);
+                $funcionario->save();
+                $this->RedirectToRoute('funcionario', 'index', ['success' => 1]); //redirecionar para o index
             }
             else
             {
-                $_POST['ativo'] = ($_POST['ativo'] ? 1 : 0);
-
-                $funcionario = User::find($id);
-                $funcionario->update_attributes($_POST);
-
-                if($funcionario->is_valid())
-                {
-                    $funcionario->save();
-                    $this->RedirectToRoute('funcionario', 'index', ['success' => 1]); //redirecionar para o index
-                }
-                else
-                {
-                    //mostrar vista edit passando o modelo como parâmetro
-                    $this->renderView('funcionario', 'edit', ['funcionario' => $funcionario]);
-                }
+                //mostrar vista edit passando o modelo como parâmetro
+                $this->renderView('funcionario', 'edit', ['funcionario' => $funcionario]);
             }
         }
         catch (Exception $_)

@@ -24,13 +24,16 @@ class Auth
         try
         {
             $user = User::find_by_email($email);
-            if($user->ativo == 1)
+            if($user != null)
             {
-                if(password_verify($password, $user->password))
+                if($user->ativo == 1)
                 {
-                    $_SESSION['username'] = $user->username;
-                    $_SESSION['email'] = $user->email;
-                    return true;
+                    if(password_verify($password, $user->password))
+                    {
+                        $_SESSION['username'] = $user->username;
+                        $_SESSION['email'] = $user->email;
+                        return true;
+                    }
                 }
             }
             return false;

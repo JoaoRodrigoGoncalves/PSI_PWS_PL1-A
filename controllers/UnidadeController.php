@@ -1,6 +1,7 @@
 <?php
 
 use ActiveRecord\RecordNotFound;
+require_once 'models/Unidade.php';
 
 class UnidadeController extends BaseAuthController
 {
@@ -14,7 +15,7 @@ class UnidadeController extends BaseAuthController
     public function create()
     {
         $this->filterByRole(['funcionario', 'administrador']);
-        $this->RenderView('unidade', 'create');
+        $this->RenderView('unidade', 'create', ['unidade' => new Unidade()]);
     }
 
     public function store()
@@ -80,7 +81,7 @@ class UnidadeController extends BaseAuthController
             }
             else {
                 //mostrar vista edit passando o modelo como parâmetro
-                $this->renderView('unidade', 'update', ['unidade' => $unidade]);
+                $this->renderView('unidade', 'edit', ['unidade' => $unidade]);
             }
         }
         catch (Exception $_)

@@ -63,7 +63,11 @@
                                             <td><?= $taxa->valor ?></td>
                                             <td>
                                                 <a href="./router.php?c=taxa&a=edit&id=<?= $taxa->id ?>" class="btn btn-warning">Editar</a>
-                                                <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $taxa->id ?>)">Apagar</a>
+                                                <?php
+                                                if($taxa->emvigor == 1){
+                                                ?>
+                                                    <a href="#" class="btn btn-danger" onclick="deleteEntity(<?= $taxa->id ?>)">Apagar</a>
+                                                <?php } ?>
                                             </td>
                                         </tr>
                                         <?php

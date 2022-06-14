@@ -28,17 +28,17 @@
                         </div>
                         <div class="mb-3">
                             <label for="inputValor" class="form-label">Valor:</label>
-                            <input type="number" class="form-control" id="valor" name="valor" required/>
-                            <div class="invalid-feedback">
-                                Campo obrigatório!
-                            </div>
+                            <input type="number" class="form-control" id="valor" name="valor" required value="<?= $taxa->valor ?>"/>
+                            <?php if($taxa -> errors && $taxa -> errors -> is_invalid('valor')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $taxa->errors->on('valor') ?></span>
+                            <?php } ?> 
                         </div>
                         <div class="mb-3">
                             <label for="inputDescicao" class="form-label">Descrição:</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao" required>
-                            <div class="invalid-feedback">
-                                Campo obrigatório!
-                            </div>
+                            <input type="text" class="form-control" id="descricao" name="descricao" required value="<?= $taxa->descricao ?>">
+                            <?php if($taxa -> errors && $taxa -> errors -> is_invalid('descricao')){ ?>
+                                <span class="alert alert-danger alert-dismissible fade show" style="display: inherit; margin-top: 7px;" role="alert"><?= $taxa->errors->on('descricao') ?></span>
+                            <?php } ?> 
                         </div>
                         <button type="submit" class="btn btn-primary">Registar</button>
                     </div>

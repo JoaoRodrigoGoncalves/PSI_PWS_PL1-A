@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= APP_NAME ?> | Iniciar Sessão</title>
+    <link rel="icon" href="./public/dist/img/FaturaMaisLogo.png">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -47,12 +48,7 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">
-                                Lembrar-me
-                            </label>
-                        </div>
+                        <a href="./router.php?c=site&a=index" class="m-1"><i class="fas fa-arrow-left"></i> Voltar à homepage</a>
                     </div>
                     <!-- /.col -->
                     <div class="col-4">
@@ -61,10 +57,6 @@
                     <!-- /.col -->
                 </div>
             </form>
-
-            <p class="mb-1">
-                <a href="forgot-password.html">Esqueci a minha palavra-passe</a>
-            </p>
         </div>
         <!-- /.card-body -->
     </div>

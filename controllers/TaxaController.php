@@ -1,5 +1,7 @@
 <?php
 
+require_once 'models/Taxa.php';
+
 class TaxaController extends BaseAuthController{
     public function index()
     {
@@ -11,7 +13,7 @@ class TaxaController extends BaseAuthController{
     public function create()
     {
         $this->filterByRole(['funcionario', 'administrador']);
-        $this->renderView('taxa', 'create');//mostrar a vista create
+        $this->renderView('taxa', 'create', ['taxa' => new Taxa()]);//mostrar a vista create
     }
     
     public function store()
@@ -76,13 +78,14 @@ class TaxaController extends BaseAuthController{
 
             $taxas->update_attributes($_POST);
 
-            if($taxas->is_valid()){
+            if($taxas->is_valid())
+            {
                 $taxas->save();
                 $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
             }
             else {
                 //mostrar vista edit passando o modelo como parâmetro
-                $this->renderView('taxa', 'update', ['taxas' => $taxas]);
+                $this->renderView('taxa', 'edit', ['taxas' => $taxas]);
             }
         }
         catch(Exception $_)
