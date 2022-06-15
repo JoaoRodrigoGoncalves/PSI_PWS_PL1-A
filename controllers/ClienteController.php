@@ -7,6 +7,11 @@ class ClienteController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
         $clientes = User::find_all_by_role('cliente');
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $clientes = array_filter($clientes, function($client){
+                return str_contains(strtoupper($client->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+            });
+        }
         $this->RenderView('cliente', 'index', ['clientes' => $clientes]);
     }
 

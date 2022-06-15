@@ -30,14 +30,22 @@
                                 </span>
                             <?php } ?>
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
+                                <form action="router.php?c=produto&a=index" method="post" class="input-group input-group-sm">
+                                    <a class="pt-1 mx-2" href="./router.php?c=produto&a=index">Clear Filter</a>
+                                    <select id="filter_type" class="form-control" name="filter_type">
+                                        <option value="descricao">Descrição</option>
+                                        <option value="stock">Stock</option>
+                                        <option value="unidade">Unidade</option>
+                                        <option value="preco_unitario">Preço Unitario</option>
+                                        <option value="taxa">Taxa</option>
+                                    </select>
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="Procurar">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <div class="card-body">

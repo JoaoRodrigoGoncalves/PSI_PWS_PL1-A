@@ -9,6 +9,11 @@ class UnidadeController extends BaseAuthController
     {
         $this->filterByRole(['funcionario', 'administrador']);
         $unidades = Unidade::all();
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $unidades = array_filter($unidades, function($unidade){
+                return str_contains(strtoupper($unidade->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+            });
+        }
         $this->RenderView('unidade', 'index', ['unidades' => $unidades]);
     }
 

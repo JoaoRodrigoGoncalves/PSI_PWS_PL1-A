@@ -7,9 +7,27 @@ class ProdutoController extends BaseAuthController
     public function index()
     {
         $this->filterByRole(['funcionario', 'administrador']);
-
+        /*var_dump($_POST);
+        exit;*/
         $products = Produto::all();
-
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $products = array_filter($products, function($produto){
+                if(!strcmp($_POST['filter_type'], 'descricao') ||
+                    !strcmp($_POST['filter_type'], 'preco_unitario') ||
+                    !strcmp($_POST['filter_type'], 'stock'))
+                {
+                    return str_contains(strtoupper($produto->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+                }
+                else if(!strcmp($_POST['filter_type'], 'unidade'))
+                {
+                    return str_contains(strtoupper($produto->{$_POST['filter_type']}->unidade),strtoupper($_POST['table_search']));
+                }else if(!strcmp($_POST['filter_type'], 'taxa'))
+                {
+                    return str_contains(strtoupper($produto->{$_POST['filter_type']}->valor),strtoupper($_POST['table_search']));
+                }
+                return false;
+            });
+        }
         $registerFalg = true;
         if(Taxa::count(array('conditions' => array('emVigor = 1'))) == 0 || Unidade::count() == 0)
             $registerFalg = false;

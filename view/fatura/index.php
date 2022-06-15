@@ -46,7 +46,7 @@
                                         <th>Cliente</th>
                                         <th class="fit_column">Funcionario</th>
                                         <th class="fit_column">Total</th>
-                                        <th class="fit_column">&nbsp;</th>
+                                        <th class="fit_column">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
