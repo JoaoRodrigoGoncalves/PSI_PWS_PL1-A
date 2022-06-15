@@ -60,7 +60,7 @@ use ActiveRecord\Model;
 
                 foreach ($valores_taxas as $taxa => $valor)
                 {
-                    $return_string .= '<tr><td colspan="'.$colspan.'"></td><td>' . $taxa . '%</td><td>'. $valor .' €</td><td>' . ($valor * ($taxa/100)) . '€</td></tr>';
+                    $return_string .= '<tr>' . ($colspan > 0 ? '<td colspan="'.$colspan.'"></td>' : '')  . '<td>' . $taxa . '%</td><td>'. $valor .' €</td><td>' . round($valor * ($taxa/100), 2) . '€</td></tr>';
                 }
             }
 

@@ -30,7 +30,17 @@ class FaturaController extends BaseAuthController{
 
         try
         {
+            $auth = new Auth();
             $fatura = Fatura::find($id);
+
+            if($auth->getRole() == 'cliente')
+            {
+                if(User::find_by_email($_SESSION['email'])->id != $fatura->cliente->id)
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
+                }
+            }
+
             $empresa = Empresa::find(1);
 
             $this->RenderView('fatura', 'show', ['fatura' => $fatura, 'empresa' => $empresa]);
@@ -161,19 +171,32 @@ class FaturaController extends BaseAuthController{
 
         try
         {
+            $auth = new Auth();
             $fatura = Fatura::find($id);
+
+            if($auth->getRole() == 'cliente')
+            {
+                if(User::find_by_email($_SESSION['email'])->id != $fatura->cliente->id)
+                {
+                    $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
+                }
+            }
+
             $empresa = Empresa::find(1);
             $dompdf = new Dompdf();
             // TODO Try to correct access external css
             $dompdf->setBasePath("./public/dist/css");
-            //Load heather
+
+            //Load header
             $html = '<!DOCTYPE html>
             <html lang="pt">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link type="text/css" rel="stylesheet" media="dompdf" href="./public/dist/css/pdf.css">
+                <title>Fatura Nº' . $fatura->id . '</title>
             </head>';
+
             //Load body html
             $html .=
             '<body>
@@ -186,16 +209,7 @@ class FaturaController extends BaseAuthController{
                         <div >
                             <div >
                                 <h1 >Fatura Nº' . $fatura->id .'</h1>
-                                ';
-            if ($fatura->estado->id == 1)
-                $html .= '<span ><b>'.$fatura->estado->estado.'</b></span>';
-            else if($fatura->estado->id == 2)
-                $html .= '<span ><b>'.$fatura->estado->estado.'</b></span>';
-            else if($fatura->estado->id == 3)
-                $html .= '<span ><b>'.$fatura->estado->estado.'</b></span>';
-            //Load Empresa e Cliente data
-            $html .= '
-                                
+                                <span ><b>'.$fatura->estado->estado.'</b></span>
                                 <p>Data: '.$fatura->data->format('d-m-Y').'</p>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
@@ -242,42 +256,48 @@ class FaturaController extends BaseAuthController{
                                 </thead>
                                 <tbody>
                                 ';
-            //Load fatura data
-            foreach ($fatura->linhafatura as $linhafatura)
-            {
-                $html .= '
-                <tr>
-                    <td>'. $linhafatura->produto->id.'</td>
-                    <td>'. $linhafatura->produto->descricao.'</td>
-                    <td>'. $linhafatura->quantidade .'</td>
-                    <td>'. $linhafatura->valor .'€</td>
-                    <td>'. $linhafatura->taxa->valor .'%</td>
-                    <td>'. $linhafatura->valor * $linhafatura->quantidade.' €</td>
-                </tr>
-                ';
-            }
+                                //Load fatura data
+                                foreach ($fatura->linhafatura as $linhafatura)
+                                {
+                                    $html .= '
+                                    <tr>
+                                        <td>'. $linhafatura->produto->id.'</td>
+                                        <td>'. $linhafatura->produto->descricao.'</td>
+                                        <td>'. $linhafatura->quantidade .'</td>
+                                        <td>'. $linhafatura->valor .'€</td>
+                                        <td>'. $linhafatura->taxa->valor .'%</td>
+                                        <td>'. $linhafatura->valor * $linhafatura->quantidade.' €</td>
+                                    </tr>
+                                    ';
+                                }
+                                $html .= '</tbody></table>';
+            //Mostrar QRCode e Desenhar tabela de IVA
             $html .= '
-                <tr>
-                    <td colspan="3"></td>
-                    <td><b>Total Líquido</b></td>
-                    <td>'. $fatura->getSubtotal() .'€</td>
-                    <td><b>Incidência</b></td>
-                </tr>
-                    '.$fatura->taxBox(3).'
-                <tr>
-                    <td colspan="3"></td>
-                    <td><b>Total IVA</b></td>
-                    <td>'. round($fatura->getTotal() - $fatura->getSubtotal(), 2) .'€</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="3"></td>
-                    <td><b>Total Bruto</b></td>
-                    <td>'. round($fatura->getTotal(), 2) .'€</td>
-                    <td></td>
-                </tr>';
-            $html .= '</tbody></table>';
-            //Load Taxas da fatura
+                    <br>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="border: 1px solid white !important; border-collapse: collapse !important; text-align: start !important;">
+                                    <img style="display: inline-block !important;" src="' . (new \chillerlan\QRCode\QRCode())->render("http://" . HOSTNAME ."/router.php?c=fatura&a=pdf&id=00" . $fatura->id) . '"/>
+                                </td>
+                                <td style="border: 1px solid white !important; border-collapse: collapse !important;">
+                                    <table>
+                                        <tr>
+                                            <td><b>Total Líquido</b></td>
+                                            <td>' . $fatura->getSubtotal() . '€</td>
+                                            <td><b>Valor Incidência</b></td>
+                                        </tr>
+                                        ' . $fatura->taxBox(0) . '
+                                        <tr>
+                                            <td><b>Total</b></td>
+                                            <td colspan="2">' . round($fatura->getTotal(), 2) . '€</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    ';
             $html .= '
             <p>Fatura processada por '. $fatura->funcionario->username .'</p>
             </div></div></body>
@@ -286,8 +306,6 @@ class FaturaController extends BaseAuthController{
             $dompdf->loadHtml($html);
             $dompdf->setPaper('A4');
             $dompdf->render();
-            //Auto download
-            //$dompdf->stream();
             //Mostra uma página com a estrutura do PDF
             $dompdf->stream("fatura_" . $fatura->id . ".pdf", array("Attachment" => false));
             //$this->RenderView('fatura', 'show', ['fatura' => $fatura, 'empresa' => $empresa]);
