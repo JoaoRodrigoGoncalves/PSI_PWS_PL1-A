@@ -30,7 +30,7 @@
                                 </span>
                             <?php } ?>
                             <div class="card-tools">
-                                <form action="router.php?c=produto&a=index" method="post" class="input-group input-group-sm">
+                                <form action="./router.php?c=produto&a=index" method="post" class="input-group input-group-sm">
                                     <a class="pt-1 mx-2" href="./router.php?c=produto&a=index">Clear Filter</a>
                                     <select id="filter_type" class="form-control" name="filter_type">
                                         <option value="descricao">Descrição</option>

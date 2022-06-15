@@ -133,8 +133,7 @@ class ClienteController extends BaseAuthController{
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'client/index']);
         }
     }
-    
-    
+
     public function delete($id)
     {
         $this->filterByRole(['funcionario', 'administrador']);
@@ -194,10 +193,16 @@ class ClienteController extends BaseAuthController{
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'cliente/index']);
         }
     }
+
     public function select()
     {
         $this->filterByRole(['funcionario', 'administrador']);
         $clientes = User::find_all_by_role('cliente');
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $clientes = array_filter($clientes, function($client){
+                return str_contains(strtoupper($client->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+            });
+        }
         $this->RenderView('cliente', 'select', ['clientes' => $clientes]);
     }
 }

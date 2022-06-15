@@ -361,7 +361,7 @@ else
             switch($a)
             {
                 case 'create':
-                    $controller->create($_GET['id']);
+                    $controller->create($_GET['callbackID']);
                     break;
 
                 case 'store':

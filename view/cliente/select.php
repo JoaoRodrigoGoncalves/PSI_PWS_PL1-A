@@ -24,14 +24,20 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
+                                <form action="router.php?c=cliente&a=select" method="post" class="input-group input-group-sm">
+                                    <a class="pt-1 mx-2" href="./router.php?c=cliente&a=select">Clear Filter</a>
+                                    <select id="filter_type" class="form-control" name="filter_type">
+                                        <option value="username">Nome</option>
+                                        <option value="email">Email</option>
+                                        <option value="nif">NIF</option>
+                                    </select>
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="Procurar">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <div class="card-body">
