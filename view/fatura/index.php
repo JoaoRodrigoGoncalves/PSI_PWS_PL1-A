@@ -82,7 +82,9 @@
                                                 <a href="./router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="btn btn-primary">Detalhes</a>
                                                 <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
                                                     <?php if ($fatura->estado->id == 1){ ?>
-                                                        <a href="#" class="btn btn-success" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?', <?= $fatura->id ?>)">Finalizar</a>
+                                                        <?php if(count($fatura->linhafatura) > 0){ ?>
+                                                            <a href="#" class="btn btn-success" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?', <?= $fatura->id ?>)">Finalizar</a>
+                                                        <?php } ?>
                                                         <a href="#" class="btn btn-danger" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?', <?= $fatura->id ?>)">Anular</a>
                                                     <?php } ?>
                                                 <?php } ?>
@@ -136,3 +138,9 @@
         }).toggle();
     }
 </script>
+<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+<?php if(isset($_GET['success'])){ ?>
+    <script type="text/javascript">
+        window.onload = function() { alert_success(); }
+    </script>
+<?php } ?>

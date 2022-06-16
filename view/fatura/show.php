@@ -60,13 +60,18 @@
             <div class="card mt-3">
                     <div class="card-header">
                         <div class="card-tools">
-                            <a class="btn btn-sencondary text-right" href="./router.php?c=fatura&a=pdf&id=<?= $fatura->id ?>">
-                                <img src="./public/dist/img/pdf-icon.png" height="30">
-                            </a>
-                            <?php if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
+                            <?php if(count($fatura->linhafatura) > 0){ ?>
+                                <a class="btn btn-sencondary text-right" href="./router.php?c=fatura&a=pdf&id=<?= $fatura->id ?>">
+                                    <img src="./public/dist/img/pdf-icon.png" height="30">
+                                </a>
+                            <?php
+                                }
+                                if(in_array($userRole, ['funcionario', 'administrador'])){ ?>
                                 <?php if($fatura->estado->id == 1){ ?>
                                     <a class="btn btn-primary" href="./router.php?c=produto&a=select&callbackID=<?=$fatura->id?>&callbackRoute=linhafatura/create">Adicionar Artigo</a>
-                                    <a class="btn btn-success" href="#" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?')">Finalizar</a>
+                                    <?php if(count($fatura->linhafatura) > 0){ ?>
+                                        <a class="btn btn-success" href="#" onclick="openModal('update', 'Tem a certeza que pretende finalizar a fatura?')">Finalizar</a>
+                                    <?php } ?>
                                     <a class="btn btn-danger" href="#" onclick="openModal('delete', 'Tem a certeza que pretende anular a fatura?')">Anular</a>
                                 <?php } ?>
                             <?php } ?>
@@ -177,3 +182,9 @@
         }).toggle();
     }
 </script>
+<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+<?php if(isset($_GET['success'])){ ?>
+    <script type="text/javascript">
+        window.onload = function() { alert_success(); }
+    </script>
+<?php } ?>

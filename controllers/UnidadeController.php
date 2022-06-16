@@ -77,7 +77,7 @@ class UnidadeController extends BaseAuthController
 
             if($unidade->is_valid()){
                 $unidade->save();
-                $this->RedirectToRoute('unidade', 'index');//redirecionar para o index
+                $this->RedirectToRoute('unidade', 'index', ['success' => 1]); //redirecionar para o index
             }
             else {
                 //mostrar vista edit passando o modelo como parâmetro

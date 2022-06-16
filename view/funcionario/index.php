@@ -20,14 +20,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <?php if(isset($_GET['success'])){ ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            Operação completada com sucesso!
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php } ?>
                     <div class="card">
                         <div class="card-header">
                             <a href="./router.php?c=funcionario&a=create" class="btn btn-primary btn-sm">Registar Funcionario</a>
@@ -120,3 +112,9 @@
         }).toggle();
     }
 </script>
+<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+<?php if(isset($_GET['success'])){ ?>
+    <script type="text/javascript">
+        window.onload = function() { alert_success(); }
+    </script>
+<?php } ?>

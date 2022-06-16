@@ -120,7 +120,7 @@ class FaturaController extends BaseAuthController{
 
                 if($emailSystem->sendEmail($fatura->cliente->email, $fatura->cliente->username, "Confirmação de compra em " . $empresa->designacaosocial, $body))
                 {
-                    $this->RedirectToRoute('fatura', 'index');
+                    $this->RedirectToRoute('fatura', 'index', ['success' => 1]);
                 }
                 else
                 {
@@ -159,7 +159,7 @@ class FaturaController extends BaseAuthController{
                     $fatura->save();
                 }
             }
-            $this->RedirectToRoute('fatura', 'index');
+            $this->RedirectToRoute('fatura', 'index', ['success' => 1]);
         }catch (Exception $_ex){
             $this->RedirectToRoute('error', 'index', ['callbackRoute' => 'fatura/index']);
         }

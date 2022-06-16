@@ -58,7 +58,7 @@ class FuncionarioController extends BaseAuthController{
                 if(EmailSystem::sendEmail($funcionario->email, $funcionario->username, 'Bem-vindo ao Fatura+', $body))
                 {
                     $funcionario->save();
-                    $this->RedirectToRoute('funcionario', 'index');
+                    $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
                 }
                 else
                 {

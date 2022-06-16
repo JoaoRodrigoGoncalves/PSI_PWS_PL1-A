@@ -103,3 +103,15 @@
         }).toggle();
     }
 </script>
+<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+<?php if(isset($_GET['success'])){ ?>
+        <?php if($_GET['success'] == 1) { ?>
+            <script type="text/javascript">
+                window.onload = function() { alert_success(); }
+            </script>
+        <?php } else { ?>
+            <script type="text/javascript">
+                window.onload = function() { alert_fail("Não foi possivel apagar porque a unidade se encontra em utilização."); }
+            </script>
+        <?php } ?>
+<?php } ?>

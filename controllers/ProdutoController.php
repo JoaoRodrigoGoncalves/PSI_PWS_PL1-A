@@ -62,7 +62,7 @@ class ProdutoController extends BaseAuthController
 
             if($produto->is_valid())
             {
-                $this->RedirectToRoute('produto', 'index');
+                $this->RedirectToRoute('produto', 'index', ['success' => 1]);
             }
             else
             {
@@ -102,7 +102,7 @@ class ProdutoController extends BaseAuthController
                 if($produto->is_valid())
                 {
                     $produto->save();
-                    $this->RedirectToRoute('produto', 'index');
+                    $this->RedirectToRoute('produto', 'index', ['success' => 1]);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ class ProdutoController extends BaseAuthController
             $produto = Produto::find($id);
             $produto->update_attribute('ativo', 0);
             $produto->save();
-            $this->RedirectToRoute('produto', 'index', ['status' => 1]); // OK, mas com aviso de desativação
+            $this->RedirectToRoute('produto', 'index', ['success' => 1]);
         }
         catch(Exception $_)
         {

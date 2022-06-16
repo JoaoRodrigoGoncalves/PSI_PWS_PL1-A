@@ -83,7 +83,7 @@ class LinhaFaturaController extends BaseAuthController{
                         $linhaFatura->save();
 
                         //redirecionar para o fatura show
-                        $this->RedirectToRoute('fatura', 'show', ['id' => $idFatura]);
+                        $this->RedirectToRoute('fatura', 'show', ['id' => $idFatura, 'success' => 1]);
                     }
                     else
                     {
@@ -123,7 +123,7 @@ class LinhaFaturaController extends BaseAuthController{
                 {
                     $linhaFatura->update_attribute('quantidade', ($linhaFatura->quantidade + $_POST['quantidade']));
                     $produto->update_attribute('stock', ($produto->stock - $_POST['quantidade']));
-                    $this->RedirectToRoute('fatura', 'show', ['id' => $idFatura]);
+                    $this->RedirectToRoute('fatura', 'show', ['id' => $idFatura, 'success' => 1]);
                 }
             }
         }
@@ -174,7 +174,7 @@ class LinhaFaturaController extends BaseAuthController{
                     ));
 
                     $linhaFatura->save();
-                    $this->RedirectToRoute('fatura','show',['id' => $linhaFatura->fatura->id]);
+                    $this->RedirectToRoute('fatura','show',['id' => $linhaFatura->fatura->id, 'success' => 1]);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ class LinhaFaturaController extends BaseAuthController{
                 $linhafatura->delete();
 
                 //Redirect to show fatura
-                $this->RedirectToRoute('fatura', 'show', ['id' => $linhafatura->fatura->id]);
+                $this->RedirectToRoute('fatura', 'show', ['id' => $linhafatura->fatura->id, 'success' => 1]);
             }
             else
             {

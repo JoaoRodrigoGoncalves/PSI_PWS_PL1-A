@@ -41,7 +41,7 @@ class EmpresaController extends BaseAuthController
 
                 if($empresa->is_valid()){
                     $empresa->save();
-                    $this->RedirectToRoute('empresa', 'index');//redirecionar para o index
+                    $this->RedirectToRoute('empresa', 'index', ['success' => 1]);//redirecionar para o index
                 }
                 else
                 {

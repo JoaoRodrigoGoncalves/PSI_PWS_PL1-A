@@ -65,7 +65,7 @@ class ClienteController extends BaseAuthController{
                     if($mail->sendEmail($cliente->email, $cliente->username, 'Conta cliente em ' . $empresa->designacaosocial, $body))
                     {
                         $cliente->save();
-                        $this->RedirectToRoute('cliente', 'index'); //redirecionar para o index
+                        $this->RedirectToRoute('cliente', 'index', ['success' => 1]); //redirecionar para o index
                     }
                     else
                     {
@@ -172,7 +172,7 @@ class ClienteController extends BaseAuthController{
                 if($email->sendEmail($cliente->email, $cliente->username, "A tua palavra-passe foi alterada", $body))
                 {
                     $cliente->save();
-                    $this->RedirectToRoute('cliente', 'index');
+                    $this->RedirectToRoute('cliente', 'index', ['success' => 1]);
                 }
                 else
                 {

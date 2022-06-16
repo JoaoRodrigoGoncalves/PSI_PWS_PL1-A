@@ -20,8 +20,6 @@ class TaxaController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        // TODO: Verificar se todos os dados necessários foram recebidos
-
         if($_POST['emvigor']){
             $_POST['emvigor'] = 1;
         }else{
@@ -31,7 +29,7 @@ class TaxaController extends BaseAuthController{
         $taxas = new Taxa($_POST);
         if($taxas->is_valid()){
             $taxas->save();
-            $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
+            $this->RedirectToRoute('taxa', 'index', ['success' => 1]); //redirecionar para o index
         } 
         else {
             //mostrar vista create passando o modelo como parâmetro
@@ -64,8 +62,6 @@ class TaxaController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        // TODO: Verificar se todos os dados necessários foram recebidos
-
         try
         {
             $taxas = Taxa::find($id);
@@ -81,7 +77,7 @@ class TaxaController extends BaseAuthController{
             if($taxas->is_valid())
             {
                 $taxas->save();
-                $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
+                $this->RedirectToRoute('taxa', 'index', ['success' => 1]); //redirecionar para o index
             }
             else {
                 //mostrar vista edit passando o modelo como parâmetro
@@ -98,13 +94,12 @@ class TaxaController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
 
-        // TODO: Criar lógica de desativação do invés de remoção
-
         try
         {
             $taxas = Taxa::find($id);
-            $taxas->delete();
-            $this->RedirectToRoute('taxa', 'index');//redirecionar para o index
+            $taxas->update_attribute('emvigor', 0);
+            $taxas->save();
+            $this->RedirectToRoute('taxa', 'index', ['success' => 1]); //redirecionar para o index
         }
         catch(Exception $_)
         {

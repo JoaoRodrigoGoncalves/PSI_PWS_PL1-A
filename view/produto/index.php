@@ -129,49 +129,9 @@
         }).toggle();
     }
 </script>
-
-<?php
-if(isset($_GET['status']))
-{
-    if($_GET['status'] == 0)
-    {
-        ?>
-        <script type="text/javascript">
-            window.onload = function()
-            {
-                Swal.fire({
-                    toast: true,
-                    position: 'top-right',
-                    icon: 'success',
-                    iconColor: 'green',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    title: 'Operação completa com sucesso!'
-                })
-            }
-        </script>
-        <?php
-    }
-    else
-    {
-        ?>
-        <script type="text/javascript">
-            window.onload = function()
-            {
-                Swal.fire({
-                    toast: true,
-                    position: 'top-right',
-                    icon: 'warning',
-                    iconColor: 'yellow',
-                    showConfirmButton: false,
-                    timer: 3500,
-                    timerProgressBar: true,
-                    title: 'O produto foi desativado ao invés de apagado visto que foi utilizado em faturas'
-                })
-            }
-        </script>
-        <?php
-    }
-}
-?>
+<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+<?php if(isset($_GET['success'])){ ?>
+    <script type="text/javascript">
+        window.onload = function() { alert_success(); }
+    </script>
+<?php } ?>
