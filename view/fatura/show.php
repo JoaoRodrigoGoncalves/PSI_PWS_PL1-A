@@ -45,16 +45,18 @@
                     <?= $empresa->designacaosocial ?><br>
                     <?= $empresa->morada ?><br>
                     <?= $empresa->codigopostal ?>, <?= $empresa->localidade ?><br>
-                    NIF: <?= $empresa->nif ?><br>
-                    Telefone: <?= $empresa->telefone ?><br>
-                    Email: <?= $empresa->email?>
+                    <b>Nif:</b> <?= $empresa->nif ?><br>
+                    <b>Telefone:</b> <?= $empresa->telefone ?><br>
+                    <b>Email:</b> <?= $empresa->email?>
                 </div>
                 <div class="col-md-6 col-12">
                     <b>Cliente:</b> <br>
                     <?= $fatura->cliente->username ?> <br>
                     <?= $fatura->cliente->morada ?> <br>
                     <?= $fatura->cliente->codigopostal ?>, <?= $fatura->cliente->localidade ?> <br>
-                    Nif: <?= $fatura->cliente->nif ?>
+                    <b>Nif:</b> <?= $fatura->cliente->nif ?><br>
+                    <b>Telefone:</b> <?= $fatura->cliente->telefone?><br>
+                    <b>Email:</b> <?= $fatura->cliente->email?><br>
                 </div>
             </div>
             <div class="card mt-3">
@@ -107,7 +109,7 @@
                                     <td><?= $linhafatura->valor * $linhafatura->quantidade?> €</td>
                                     <td>
                                         <?php
-                                        if ($fatura->estado->id == 1)
+                                        if ($fatura->estado->id == 1 && in_array($userRole, ['funcionario', 'administrador']))
                                         {
                                             ?>
                                             <a href="./router.php?c=linhafatura&a=edit&id=<?= $linhafatura->id ?>" class="btn btn-warning">Editar</a>

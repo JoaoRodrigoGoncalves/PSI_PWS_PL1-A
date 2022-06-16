@@ -16,10 +16,13 @@ class FaturaController extends BaseAuthController{
             $faturas = $this->filter($faturas);
             $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
         }
-        
+
         if(in_array($auth->getRole(), ['cliente'])){
-            $cliente = User::find_by_email($_SESSION['email']);
-            $faturas = Fatura::find('all', array('conditions' => array('estado_id =? AND cliente_id =?', 2, $cliente->id), 'order' => 'id desc'));
+            $faturas = Fatura::all();
+            $faturas = array_filter($faturas, function($fatura){
+                $cliente = User::find_by_email($_SESSION['email']);
+                return str_contains(strtoupper($fatura->cliente->id),strtoupper($cliente->id));
+            });
             $faturas = $this->filter($faturas);
             $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
         }
