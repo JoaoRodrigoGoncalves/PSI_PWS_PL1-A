@@ -13,15 +13,42 @@ class FaturaController extends BaseAuthController{
         $auth = new Auth();
         if(in_array($auth->getRole(), ['funcionario', 'administrador'])){
             $faturas = Fatura::all(array('order' => 'id desc'));
+            $faturas = $this->filter($faturas);
             $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
         }
         
         if(in_array($auth->getRole(), ['cliente'])){
             $cliente = User::find_by_email($_SESSION['email']);
             $faturas = Fatura::find('all', array('conditions' => array('estado_id =? AND cliente_id =?', 2, $cliente->id), 'order' => 'id desc'));
+            $faturas = $this->filter($faturas);
             $this->RenderView('fatura', 'index', ['faturas' => $faturas]);
         }
-        
+    }
+
+    private function filter($faturas){
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $faturas = array_filter($faturas, function($fatura){
+                if(!strcmp($_POST['filter_type'],'cliente') ||
+                    !strcmp($_POST['filter_type'],'funcionario'))
+                {
+                    return str_contains(strtoupper($fatura->{$_POST['filter_type']}->username),strtoupper($_POST['table_search']));
+                }
+                else if (!strcmp($_POST['filter_type'],'estado'))
+                {
+                    return str_contains(strtoupper($fatura->{$_POST['filter_type']}->estado),strtoupper($_POST['table_search']));
+                }
+                else if(!strcmp($_POST['filter_type'],'total'))
+                {
+                    return str_contains(strtoupper($fatura->getTotal()),strtoupper($_POST['table_search']));
+                }
+                else if(!strcmp($_POST['filter_type'],'id'))
+                {
+                    return str_contains(strtoupper($fatura->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+                }
+                return false;
+            });
+        }
+        return $faturas;
     }
 
     public function show($id)

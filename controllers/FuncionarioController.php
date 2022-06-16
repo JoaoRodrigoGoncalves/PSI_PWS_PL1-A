@@ -7,6 +7,11 @@ class FuncionarioController extends BaseAuthController{
     {
         $this->filterByRole(['administrador']);
         $funcionarios = User::find_all_by_role('funcionario');
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $funcionarios = array_filter($funcionarios, function($funcionario){
+                return str_contains(strtoupper($funcionario->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+            });
+        }
         $this->RenderView('funcionario', 'index', ['funcionarios' => $funcionarios]);
     }
 

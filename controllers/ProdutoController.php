@@ -7,9 +7,8 @@ class ProdutoController extends BaseAuthController
     public function index()
     {
         $this->filterByRole(['funcionario', 'administrador']);
-
         $products = Produto::all();
-
+        $products = $this->filter($products);
         $registerFalg = true;
         if(Taxa::count(array('conditions' => array('emVigor = 1'))) == 0 || Unidade::count() == 0)
             $registerFalg = false;
@@ -134,11 +133,37 @@ class ProdutoController extends BaseAuthController
     public function select($callbackRoute){
 
         $this->filterByRole(['funcionario', 'administrador']);
-        $produtos = Produto::find_all_by_ativo(1);
-
+        $products = Produto::find_all_by_ativo(1);
+        $products = $this->filter($products);
+        //Build url
         $callback = explode('/', $callbackRoute);
-        $callbackRoute = "./router.php?c=" . $callback[0] . "&a=" . $callback[1] . "&id=" . $_GET['callbackID'];
+        $reloadView = "./router.php?c=produto&a=select" .
+            "&callbackID=" . $_GET['callbackID'] . "&callbackRoute=" . $callbackRoute;
+        $callbackRoute = "./router.php?c=" . $callback[0] . "&a=" . $callback[1] .
+            "&callbackID=" . $_GET['callbackID'] . "&callbackRoute=" . $callbackRoute;
+        //Go to view
+        $this->RenderView('produto', 'select', ['produtos' => $products, 'reloadView' => $reloadView,'callbackRoute' => $callbackRoute]);
+    }
 
-        $this->RenderView('produto', 'select', ['produtos' => $produtos, 'callbackRoute' => $callbackRoute]);
+    public function filter($products){
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $products = array_filter($products, function($produto){
+                if(!strcmp($_POST['filter_type'], 'descricao') ||
+                    !strcmp($_POST['filter_type'], 'preco_unitario') ||
+                    !strcmp($_POST['filter_type'], 'stock'))
+                {
+                    return str_contains(strtoupper($produto->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+                }
+                else if(!strcmp($_POST['filter_type'], 'unidade'))
+                {
+                    return str_contains(strtoupper($produto->{$_POST['filter_type']}->unidade),strtoupper($_POST['table_search']));
+                }else if(!strcmp($_POST['filter_type'], 'taxa'))
+                {
+                    return str_contains(strtoupper($produto->{$_POST['filter_type']}->valor),strtoupper($_POST['table_search']));
+                }
+                return false;
+            });
+        }
+        return $products;
     }
 }

@@ -7,6 +7,11 @@ class TaxaController extends BaseAuthController{
     {
         $this->filterByRole(['funcionario', 'administrador']);
         $taxas = Taxa::all();
+        if(isset($_POST['filter_type'], $_POST['table_search']) && $_POST['table_search'] != ''){
+            $taxas = array_filter($taxas, function($taxa){
+                return str_contains(strtoupper($taxa->{$_POST['filter_type']}),strtoupper($_POST['table_search']));
+            });
+        }
         $this->RenderView('taxa', 'index', ['taxas' => $taxas]);
     }
     
