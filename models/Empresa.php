@@ -23,8 +23,10 @@ class Empresa extends Model
     );
 
     static $validates_pattern = array(
-        array('email', FILTER_VALIDATE_EMAIL, array("regex" => "(?:[a-zA-Z\-\.]+)@(?:[^\s]+)\.(?:[^\s]{2,4})
-        ")),
         array('codigopostal', FILTER_VALIDATE_REGEXP, array("regex" => "/^([1-9]{4})-([1-9]{3})$/"))
+    );
+
+    static $validates_format_of = array(
+        array('email', 'with' => '/^[^0-9][A-z0-9_]+([.][A-z0-9_]+)*[@][A-z0-9_]+([.][A-z0-9_]+)*[.][A-z]{2,4}$/', 'message' => 'O email inserido é iválido')
     );
 }
