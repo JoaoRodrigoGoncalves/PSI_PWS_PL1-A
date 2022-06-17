@@ -25,3 +25,16 @@ function alert_fail(message)
         title: message
     });
 }
+
+function toggle_sidebar_status()
+{
+    var status = localStorage.getItem("sidebar_collapsed");
+    if(status == null)
+    {
+        localStorage.setItem("sidebar_collapsed", "true");
+    }
+    else
+    {
+        localStorage.setItem("sidebar_collapsed", (status === "true" ? "false" : "true"));
+    }
+}

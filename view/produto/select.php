@@ -25,7 +25,7 @@
                         <div class="card-header">
                             <div class="card-tools">
                                 <form action="<?= $reloadView?>" method="post" class="input-group input-group-sm">
-                                    <a class="pt-1 mx-2" href="<?= $reloadView?>">Clear Filter</a>
+                                    <a class="pt-1 mx-2" href="<?= $reloadView?>">Limpar Filtro</a>
                                     <select id="filter_type" class="form-control" name="filter_type">
                                         <option value="descricao">Descrição</option>
                                         <option value="stock">Stock</option>

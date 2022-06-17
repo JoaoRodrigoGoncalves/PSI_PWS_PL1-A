@@ -6,6 +6,7 @@
                 <p class="section-title text-white h5 mb-4">Links<span></span></p>
                 <a class="btn btn-link" href="./router.php?c=site&a=index">Inicio</a>
                 <a class="btn btn-link" href="./router.php?c=login&a=index">Iniciar Sessão</a>
+                <a class="btn btn-link" href="https://github.com/JoaoRodrigoGoncalves/PSI_PWS_PL1-A">Github</a>
             </div>
         </div>
     </div>

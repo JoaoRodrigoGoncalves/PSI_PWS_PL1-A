@@ -137,7 +137,6 @@ class FuncionarioController extends BaseAuthController{
 
     public function passwordReset($id)
     {
-        // TODO: Mudar função para sitio certo e deixar de duplicar código com ClienteController.php
         $this->filterByRole(['administrador']);
 
         try
@@ -146,7 +145,7 @@ class FuncionarioController extends BaseAuthController{
 
             $newPassword = bin2hex(random_bytes(10));
 
-            $funcionario->update_attribute('password', $newPassword);
+            $funcionario->update_attribute('password', password_hash($newPassword, PASSWORD_DEFAULT));
 
             if($funcionario->is_valid())
             {
@@ -160,7 +159,7 @@ class FuncionarioController extends BaseAuthController{
                 if($email->sendEmail($funcionario->email, $funcionario->username, "A tua palavra-passe foi alterada", $body))
                 {
                     $funcionario->save();
-                    $this->RedirectToRoute('funcionario', 'index');
+                    $this->RedirectToRoute('funcionario', 'index', ['success' => 1]);
                 }
                 else
                 {

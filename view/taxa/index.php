@@ -25,7 +25,7 @@
                             <a href="./router.php?c=taxa&a=create" class="btn btn-primary btn-sm">Criar Taxa</a>
                             <div class="card-tools">
                                 <form action="router.php?c=taxa&a=index" method="post" class="input-group input-group-sm">
-                                    <a class="pt-1 mx-2" href="./router.php?c=taxa&a=index">Clear Filter</a>
+                                    <a class="pt-1 mx-2" href="./router.php?c=taxa&a=index">Limpar Filtro</a>
                                     <select id="filter_type" class="form-control" name="filter_type">
                                         <option value="descricao">Descrição</option>
                                         <option value="valor">Valor</option>
@@ -122,7 +122,7 @@
         }).toggle();
     }
 </script>
-<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+
 <?php if(isset($_GET['success'])){ ?>
     <script type="text/javascript">
         window.onload = function() { alert_success(); }

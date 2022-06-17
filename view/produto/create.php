@@ -23,7 +23,7 @@
                 <div class="col">
                     <form action="./router.php?c=produto&a=store" method="post">
                         <div class="mb-3">
-                            <input type="checkbox" id="ativo" name="ativo" <?= (isset($produto->errors) ? ($produto->ativo ? 'checked' : '' ) : '') ?>>
+                            <input type="checkbox" id="ativo" name="ativo" <?= (isset($produto->errors) ? ($produto->ativo ? 'checked' : '' ) : '') ?> checked>
                             <label for="ativo">Ativo</label>
                             <?= (isset($produto->errors) ? $produto->errors->on('ativo') : '') ?>
                         </div>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="taxa_id">Taxa de IVA</label>
-                            <select class="form-select" id="taxa_id" name="taxa_id">
+                            <select class="form-control" id="taxa_id" name="taxa_id">
                                 <?php foreach ($taxas_iva as $taxa){ ?>
                                     <option value="<?= $taxa->id ?>"><?= $taxa->descricao ?> (<?= $taxa->valor ?>%)</option>
                                 <?php } ?>

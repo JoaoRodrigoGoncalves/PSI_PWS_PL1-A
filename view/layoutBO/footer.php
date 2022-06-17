@@ -6,6 +6,7 @@
                 </div>
             </footer>
         </div>
+        <script src="./public/dist/js/faturamais_bo.js"></script>
         <script src="./public/plugins/jquery/jquery.min.js"></script>
         <script src="./public/plugins/popper/umd/popper.js"></script>
         <script src="./public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -16,7 +17,22 @@
             // Ativar tooltips no backoffice
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
-            })
+            });
+
+            // Atualizar estado da sidebar
+            var status = localStorage.getItem("sidebar_collapsed");
+            var body = $('body');
+            if(status === "true")
+            {
+                body.removeClass();
+                body.addClass('sidebar-mini');
+                body.addClass('sidebar-collapse');
+            }
+            else
+            {
+                body.removeClass();
+                body.addClass('sidebar-mini');
+            }
         </script>
         </body>
 </html>

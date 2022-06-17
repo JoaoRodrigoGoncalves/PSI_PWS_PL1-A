@@ -58,7 +58,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
 <?php if(isset($_GET['success'])){ ?>
     <script type="text/javascript">
         window.onload = function() { alert_success(); }

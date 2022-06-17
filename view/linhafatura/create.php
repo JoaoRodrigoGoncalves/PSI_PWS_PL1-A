@@ -50,7 +50,7 @@
                                     <label class="input-group-text" for="taxa_id">Taxa de IVA</label>
                                     <select class="form-control" id="taxa_id" name="taxa_id">
                                         <?php foreach ($taxas_iva as $taxa){ ?>
-                                            <option value="<?= $taxa->id ?>"><?= $taxa->descricao ?> (<?= $taxa->valor ?>%)</option>
+                                            <option value="<?= $taxa->id ?>" <?= (isset($produto) ? ($produto->taxa->id == $taxa->id ? 'selected': '') : '') ?>><?= $taxa->descricao ?> (<?= $taxa->valor ?>%)</option>
                                         <?php } ?>
                                     </select>
                                 </div>

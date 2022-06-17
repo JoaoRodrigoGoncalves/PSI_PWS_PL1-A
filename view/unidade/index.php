@@ -26,7 +26,7 @@
                             <div class="card-tools">
                                 <div class="card-tools">
                                     <form action="router.php?c=unidade&a=index" method="post" class="input-group input-group-sm">
-                                        <a class="pt-1 mx-2" href="./router.php?c=unidade&a=index">Clear Filter</a>
+                                        <a class="pt-1 mx-2" href="./router.php?c=unidade&a=index">Limpar Filtro</a>
                                         <select id="filter_type" class="form-control" name="filter_type">
                                             <option value="unidade">Unidade</option>
                                         </select>
@@ -109,7 +109,7 @@
         }).toggle();
     }
 </script>
-<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+
 <?php if(isset($_GET['success'])){ ?>
         <?php if($_GET['success'] == 1) { ?>
             <script type="text/javascript">

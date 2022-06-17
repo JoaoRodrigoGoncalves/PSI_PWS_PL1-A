@@ -153,7 +153,6 @@ class ClienteController extends BaseAuthController{
 
     public function resetPassword($id)
     {
-        // TODO: Mudar função para sitio certo e deixar de duplicar código com FuncionarioController.php
         $this->filterByRole(['funcionario', 'administrador']);
 
         try

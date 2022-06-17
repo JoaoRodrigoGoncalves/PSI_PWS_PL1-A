@@ -62,12 +62,11 @@ class SetupPageController extends BaseController
                 $this->RedirectToRoute('login', 'index');
             } else {
                 // Mostrar erros
-                $this->RenderView('setup', 'index');
+                $this->RenderView('setup', 'index', ['admin' => $administrador, 'empresa' => $empresa]);
             }
         }
         else
         {
-            // TODO: Resolver o erro do erro
             $this->RenderView('error', 'index', ['callbackRoute', 'setup/index']);
         }
     }

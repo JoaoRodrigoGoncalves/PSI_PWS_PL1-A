@@ -3,29 +3,29 @@ CREATE DATABASE faturamais;
 USE faturamais;
 
 CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador User',
-    ativo TINYINT(1) DEFAULT 1 NOT NULL COMMENT 'Estado do utilizador ',
-    username VARCHAR(100) NOT NULL COMMENT 'Nome do utilizador',
-    password VARCHAR(100) NOT NULL COMMENT 'Password do utilizador',
-    email VARCHAR(100) UNIQUE NOT NULL COMMENT 'Email do utilizador',
-    telefone CHAR(9) NOT NULL COMMENT 'Telefone do utilizador',
-    nif CHAR(9) UNIQUE NOT NULL COMMENT 'Numero de identificação fiscal do utilizador',
-    morada VARCHAR(100) NOT NULL COMMENT 'Morada do utilizador',
-    codigopostal VARCHAR(8) NOT NULL COMMENT 'Código Postal do Utilizador',
-    localidade VARCHAR(40) NOT NULL COMMENT 'Localidade da morada do Utilizador',
-    role VARCHAR(15) DEFAULT 'cliente' NOT NULL COMMENT 'Role do utilizador'
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ativo TINYINT(1) DEFAULT 1 NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    telefone CHAR(9) NOT NULL,
+    nif CHAR(9) UNIQUE NOT NULL,
+    morada VARCHAR(100) NOT NULL,
+    codigopostal VARCHAR(8) NOT NULL,
+    localidade VARCHAR(40) NOT NULL,
+    role VARCHAR(15) DEFAULT 'cliente'
 )ENGINE=INNODB;
 
 CREATE TABLE empresas (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificação Empresa',
-    designacaosocial VARCHAR(100) NOT NULL COMMENT 'Designação Social da Empresa',
-    capitalsocial FLOAT NOT NULL COMMENT 'Capital Social da empresa',
-    email VARCHAR(100) UNIQUE NOT NULL COMMENT 'Email da empresa',
-    telefone CHAR(9) NOT NULL COMMENT 'Telemovel da empresa',
-    nif CHAR(9) UNIQUE NOT NULL COMMENT 'Numero de Identificação fiscal da empresa',
-    morada VARCHAR(100) NOT NULL COMMENT 'Morada da empresa',
-    codigopostal CHAR(8) NOT NULL COMMENT 'Codigo postal da Empresa',
-    localidade VARCHAR(40) NOT NULL COMMENT 'Localidade da Empresa'
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    designacaosocial VARCHAR(100) NOT NULL,
+    capitalsocial FLOAT NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    telefone CHAR(9) NOT NULL,
+    nif CHAR(9) UNIQUE NOT NULL,
+    morada VARCHAR(100) NOT NULL,
+    codigopostal CHAR(8) NOT NULL,
+    localidade VARCHAR(40) NOT NULL
 )ENGINE=INNODB;
 
 CREATE TABLE estados
@@ -40,11 +40,11 @@ INSERT INTO estados (estado) VALUES -- não mudar ordem destes valores
                         ('Anulada');
 
 CREATE TABLE faturas (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificação fatura',
-    data DATETIME NOT NULL DEFAULT NOW() COMMENT 'Data criação fatura',
-    estado_id INTEGER NOT NULL COMMENT 'Identificador do estado da fatura',
-    cliente_id INTEGER NOT NULL COMMENT 'Identificador do cliente da fatura',
-    funcionario_id INTEGER NOT NULL COMMENT 'Identificador do funcionario da fatura',
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    data DATETIME NOT NULL DEFAULT NOW(),
+    estado_id INTEGER NOT NULL,
+    cliente_id INTEGER NOT NULL,
+    funcionario_id INTEGER NOT NULL,
     CONSTRAINT IDCLIENTE_FK FOREIGN KEY (cliente_id)
         REFERENCES users (id),
     CONSTRAINT IDFUNCIONARIO_FK FOREIGN KEY (funcionario_id)
@@ -52,10 +52,10 @@ CREATE TABLE faturas (
 )ENGINE=INNODB;
 
 CREATE TABLE taxas (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador da Taxa',
-    valor INTEGER NOT NULL COMMENT 'Valor da taxa', -- guarda-se o valor completo e no código divide-se por 100 para contas, caso necessário
-    descricao VARCHAR(100) NOT NULL COMMENT 'Descrição da taxa',
-    emvigor TINYINT(1) DEFAULT 0 NOT NULL COMMENT 'Bool estado em vigor ou não da taxa'
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    valor INTEGER NOT NULL, -- guarda-se o valor completo e no código divide-se por 100 para contas, caso necessário
+    descricao VARCHAR(100) NOT NULL,
+    emvigor TINYINT(1) DEFAULT 0 NOT NULL
 )ENGINE=INNODB;
 
 INSERT INTO taxas (valor, descricao, emvigor) VALUES
@@ -63,10 +63,11 @@ INSERT INTO taxas (valor, descricao, emvigor) VALUES
                       (13, 'Taxa Intermédia', 1),
                       (6, 'Taxa Reduzida', 1),
                       (0, 'Isento', 1);
+                      
 CREATE TABLE unidades
 (
-	id INTEGER PRIMARY KEY AUTO_INCREMENT comment 'Identificador da unidade',
-    unidade VARCHAR(10) NOT NULL comment '?'
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    unidade VARCHAR(10) NOT NULL
 )ENGINE=InnoDB;
 
 INSERT INTO unidades (unidade) VALUES
@@ -76,13 +77,13 @@ INSERT INTO unidades (unidade) VALUES
                          ('M2');
 
 CREATE TABLE produtos (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador do produto',
-    ativo TINYINT(1) DEFAULT 1 NOT NULL COMMENT 'Estado ativo ou não do produto',
-    descricao VARCHAR(100) NOT NULL COMMENT 'Descrição do produto',
-    preco_unitario DECIMAL(10 , 2 ) NOT NULL COMMENT 'Preço do produto',
-    taxa_id INTEGER NOT NULL COMMENT 'Identificador do iva do produto',
-    unidade_id INTEGER NOT NULL COMMENT 'Identificador tipo de unidade do produto',
-    stock FLOAT NOT NULL COMMENT 'Numero de stock do produto',
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ativo TINYINT(1) DEFAULT 1 NOT NULL,
+    descricao VARCHAR(100) NOT NULL,
+    preco_unitario DECIMAL(10 , 2 ) NOT NULL,
+    taxa_id INTEGER NOT NULL,
+    unidade_id INTEGER NOT NULL,
+    stock FLOAT NOT NULL,
     CONSTRAINT IDTAXA_P_FK FOREIGN KEY (taxa_id)
         REFERENCES taxas (id),
     CONSTRAINT IDUNIDADE_FK FOREIGN KEY (unidade_id)
@@ -90,12 +91,12 @@ CREATE TABLE produtos (
 )ENGINE=INNODB;
 
 CREATE TABLE linha_faturas (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT 'Identificador da linha de faturas',
-    fatura_id INTEGER NOT NULL COMMENT 'Identificador da fatura asociada',
-    produto_id INTEGER NOT NULL COMMENT 'Identificador do produto asociado',
-    valor DECIMAL(10 , 2 ) NOT NULL COMMENT 'Valor da fatura',
-    quantidade int not null default 1 comment 'Quantidade de produto',
-    taxa_id INTEGER NOT NULL COMMENT 'Identificador do tipo de iva da fatura',
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    fatura_id INTEGER NOT NULL,
+    produto_id INTEGER NOT NULL,
+    valor DECIMAL(10 , 2 ) NOT NULL,
+    quantidade DECIMAL(10, 2) not null default 1,
+    taxa_id INTEGER NOT NULL,
     CONSTRAINT IDFATURA_FK FOREIGN KEY (fatura_id)
         REFERENCES faturas (id),
     CONSTRAINT IDPRODUTO_FK FOREIGN KEY (produto_id)

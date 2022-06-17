@@ -25,7 +25,7 @@
                         <div class="card-header">
                             <div class="card-tools">
                                 <form action="router.php?c=cliente&a=select" method="post" class="input-group input-group-sm">
-                                    <a class="pt-1 mx-2" href="./router.php?c=cliente&a=select">Clear Filter</a>
+                                    <a class="pt-1 mx-2" href="./router.php?c=cliente&a=select">Limpar Filtro</a>
                                     <select id="filter_type" class="form-control" name="filter_type">
                                         <option value="username">Nome</option>
                                         <option value="email">Email</option>

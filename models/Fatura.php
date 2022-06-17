@@ -58,6 +58,8 @@ use ActiveRecord\Model;
                     }
                 }
 
+                krsort($valores_taxas, SORT_NUMERIC); // Ordenar as taxas por ordem decrescente antes de desenhar
+
                 foreach ($valores_taxas as $taxa => $valor)
                 {
                     $return_string .= '<tr>' . ($colspan > 0 ? '<td colspan="'.$colspan.'"></td>' : '')  . '<td>' . $taxa . '%</td><td>'. $valor .' €</td><td>' . round($valor * ($taxa/100), 2) . '€</td></tr>';

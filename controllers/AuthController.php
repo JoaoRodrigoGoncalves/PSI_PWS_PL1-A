@@ -72,6 +72,4 @@ class  AuthController extends BaseAuthController
         $auth->logOut();
         $this->RedirectToRoute('login','index');
     }
-
-    //TODO: Mover resetPassword para aqui
 }

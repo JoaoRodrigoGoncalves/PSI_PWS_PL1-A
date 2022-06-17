@@ -103,7 +103,7 @@
                                 <tr>
                                     <td><?= $linhafatura->produto->id?></td>
                                     <td><?= $linhafatura->produto->descricao?></td>
-                                    <td><?= $linhafatura->quantidade ?></td>
+                                    <td><?= $linhafatura->quantidade ?> <?= $linhafatura->produto->unidade->unidade ?></td>
                                     <td><?= $linhafatura->valor ?>€</td>
                                     <td><?= $linhafatura->taxa->valor ?>%</td>
                                     <td><?= $linhafatura->valor * $linhafatura->quantidade?> €</td>
@@ -184,7 +184,7 @@
         }).toggle();
     }
 </script>
-<script type="text/javascript" src="./public/dist/js/faturamais_bo.js"></script>
+
 <?php if(isset($_GET['success'])){ ?>
     <script type="text/javascript">
         window.onload = function() { alert_success(); }
